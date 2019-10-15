@@ -147,7 +147,7 @@ export const constantRoutes = [{
     children: [{
       path: 'list',
       name: 'pluginlist',
-      component: () => import('@/views/table/index'),
+      component: () => import('@/views/pluginList/index'),
       meta: {
         title: '导入插件',
         icon: 'table'
