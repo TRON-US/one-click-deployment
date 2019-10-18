@@ -11,23 +11,15 @@
             </router-link>
         </div>
         <div class="breadcrumb-title">{{title}}</div>
-        <!-- <breadcrumb class="breadcrumb-container" /> -->
 
         <div class="right-menu">
-            <el-dropdown class="avatar-container">
+            <div class="avatar-container">
                 <div class="avatar-wrapper">
-                    <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
-                    <i class="el-icon-caret-bottom" />
+                    <div class="user-avatar">
+                        <i class="el-icon-user-solid"></i>
+                    </div>
                 </div>
-                <el-dropdown-menu slot="dropdown" class="user-dropdown">
-                    <router-link to="/">
-                        <el-dropdown-item>首页</el-dropdown-item>
-                    </router-link>
-                    <el-dropdown-item divided>
-                        <span style="display:block;" @click="logout">退出</span>
-                    </el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
+            </div>
         </div>
     </div>
 </template>
@@ -156,6 +148,8 @@ export default {
                     width: 40px;
                     height: 40px;
                     border-radius: 10px;
+                    line-height: 40px;
+                    text-align: center;
                 }
 
                 .el-icon-caret-bottom {
