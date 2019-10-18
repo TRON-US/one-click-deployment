@@ -2,14 +2,14 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-18 15:51:20
+ * @Last Modified time: 2019-10-18 17:45:53
  * @tron node list  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="mini" @click="addNodeFun()" type="primary">新增分支</el-button>
+                <el-button size="mini" @click="addBranchFun()" type="primary">新增分支</el-button>
                 <el-button size="mini" type="info" @click>修改分支信息</el-button>
             </div>
             <div class="filter-container tron-table">
@@ -44,12 +44,21 @@
                 </div>
             </div>
         </div>
+        <operate-branch
+            :branchDialogVisible="branchObj.visible"
+            :detailInfoData="branchObj.detail"
+            @dialog="branchDetailFun"
+        ></operate-branch>
     </div>
 </template>
 <script>
 // import { getNodeList, deleteNode, updateNode } from "@/api/nodeApi.js";
+import operateBranch from "./operateBranch";
 export default {
     name: "nodelist",
+    components: {
+        operateBranch
+    },
     data() {
         return {
             list: [{ id: 0 }],
@@ -61,6 +70,10 @@ export default {
                 limit: 20,
                 page: 1,
                 total: 0
+            },
+            branchObj: {
+                visible: false,
+                detail: {}
             }
         };
     },
@@ -73,7 +86,9 @@ export default {
         this.getDataListFun();
     },
     methods: {
-        addNodeFun() {},
+        addBranchFun() {
+            this.branchObj.visible = true;
+        },
         clickSearch() {
             this.getDataListFun();
         },
@@ -107,6 +122,9 @@ export default {
             console.log(`当前页: ${val}`);
             this.listQuery.page = val;
             this.getDataListFun();
+        },
+        branchDetailFun(val) {
+            this.branchObj.visible = val;
         }
     }
 };

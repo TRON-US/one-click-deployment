@@ -64,17 +64,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/branch/list',
     name: 'branch',
-    meta: {
-      title: '分支',
-      icon: 'example'
-    },
     children: [{
       path: 'list',
       name: 'list',
       component: () => import('@/views/branch/index'),
       meta: {
         title: '分支管理',
-        icon: 'table'
+        icon: 'branch'
       }
     }]
   },
