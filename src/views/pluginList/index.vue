@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-// import { getNodeList, deleteNode, updateNode } from "@/api/nodeApi.js";
+
 export default {
     name: "nodelist",
     data() {

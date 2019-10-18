@@ -30,7 +30,7 @@
                     <el-table-column prop="created_at" label="提交人" align="center"></el-table-column>
                     <el-table-column label="备注" align="center"></el-table-column>
                 </el-table>
-                <div v-show="!listLoading" class="pagination-container mgt20 pdb10">
+                <div v-show="!listLoading" class="pagination-container mgt20">
                     <el-pagination
                         background
                         @size-change="handleSizeChange"
