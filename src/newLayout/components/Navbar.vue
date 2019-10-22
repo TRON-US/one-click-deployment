@@ -14,11 +14,11 @@
 
         <div class="right-menu">
             <div class="avatar-container">
-                <div class="avatar-wrapper">
+                <!-- <div class="avatar-wrapper">
                     <div class="user-avatar">
                         <i class="el-icon-user-solid"></i>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

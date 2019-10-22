@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-18 17:45:53
+ * @Last Modified time: 2019-10-21 14:15:19
  * @tron node list  
  */
 <template>
@@ -10,7 +10,6 @@
         <div class="tron-content">
             <div class="tron-filter-section">
                 <el-button size="mini" @click="addBranchFun()" type="primary">新增分支</el-button>
-                <el-button size="mini" type="info" @click>修改分支信息</el-button>
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->
@@ -24,12 +23,15 @@
                     border
                     @selection-change="handleSelectionChange"
                 >
-                    <el-table-column prop="mobile" label="分支编码" align="center"></el-table-column>
-                    <el-table-column prop="name" label="分支名称" align="center"></el-table-column>
-                    <el-table-column prop="address" label="分支状态" align="center"></el-table-column>
-                    <el-table-column prop="created_at" label="备注" align="center"></el-table-column>
+                    <el-table-column prop="branch_code" label="分支编码" align="center"></el-table-column>
+                    <el-table-column prop="branch_name" label="分支名称" align="center"></el-table-column>
+                    <el-table-column prop="branch_status" label="分支状态" align="center"></el-table-column>
+                    <el-table-column prop="note" label="备注" align="center"></el-table-column>
+                    <el-table-column label="操作" align="center">
+                        <el-button size="mini" type="info" @click="modifyBranchFun">修改分支信息</el-button>
+                    </el-table-column>
                 </el-table>
-                <div v-show="!listLoading" class="pagination-container mgt20 pdb10">
+                <!-- <div v-show="!listLoading" class="pagination-container mgt20 pdb10">
                     <el-pagination
                         background
                         @size-change="handleSizeChange"
@@ -41,7 +43,7 @@
                         layout="total, prev, pager,next,sizes,jumper"
                         :total="listQuery.total"
                     ></el-pagination>
-                </div>
+                </div>-->
             </div>
         </div>
         <operate-branch
@@ -52,7 +54,7 @@
     </div>
 </template>
 <script>
-// import { getNodeList, deleteNode, updateNode } from "@/api/nodeApi.js";
+import { branchGetApi } from "@/api/branchApi";
 import operateBranch from "./operateBranch";
 export default {
     name: "nodelist",
@@ -61,7 +63,15 @@ export default {
     },
     data() {
         return {
-            list: [{ id: 0 }],
+            list: [
+                {
+                    id: 0,
+                    branch_code: "123",
+                    branch_name: "dev",
+                    branch_status: true,
+                    note: "暂无"
+                }
+            ],
             listLoading: false,
             filterItem: {
                 name: ""
@@ -87,29 +97,31 @@ export default {
     },
     methods: {
         addBranchFun() {
+            if (this.list.length === 1) {
+                this.$message("已添加分支,请操作当前分支信息");
+                return;
+            }
             this.branchObj.visible = true;
         },
-        clickSearch() {
-            this.getDataListFun();
+        modifyBranchFun() {
+            this.branchObj.detail = {
+                id: 0,
+                branch_code: "123",
+                branch_name: "dev",
+                branch_status: true,
+                note: "暂无"
+            };
+            this.branchObj.visible = true;
         },
         getDataListFun() {
-            // getAgentList(this.parames)
-            //     .then(response => {
-            //         let resBody = response.items || [];
-            //         resBody.forEach(element => {
-            //             if (element.status == 1) {
-            //                 element.statusName = true;
-            //             } else {
-            //                 element.statusName = false;
-            //             }
-            //         });
-            //         this.list = resBody;
-            //         this.listQuery.total = response.total;
-            //         this.listLoading = false;
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     });
+            branchGetApi()
+                .then(response => {
+                    let resBody = response.items || [];
+                    this.list = resBody;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;

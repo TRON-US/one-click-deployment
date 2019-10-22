@@ -2,12 +2,12 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-15 18:47:17
- * @operation node
+ * @Last Modified time: 2019-10-21 16:28:11
+ * @operation node 
  */
 
 <template>
-    <div class="viewNodeDialog">
+    <div class="viewnodeDialog">
         <el-dialog
             :title="dialogTitle"
             @open="openDialogFun"
@@ -17,43 +17,39 @@
             :close-on-press-escape="false"
             v-loading="classLoading"
             width="600px"
+            center
         >
             <el-form
-                ref="classDialogForm"
-                :rules="classRules"
-                :model="classForm"
+                ref="nodeDialogForm"
+                :rules="nodeRules"
+                :model="nodeForm"
                 label-width="100px"
                 label-position="left"
             >
-                <el-form-item label="班级码" v-if="editStatus == 1">
-                    <el-col :span="8">{{studentObj.classId}}</el-col>
+                <el-form-item label="ID" prop="id">
+                    <el-input :maxlength="50" v-model="nodeForm.id" placeholder="请填写id"></el-input>
                 </el-form-item>
-                <el-form-item label="别名" prop="class_name">
-                    <el-col :span="8">
-                        <el-input
-                            :maxlength="20"
-                            v-model="classForm.class_name"
-                            placeholder="请填写别名"
-                        ></el-input>
-                    </el-col>
+                <el-form-item label="节点名称" prop="nodeName">
+                    <el-input :maxlength="50" v-model="nodeForm.nodeName" placeholder="请填写节点名称"></el-input>
                 </el-form-item>
-                <el-form-item label="入学年月份" prop="enrol_date">
-                    <el-col :span="8">
-                        <el-date-picker
-                            v-model="classForm.enrol_date"
-                            align="right"
-                            type="month"
-                            value-format="yyyyMM"
-                            placeholder="选择年月"
-                        ></el-date-picker>
-                    </el-col>
+                <el-form-item label="IP/HOST" prop="ip">
+                    <el-input :maxlength="50" v-model="nodeForm.ip" placeholder="请填写IP/HOST"></el-input>
+                </el-form-item>
+                <el-form-item label="PORT" prop="port">
+                    <el-input :maxlength="50" v-model="nodeForm.port" placeholder="请填写PORT"></el-input>
+                </el-form-item>
+                <el-form-item label="是否为SR" prop="isSr">
+                    <el-select v-model="nodeForm.isSr" placeholder="请选择是否为SR">
+                        <el-option
+                            v-for="item in srAry"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        ></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button
-                        v-if="editStatus == 0"
-                        type="primary"
-                        @click="saveData('classDialogForm')"
-                    >确定</el-button>
+                    <el-button type="primary" @click="saveData('nodeDialogForm')">保存</el-button>
                     <el-button @click="cancelFun">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -61,76 +57,83 @@
     </div>
 </template>
 <script>
-import { classAdd, classUpdate } from "@/api/garden";
+// import { nodeSaveApi, nodeGetApi } from "@/api/nodeApi";
 export default {
-    name: "addClassDialog",
-    props: [
-        "dialogTitle",
-        "classDialogVisible",
-        "gradeListAry",
-        "classListAry",
-        "studentObj",
-        "editStatus"
-    ],
+    name: "operationNode",
+    props: ["nodeDialogVisible", "detailInfoData", "editStatus"],
     data() {
         return {
             classLoading: false,
-            dialogVisible: this.classDialogVisible,
-            classId: "",
-            classForm: {},
-            newGradeListAry: [],
-            newClassListAry: [],
-            classRules: {
-                class_name: [
-                    { required: true, message: "请填写别名", trigger: "change" }
-                ],
-                enrol_date: [
+            dialogVisible: this.nodeDialogVisible,
+            dialogTitle: "新增节点",
+            nodeForm: {},
+            srAry: [
+                { id: 0, label: "是", value: true },
+                { id: 1, label: "否", value: false }
+            ],
+            nodeRules: {
+                id: [
                     {
                         required: true,
-                        message: "请选择入学年份",
-                        trigger: "change"
+                        message: "请填写id",
+                        trigger: "blur"
                     }
-                ]
+                ],
+                nodeName: [
+                    {
+                        required: true,
+                        message: "请选择节点名称",
+                        trigger: "blur"
+                    }
+                ],
+                ip: {
+                    required: true,
+                    message: "请填写IP/HOST",
+                    trigger: "blur"
+                },
+                port: {
+                    required: true,
+                    message: "请填写PORT",
+                    trigger: "blur"
+                },
+                isSr: {
+                    required: true,
+                    message: "请选择是否为SR",
+                    trigger: "blur"
+                }
             }
         };
     },
     methods: {
         openDialogFun() {},
         closeFun() {
-            this.$refs.classDialogForm.resetFields();
+            this.$refs.nodeDialogForm.resetFields();
             this.dialogVisible = false;
         },
         cancelFun() {
-            this.$refs.classDialogForm.resetFields();
+            this.$refs.nodeDialogForm.resetFields();
             this.dialogVisible = false;
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.$set(
-                        this.classForm,
+                        this.nodeForm,
                         "nursery_id",
                         this.$route.query.id
                     );
-                    this.classForm.enrol_year = this.classForm.enrol_date.slice(
-                        0,
-                        4
-                    );
-                    this.classForm.enrol_month = this.classForm.enrol_date.slice(
-                        4,
-                        6
-                    );
-                    classAdd(this.classForm)
-                        .then(response => {
-                            this.$emit("addClassSuccess", true);
-                            this.$refs.classDialogForm.resetFields();
-                            this.$message.success("添加班级信息成功");
-                            this.dialogVisible = false;
-                        })
-                        .catch(error => {
-                            // this.listLoading = false;
-                            console.log(error);
-                        });
+
+                    // nodeSave(this.nodeForm)
+                    //     .then(response => {
+                    //         this.$emit("addClassSuccess", true);
+                    //         this.$refs.nodeDialogForm.resetFields();
+                    //         this.$message.success("添加班级信息成功");
+                    //         this.dialogVisible = false;
+                    //     })
+                    //     .catch(error => {
+                    //         // this.listLoading = false;
+                    //         console.log(error);
+                    //     });
                 } else {
                     console.log("error submit!!");
                     return false;
@@ -139,16 +142,10 @@ export default {
         }
     },
     watch: {
-        studentObj(val) {
-            if (val.classId) {
-            } else {
-                this.classForm = {
-                    class_name: "",
-                    enrol_date: ""
-                };
-            }
+        detailInfoData(val) {
+            this.nodeForm = this.detailInfoData;
         },
-        classDialogVisible(val) {
+        nodeDialogVisible(val) {
             this.dialogVisible = val;
         },
         dialogVisible(val) {

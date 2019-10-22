@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getList(params) {
+export function addNodeApi(params) {
   return request({
-    url: '/table/list',
+    url: '/addNode',
     method: 'get',
     params
   })

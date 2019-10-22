@@ -99,17 +99,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/node/list',
     name: 'Example',
-    meta: {
-      title: '节点',
-      icon: 'example'
-    },
     children: [{
         path: 'table',
         name: 'table',
         component: () => import('@/views/node/index'),
         meta: {
           title: '节点管理',
-          icon: 'table'
+          icon: 'tree'
         }
       },
       // {
@@ -121,15 +117,16 @@ export const constantRoutes = [
       //     icon: 'tree'
       //   }
       // },
-      // {
-      //   path: 'detail',
-      //   name: 'detail',
-      //   component: () => import('@/views/node/nodeDetail'),
-      //   meta: {
-      //     title: '节点详情',
-      //     icon: 'detail'
-      //   }
-      // }
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('@/views/node/nodeDetail'),
+        hidden: true,
+        meta: {
+          title: '节点详情',
+          icon: 'detail'
+        }
+      }
     ]
   },
 
@@ -148,7 +145,7 @@ export const constantRoutes = [
       component: () => import('@/views/pluginList/index'),
       meta: {
         title: '导入插件',
-        icon: 'table'
+        icon: 'plugins'
       }
     }]
   },

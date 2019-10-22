@@ -2,8 +2,8 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 16:16:43
- * @operation branch 
+ * @Last Modified time: 2019-10-21 18:12:00
+ * @setting p2p setting 
  */
 
 <template>
@@ -16,40 +16,61 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             v-loading="classLoading"
-            width="600px"
+            width="800px"
             center
         >
             <el-form
-                ref="branchDialogForm"
-                :rules="branchRules"
-                :model="branchForm"
-                label-width="100px"
-                class="tronBranchForm"
+                ref="p2pSettingDialogForm"
+                :rules="p2pSettingRules"
+                :model="p2pSettingForm"
+                label-width="210px"
+                class="tronp2pSettingForm"
                 label-position="left"
             >
-                <el-form-item label="分支编码" prop="branchCode">
-                    <el-input :maxlength="20" v-model="branchForm.branchCode" placeholder="请填写分支编码"></el-input>
-                </el-form-item>
-                <el-form-item label="分支名称" prop="branchName">
-                    <el-select v-model="branchForm.branchName" placeholder="请选择分支名称">
-                        <el-option
-                            v-for="item in branchAry"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="备注" prop="note">
+                <el-form-item label="p2pVersion" prop="p2pVersion">
                     <el-input
-                        type="textarea"
-                        :maxlength="20"
-                        v-model="branchForm.note"
-                        placeholder="请填写备注"
+                        :maxlength="50"
+                        v-model="p2pSettingForm.p2pVersion"
+                        placeholder="请填写p2pVersion"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="maxActionNodes" prop="maxActionNodes">
+                    <el-input
+                        :maxlength="50"
+                        v-model="p2pSettingForm.maxActionNodes"
+                        placeholder="请填写maxActionNodes"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="maxActiveNodesWithSample" prop="blockProducedTimeOut">
+                    <el-input
+                        :maxlength="50"
+                        v-model="p2pSettingForm.maxActiveNodesWithSample"
+                        placeholder="请填写maxActiveNodesWithSample"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="activeConnectFactor" prop="activeConnectFactor">
+                    <el-input
+                        :maxlength="50"
+                        v-model="p2pSettingForm.activeConnectFactor"
+                        placeholder="请填写activeConnectFactor"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="seedNode" prop="seedNode">
+                    <el-input
+                        :maxlength="50"
+                        v-model="p2pSettingForm.seedNode"
+                        placeholder="请填写seedNode"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="trustNode" prop="trustNode">
+                    <el-input
+                        :maxlength="50"
+                        v-model="p2pSettingForm.trustNode"
+                        placeholder="请填写trustNode"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('branchDialogForm')">保存</el-button>
+                    <el-button type="primary" @click="saveData('p2pSettingDialogForm')">保存</el-button>
                     <el-button @click="cancelFun">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -58,35 +79,32 @@
 </template>
 <script>
 import { branchSaveApi, branchGetApi } from "@/api/branchApi";
+
 export default {
-    name: "operationBranch",
+    name: "baseSetting",
     props: ["branchDialogVisible", "detailInfoData", "editStatus"],
     data() {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "新增分支",
-            branchForm: {},
-            branchAry: [
-                { id: 0, label: "master", value: "master" },
-                { id: 1, label: "dev", value: "dev" }
-            ],
-            branchRules: {
-                branchCode: [
+            dialogTitle: "p2pSetting",
+            p2pSettingForm: {},
+            p2pSettingRules: {
+                p2pVersion: [
                     {
                         required: true,
                         message: "请填写分支编码",
                         trigger: "change"
                     }
                 ],
-                branchName: [
+                maxActionNodes: [
                     {
                         required: true,
                         message: "请选择分支名称",
                         trigger: "change"
                     }
                 ],
-                note: {
+                trustNodeWithSample: {
                     required: true,
                     message: "请填写备注",
                     trigger: "change"
@@ -97,26 +115,26 @@ export default {
     methods: {
         openDialogFun() {},
         closeFun() {
-            this.$refs.branchDialogForm.resetFields();
+            this.$refs.p2pSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         cancelFun() {
-            this.$refs.branchDialogForm.resetFields();
+            this.$refs.p2pSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.$set(
-                        this.branchForm,
+                        this.p2pSettingForm,
                         "nursery_id",
                         this.$route.query.id
                     );
 
-                    // branchSave(this.branchForm)
+                    // branchSave(this.p2pSettingForm)
                     //     .then(response => {
                     //         this.$emit("addClassSuccess", true);
-                    //         this.$refs.branchDialogForm.resetFields();
+                    //         this.$refs.p2pSettingDialogForm.resetFields();
                     //         this.$message.success("添加班级信息成功");
                     //         this.dialogVisible = false;
                     //     })
@@ -133,7 +151,7 @@ export default {
     },
     watch: {
         detailInfoData(val) {
-            this.branchForm = this.detailInfoData;
+            this.p2pSettingForm = this.detailInfoData;
         },
         branchDialogVisible(val) {
             this.dialogVisible = val;
@@ -148,8 +166,8 @@ export default {
 .textCenter {
     text-align: center;
 }
-.tronBranchForm {
-    padding: 0 80px 0 0;
+.tronp2pSettingForm {
+    padding: 0 70px 0 0;
 }
 </style>
 

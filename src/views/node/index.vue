@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-15 18:39:13
+ * @Last Modified time: 2019-10-21 16:23:32
  * @tron node list  
  */
 <template>
@@ -24,40 +24,55 @@
                     border
                     @selection-change="handleSelectionChange"
                 >
-                    <el-table-column prop="mobile" label="节点名称" align="center"></el-table-column>
-                    <el-table-column prop="name" label="IP/HOST" align="center"></el-table-column>
-                    <el-table-column prop="address" label="SSH PORT" align="center"></el-table-column>
-                    <el-table-column prop="created_at" label="是否为SR" align="center"></el-table-column>
-                    <el-table-column prop="created_at" label="节点状态" align="center"></el-table-column>
+                    <el-table-column type="selection" width="55"></el-table-column>
+                    <el-table-column prop="nodeName" label="节点名称" align="center"></el-table-column>
+                    <el-table-column prop="ip" label="IP/HOST" align="center"></el-table-column>
+                    <el-table-column prop="port" label="SSH PORT" align="center"></el-table-column>
+                    <el-table-column label="是否为SR" align="center">
+                        <template slot-scope="scope">
+                            <el-tag type="success" v-if="scope.row.isSr">yes</el-tag>
+                            <el-tag type="error" v-else>yes</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="status" label="节点状态" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.status">成功</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column label="操作" align="center">
                         <el-button size="mini" type="warning">修改</el-button>
                         <el-button size="mini" type="danger" @click="deleteNodeListFun()">删除</el-button>
                     </el-table-column>
                 </el-table>
-                <div v-show="!listLoading" class="pagination-container mgt20 pdb10">
-                    <el-pagination
-                        background
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange"
-                        :current-page.sync="listQuery.page"
-                        style="text-align:right"
-                        :page-size="listQuery.limit"
-                        :page-sizes="[20, 50, 100]"
-                        layout="total, prev, pager,next,sizes,jumper"
-                        :total="listQuery.total"
-                    ></el-pagination>
-                </div>
             </div>
         </div>
+        <operate-node
+            :nodeDialogVisible="nodeObj.visible"
+            :detailInfoData="nodeObj.detail"
+            @dialog="nodeDetailFun"
+        ></operate-node>
     </div>
 </template>
 <script>
 // import { getNodeList, deleteNode, updateNode } from "@/api/nodeApi.js";
+import operateNode from "./nodeOperate";
 export default {
     name: "nodelist",
+    components: {
+        operateNode
+    },
     data() {
         return {
-            list: [{ id: 0 }],
+            list: [
+                {
+                    id: 0,
+                    nodeName: "节点一",
+                    ip: "127.0.0.1",
+                    port: "8080",
+                    isSr: false
+                }
+            ],
             listLoading: false,
             filterItem: {
                 name: ""
@@ -66,21 +81,24 @@ export default {
                 limit: 20,
                 page: 1,
                 total: 0
+            },
+            nodeObj: {
+                visible: false,
+                detail: {}
             }
         };
     },
     computed: {
-        parames() {
-            return Object.assign(this.filterItem, this.listQuery);
-        }
+        // parames() {
+        //     return Object.assign(this.filterItem, this.listQuery);
+        // }
     },
     created() {
         this.getDataListFun();
     },
     methods: {
-        addNodeFun() {},
-        clickSearch() {
-            this.getDataListFun();
+        addNodeFun() {
+            this.nodeObj.visible = true;
         },
         getDataListFun() {
             // getAgentList(this.parames)
@@ -133,6 +151,9 @@ export default {
                         message: "已取消删除"
                     });
                 });
+        },
+        nodeDetailFun(val) {
+            this.nodeObj.visible = val;
         }
     }
 };

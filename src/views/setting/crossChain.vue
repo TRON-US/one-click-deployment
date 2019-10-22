@@ -2,8 +2,8 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 16:16:43
- * @operation branch 
+ * @Last Modified time: 2019-10-21 18:19:16
+ * @setting cross setting
  */
 
 <template>
@@ -16,40 +16,54 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             v-loading="classLoading"
-            width="600px"
+            width="800px"
             center
         >
             <el-form
-                ref="branchDialogForm"
+                ref="crossSettingDialogForm"
                 :rules="branchRules"
-                :model="branchForm"
-                label-width="100px"
-                class="tronBranchForm"
+                :model="baseSettingForm"
+                label-width="200px"
+                class="tronbaseSettingForm"
                 label-position="left"
             >
-                <el-form-item label="分支编码" prop="branchCode">
-                    <el-input :maxlength="20" v-model="branchForm.branchCode" placeholder="请填写分支编码"></el-input>
-                </el-form-item>
-                <el-form-item label="分支名称" prop="branchName">
-                    <el-select v-model="branchForm.branchName" placeholder="请选择分支名称">
-                        <el-option
-                            v-for="item in branchAry"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="备注" prop="note">
+                <el-form-item label="enableCrossChain" prop="enableCrossChain">
                     <el-input
-                        type="textarea"
-                        :maxlength="20"
-                        v-model="branchForm.note"
-                        placeholder="请填写备注"
+                        :maxlength="50"
+                        v-model="baseSettingForm.enableCrossChain"
+                        placeholder="请填写enableCrossChain"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="maxValidatorNumber" prop="maxValidatorNumber">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.maxValidatorNumber"
+                        placeholder="请填写maxValidatorNumber"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="minValidatorNumber" prop="minValidatorNumber">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.minValidatorNumber"
+                        placeholder="请填写minValidatorNumber"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="chainIdList" prop="chainIdList">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.chainIdList"
+                        placeholder="请填写chainIdList"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="crossChainFee" prop="crossChainFee">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.crossChainFee"
+                        placeholder="请填写crossChainFee"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('branchDialogForm')">保存</el-button>
+                    <el-button type="primary" @click="saveData('crossSettingDialogForm')">保存</el-button>
                     <el-button @click="cancelFun">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -58,35 +72,32 @@
 </template>
 <script>
 import { branchSaveApi, branchGetApi } from "@/api/branchApi";
+
 export default {
-    name: "operationBranch",
+    name: "baseSetting",
     props: ["branchDialogVisible", "detailInfoData", "editStatus"],
     data() {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "新增分支",
-            branchForm: {},
-            branchAry: [
-                { id: 0, label: "master", value: "master" },
-                { id: 1, label: "dev", value: "dev" }
-            ],
+            dialogTitle: "跨链配置",
+            baseSettingForm: {},
             branchRules: {
-                branchCode: [
+                enableCrossChain: [
                     {
                         required: true,
                         message: "请填写分支编码",
                         trigger: "change"
                     }
                 ],
-                branchName: [
+                maxValidatorNumber: [
                     {
                         required: true,
                         message: "请选择分支名称",
                         trigger: "change"
                     }
                 ],
-                note: {
+                minValidatorNumber: {
                     required: true,
                     message: "请填写备注",
                     trigger: "change"
@@ -97,26 +108,26 @@ export default {
     methods: {
         openDialogFun() {},
         closeFun() {
-            this.$refs.branchDialogForm.resetFields();
+            this.$refs.crossSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         cancelFun() {
-            this.$refs.branchDialogForm.resetFields();
+            this.$refs.crossSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.$set(
-                        this.branchForm,
+                        this.baseSettingForm,
                         "nursery_id",
                         this.$route.query.id
                     );
 
-                    // branchSave(this.branchForm)
+                    // branchSave(this.baseSettingForm)
                     //     .then(response => {
                     //         this.$emit("addClassSuccess", true);
-                    //         this.$refs.branchDialogForm.resetFields();
+                    //         this.$refs.crossSettingDialogForm.resetFields();
                     //         this.$message.success("添加班级信息成功");
                     //         this.dialogVisible = false;
                     //     })
@@ -133,7 +144,7 @@ export default {
     },
     watch: {
         detailInfoData(val) {
-            this.branchForm = this.detailInfoData;
+            this.baseSettingForm = this.detailInfoData;
         },
         branchDialogVisible(val) {
             this.dialogVisible = val;
@@ -148,7 +159,7 @@ export default {
 .textCenter {
     text-align: center;
 }
-.tronBranchForm {
+.tronbaseSettingForm {
     padding: 0 80px 0 0;
 }
 </style>

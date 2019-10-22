@@ -79,9 +79,6 @@ export default {
         this.getDataListFun();
     },
     methods: {
-        clickSearch() {
-            this.getDataListFun();
-        },
         getDataListFun() {
             // getAgentList(this.parames)
             //     .then(response => {

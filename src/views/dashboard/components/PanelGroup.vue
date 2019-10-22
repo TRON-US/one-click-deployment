@@ -1,70 +1,114 @@
+/*
+ * @Author: lxm 
+ * @Date: 2019-10-21 15:25:02 
+ * @Last Modified by: lxm
+ * @Last Modified time: 2019-10-21 17:05:53
+ * @dashboard-index
+ */
+
 <template>
-    <el-row :gutter="40" class="panel-group">
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-                <div class="card-panel-icon-wrapper icon-people">
-                    <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+    <div>
+        <el-row :gutter="10" class="panel-group">
+            <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
+                <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">All Node</div>
+                        <count-to
+                            :start-val="0"
+                            :end-val="102400"
+                            :duration="2600"
+                            class="card-panel-num"
+                        />
+                    </div>
+                    <div class="card-panel-icon-wrapper icon-people">
+                        <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+                    </div>
                 </div>
-                <div class="card-panel-description">
-                    <div class="card-panel-text">New Visits</div>
-                    <count-to
-                        :start-val="0"
-                        :end-val="102400"
-                        :duration="2600"
-                        class="card-panel-num"
-                    />
+            </el-col>
+            <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
+                <div class="card-panel" @click="handleSetLineChartData('messages')">
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">Witeness</div>
+                        <count-to
+                            :start-val="0"
+                            :end-val="81212"
+                            :duration="3000"
+                            class="card-panel-num"
+                        />
+                    </div>
+                    <div class="card-panel-icon-wrapper icon-message">
+                        <svg-icon icon-class="message" class-name="card-panel-icon" />
+                    </div>
                 </div>
-            </div>
-        </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel" @click="handleSetLineChartData('messages')">
-                <div class="card-panel-icon-wrapper icon-message">
-                    <svg-icon icon-class="message" class-name="card-panel-icon" />
+            </el-col>
+            <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
+                <div class="card-panel" @click="handleSetLineChartData('purchases')">
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">FullNode</div>
+                        <count-to
+                            :start-val="0"
+                            :end-val="9280"
+                            :duration="3200"
+                            class="card-panel-num"
+                        />
+                    </div>
+                    <div class="card-panel-icon-wrapper icon-money">
+                        <svg-icon icon-class="money" class-name="card-panel-icon" />
+                    </div>
                 </div>
-                <div class="card-panel-description">
-                    <div class="card-panel-text">Messages</div>
-                    <count-to
-                        :start-val="0"
-                        :end-val="81212"
-                        :duration="3000"
-                        class="card-panel-num"
-                    />
+            </el-col>
+        </el-row>
+        <el-row :gutter="10" class="panel-group">
+            <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
+                <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">Version</div>
+                        <count-to
+                            :start-val="0"
+                            :end-val="3.5"
+                            :duration="2600"
+                            class="card-panel-num"
+                        />
+                    </div>
+                    <div class="card-panel-icon-wrapper icon-people">
+                        <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+                    </div>
                 </div>
-            </div>
-        </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel" @click="handleSetLineChartData('purchases')">
-                <div class="card-panel-icon-wrapper icon-money">
-                    <svg-icon icon-class="money" class-name="card-panel-icon" />
+            </el-col>
+            <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
+                <div class="card-panel" @click="handleSetLineChartData('messages')">
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">正常节点</div>
+                        <count-to
+                            :start-val="0"
+                            :end-val="81212"
+                            :duration="3000"
+                            class="card-panel-num"
+                        />
+                    </div>
+                    <div class="card-panel-icon-wrapper icon-message">
+                        <svg-icon icon-class="message" class-name="card-panel-icon" />
+                    </div>
                 </div>
-                <div class="card-panel-description">
-                    <div class="card-panel-text">Purchases</div>
-                    <count-to
-                        :start-val="0"
-                        :end-val="9280"
-                        :duration="3200"
-                        class="card-panel-num"
-                    />
+            </el-col>
+            <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
+                <div class="card-panel" @click="handleSetLineChartData('purchases')">
+                    <div class="card-panel-description">
+                        <div class="card-panel-text">非正常节点</div>
+                        <count-to
+                            :start-val="0"
+                            :end-val="9280"
+                            :duration="3200"
+                            class="card-panel-num"
+                        />
+                    </div>
+                    <div class="card-panel-icon-wrapper icon-money">
+                        <svg-icon icon-class="money" class-name="card-panel-icon" />
+                    </div>
                 </div>
-            </div>
-        </el-col>
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-                <div class="card-panel-icon-wrapper icon-shopping">
-                    <svg-icon icon-class="shopping" class-name="card-panel-icon" />
-                </div>
-                <div class="card-panel-description">
-                    <div class="card-panel-text">Shoppings</div>
-                    <count-to
-                        :start-val="0"
-                        :end-val="13600"
-                        :duration="3600"
-                        class="card-panel-num"
-                    />
-                </div>
-            </div>
-        </el-col>
-    </el-row>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -97,37 +141,8 @@ export default {
         background: #fff;
         box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
         border-color: rgba(0, 0, 0, 0.05);
-        &:hover {
-            .card-panel-icon-wrapper {
-                color: #fff;
-            }
-            .icon-people {
-                background: #40c9c6;
-            }
-            .icon-message {
-                background: #36a3f7;
-            }
-            .icon-money {
-                background: #f4516c;
-            }
-            .icon-shopping {
-                background: #34bfa3;
-            }
-        }
-        .icon-people {
-            color: #40c9c6;
-        }
-        .icon-message {
-            color: #36a3f7;
-        }
-        .icon-money {
-            color: #f4516c;
-        }
-        .icon-shopping {
-            color: #34bfa3;
-        }
         .card-panel-icon-wrapper {
-            float: left;
+            float: right;
             margin: 14px 0 0 14px;
             padding: 16px;
             transition: all 0.38s ease-out;
@@ -138,10 +153,9 @@ export default {
             font-size: 48px;
         }
         .card-panel-description {
-            float: right;
+            float: left;
             font-weight: bold;
             margin: 26px;
-            margin-left: 0px;
             .card-panel-text {
                 line-height: 18px;
                 color: rgba(0, 0, 0, 0.45);
