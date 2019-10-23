@@ -121,7 +121,7 @@
                 </div>
                 <div v-if="radioVal == 2">
                     <el-divider>自定义数据库配置</el-divider>
-                    <el-form-item prop="otherdb">
+                    <el-form-item label="自定义数据库配置" prop="otherdb">
                         <el-input :maxlength="50" v-model="dbSettingForm.otherdb" placeholder="请填写"></el-input>
                     </el-form-item>
                 </div>

@@ -1,0 +1,16 @@
+export default {
+  'tronNewBranch': 'en新建分支',
+  'tronBranchCode': 'en分支编码',
+  'tronBranchCodePlaceholder': 'en请填写分支编码',
+  'tronBranchNamePlaceholder': 'en请选择分支名称',
+  'tronBranchNotePlaceholder': 'en请填写备注',
+  'tronBranchName': 'en分支名称',
+  'tronBranchStatus': 'en分支状态',
+  'tronBranchNote': 'en备注',
+  'tronBranchOperate': 'en操作',
+  'tronBranchPperateModify': 'en修改分支信息',
+  'tronTableNodata': 'en暂无数据',
+  'tronBranchTableHasNote': 'en已添加分支,请操作当前分支信息',
+  'tronBranchSave': 'en保存',
+  'tronBranchCancel': 'en取消',
+}

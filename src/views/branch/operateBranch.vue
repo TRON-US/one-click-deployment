@@ -2,14 +2,14 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 16:16:43
+ * @Last Modified time: 2019-10-23 15:57:37
  * @operation branch 
  */
 
 <template>
     <div class="viewBranchDialog">
         <el-dialog
-            :title="dialogTitle"
+            :title="$t('tronNewBranch')"
             @open="openDialogFun"
             @close="closeFun"
             :visible.sync="dialogVisible"
@@ -27,11 +27,18 @@
                 class="tronBranchForm"
                 label-position="left"
             >
-                <el-form-item label="分支编码" prop="branchCode">
-                    <el-input :maxlength="20" v-model="branchForm.branchCode" placeholder="请填写分支编码"></el-input>
+                <el-form-item :label="$t('tronBranchCode')" prop="branchCode">
+                    <el-input
+                        :maxlength="20"
+                        v-model="branchForm.branchCode"
+                        :placeholder="$t('tronBranchCodePlaceholder')"
+                    ></el-input>
                 </el-form-item>
-                <el-form-item label="分支名称" prop="branchName">
-                    <el-select v-model="branchForm.branchName" placeholder="请选择分支名称">
+                <el-form-item :label="$t('tronBranchName')" prop="branchName">
+                    <el-select
+                        v-model="branchForm.branchName"
+                        :placeholder="$t('tronBranchNamePlaceholder')"
+                    >
                         <el-option
                             v-for="item in branchAry"
                             :key="item.value"
@@ -40,17 +47,20 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="备注" prop="note">
+                <el-form-item :label="$t('tronBranchNote')" prop="note">
                     <el-input
                         type="textarea"
                         :maxlength="20"
                         v-model="branchForm.note"
-                        placeholder="请填写备注"
+                        :placeholder="$t('tronBranchNotePlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('branchDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('branchDialogForm')"
+                    >{{$t('tronBranchSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronBranchCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -65,7 +75,6 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "新增分支",
             branchForm: {},
             branchAry: [
                 { id: 0, label: "master", value: "master" },
@@ -75,20 +84,20 @@ export default {
                 branchCode: [
                     {
                         required: true,
-                        message: "请填写分支编码",
+                        message: this.$t("tronBranchNamePlaceholder"),
                         trigger: "change"
                     }
                 ],
                 branchName: [
                     {
                         required: true,
-                        message: "请选择分支名称",
+                        message: this.$t("tronBranchCodePlaceholder"),
                         trigger: "change"
                     }
                 ],
                 note: {
                     required: true,
-                    message: "请填写备注",
+                    message: this.$t("tronBranchNotePlaceholder"),
                     trigger: "change"
                 }
             }

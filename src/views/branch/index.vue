@@ -2,14 +2,18 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 14:15:19
+ * @Last Modified time: 2019-10-23 15:00:21
  * @tron node list  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="mini" @click="addBranchFun()" type="primary">新增分支</el-button>
+                <el-button
+                    size="mini"
+                    @click="addBranchFun()"
+                    type="primary"
+                >{{$t('tronNewBranch')}}</el-button>
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->
@@ -23,12 +27,28 @@
                     border
                     @selection-change="handleSelectionChange"
                 >
-                    <el-table-column prop="branch_code" label="分支编码" align="center"></el-table-column>
-                    <el-table-column prop="branch_name" label="分支名称" align="center"></el-table-column>
-                    <el-table-column prop="branch_status" label="分支状态" align="center"></el-table-column>
-                    <el-table-column prop="note" label="备注" align="center"></el-table-column>
-                    <el-table-column label="操作" align="center">
-                        <el-button size="mini" type="info" @click="modifyBranchFun">修改分支信息</el-button>
+                    <el-table-column
+                        prop="branch_code"
+                        :label="$t('tronBranchCode')"
+                        align="center"
+                    ></el-table-column>
+                    <el-table-column
+                        prop="branch_name"
+                        :label="$t('tronBranchName')"
+                        align="center"
+                    ></el-table-column>
+                    <el-table-column
+                        prop="branch_status"
+                        :label="$t('tronBranchStatus')"
+                        align="center"
+                    ></el-table-column>
+                    <el-table-column prop="note" :label="$t('tronBranchNote')" align="center"></el-table-column>
+                    <el-table-column :label="$t('tronBranchOperate')" align="center">
+                        <el-button
+                            size="mini"
+                            type="info"
+                            @click="modifyBranchFun"
+                        >{{$t('tronBranchPperateModify')}}</el-button>
                     </el-table-column>
                 </el-table>
                 <!-- <div v-show="!listLoading" class="pagination-container mgt20 pdb10">
