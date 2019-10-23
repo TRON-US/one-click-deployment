@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 15:57:37
+ * @Last Modified time: 2019-10-23 16:56:15
  * @operation branch 
  */
 
@@ -23,7 +23,7 @@
                 ref="branchDialogForm"
                 :rules="branchRules"
                 :model="branchForm"
-                label-width="100px"
+                label-width="120px"
                 class="tronBranchForm"
                 label-position="left"
             >

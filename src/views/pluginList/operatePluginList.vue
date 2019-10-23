@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 18:19:16
+ * @Last Modified time: 2019-10-23 18:35:00
  * @setting genesis setting
  */
 
@@ -27,17 +27,20 @@
                 label-position="left"
             >
                 <div class="onsensus">
-                    <el-button class="newonsensus">共识模块</el-button>
+                    <el-button class="newonsensus">{{$t('tronPluginConsensusModule')}}</el-button>
                     <el-radio-group v-model="pluginForm.onsensus">
                         <el-radio :label="0">DPOS</el-radio>
                         <el-radio :label="1">PBFT</el-radio>
                         <br />
-                        <el-radio style="margin:15px 0" :label="9">自定义公式模块：</el-radio>
+                        <el-radio
+                            style="margin:15px 0"
+                            :label="9"
+                        >{{$t('tronPluginCustomConsensusModule')}}：</el-radio>
                     </el-radio-group>
                     <el-input :maxlength="50" v-model="pluginForm.id" placeholder="请填写"></el-input>
                 </div>
                 <div class="transaction">
-                    <el-button class="newtransaction">交易模块</el-button>
+                    <el-button class="newtransaction">{{$t('tronPluginTransactionModule')}}</el-button>
                     <el-checkbox-group v-model="pluginForm.transaction">
                         <el-checkbox label="AccountUpdate"></el-checkbox>
                         <el-checkbox style="margin:0 66px" label="TransferaSSET"></el-checkbox>
@@ -48,23 +51,29 @@
                         <el-checkbox label="UpdateAsset"></el-checkbox>
                         <el-checkbox style="margin:0 82px" label="SetAccountId"></el-checkbox>
                         <br />
-                        <el-checkbox style="margin:15px 0" label="自定义交易模块"></el-checkbox>
+                        <el-checkbox
+                            style="margin:15px 0"
+                            :label="$t('tronPluginCustomTradingModule')"
+                        ></el-checkbox>
                         <el-input :maxlength="50" v-model="pluginForm.id" placeholder="请填写"></el-input>
                     </el-checkbox-group>
                 </div>
                 <div class="dbModal">
-                    <el-button class="newBbModal">交易模块</el-button>
+                    <el-button class="newBbModal">{{$t('tronPluginDatabaseModule')}}</el-button>
                     <el-radio-group v-model="pluginForm.dbsetting">
                         <el-radio :label="0">leveldb</el-radio>
                         <el-radio :label="1">rockdb</el-radio>
                         <br />
-                        <el-radio style="margin:15px 0" :label="9">自定义数据库模块：</el-radio>
+                        <el-radio
+                            style="margin:15px 0"
+                            :label="9"
+                        >{{$t('tronPluginCustomDatabaseModule')}}</el-radio>
                     </el-radio-group>
                     <el-input :maxlength="50" v-model="pluginForm.id" placeholder="请填写"></el-input>
                 </div>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button type="primary">{{$t('tronPluginInputSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronPluginInputCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -79,7 +88,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.genesisDialogVisible,
-            dialogTitle: "导入插件",
+            dialogTitle: this.$t("tronPluginImport"),
             pluginForm: {
                 onsensus: "",
                 transaction: "",

@@ -2,14 +2,18 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 17:05:59
+ * @Last Modified time: 2019-10-23 18:16:04
  * @tron plugin list  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="mini" type="primary" @click="pluginSetting.visible =true">点击导入配置</el-button>
+                <el-button
+                    size="mini"
+                    type="primary"
+                    @click="pluginSetting.visible =true"
+                >{{$t('tronPluginImport')}}</el-button>
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->

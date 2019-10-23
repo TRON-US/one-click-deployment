@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 18:27:01
+ * @Last Modified time: 2019-10-23 18:44:08
  * @setting cross setting
  */
 
@@ -31,7 +31,7 @@
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.maxHttpConnectNumber"
-                        placeholder="请填写maxHttpConnectNumber"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="httpEnable" prop="httpEnable">
@@ -45,7 +45,7 @@
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.httpPort"
-                        placeholder="请填写httpPort"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="rpcEnable" prop="rpcEnable">
@@ -59,12 +59,15 @@
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.rpcPort"
-                        placeholder="请填写rpcPort"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('crossSettingDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('crossSettingDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -80,7 +83,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "网络链接配置",
+            dialogTitle: this.$t("tronSettingHttp"),
             baseSettingForm: {},
             branchRules: {
                 maxHttpConnectNumber: [

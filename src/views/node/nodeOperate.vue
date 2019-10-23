@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 16:28:11
+ * @Last Modified time: 2019-10-23 17:13:42
  * @operation node 
  */
 
@@ -16,30 +16,47 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             v-loading="classLoading"
-            width="600px"
+            width="650px"
             center
         >
             <el-form
                 ref="nodeDialogForm"
                 :rules="nodeRules"
                 :model="nodeForm"
-                label-width="100px"
+                label-width="130px"
                 label-position="left"
+                class="nodeDialogForm"
             >
                 <el-form-item label="ID" prop="id">
-                    <el-input :maxlength="50" v-model="nodeForm.id" placeholder="请填写id"></el-input>
+                    <el-input
+                        :maxlength="50"
+                        v-model="nodeForm.id"
+                        :placeholder="$t('tronNodeIDPlaceholder')"
+                    ></el-input>
                 </el-form-item>
-                <el-form-item label="节点名称" prop="nodeName">
-                    <el-input :maxlength="50" v-model="nodeForm.nodeName" placeholder="请填写节点名称"></el-input>
+                <el-form-item :label="$t('tronNodeName')" prop="nodeName">
+                    <el-input
+                        :maxlength="50"
+                        v-model="nodeForm.nodeName"
+                        :placeholder="$t('tronNodeNamePlaceholder')"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="IP/HOST" prop="ip">
-                    <el-input :maxlength="50" v-model="nodeForm.ip" placeholder="请填写IP/HOST"></el-input>
+                    <el-input
+                        :maxlength="50"
+                        v-model="nodeForm.ip"
+                        :placeholder="$t('tronNodeIpPlaceholder')"
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="PORT" prop="port">
-                    <el-input :maxlength="50" v-model="nodeForm.port" placeholder="请填写PORT"></el-input>
+                    <el-input
+                        :maxlength="50"
+                        v-model="nodeForm.port"
+                        :placeholder="$t('tronNodePortPlaceholder')"
+                    ></el-input>
                 </el-form-item>
-                <el-form-item label="是否为SR" prop="isSr">
-                    <el-select v-model="nodeForm.isSr" placeholder="请选择是否为SR">
+                <el-form-item :label="$t('tronNodeWhetherIsSR')" prop="isSr">
+                    <el-select v-model="nodeForm.isSr" :placeholder="$t('tronNodeSRPlaceholder')">
                         <el-option
                             v-for="item in srAry"
                             :key="item.value"
@@ -49,8 +66,11 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('nodeDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('nodeDialogForm')"
+                    >{{$t('tronNodeSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronNodeCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -65,7 +85,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.nodeDialogVisible,
-            dialogTitle: "新增节点",
+            dialogTitle: this.$t("tronNodeAdd"),
             nodeForm: {},
             srAry: [
                 { id: 0, label: "是", value: true },
@@ -75,30 +95,30 @@ export default {
                 id: [
                     {
                         required: true,
-                        message: "请填写id",
+                        message: this.$t("tronNodeIDPlaceholder"),
                         trigger: "blur"
                     }
                 ],
                 nodeName: [
                     {
                         required: true,
-                        message: "请选择节点名称",
+                        message: this.$t("tronNodeNamePlaceholder"),
                         trigger: "blur"
                     }
                 ],
                 ip: {
                     required: true,
-                    message: "请填写IP/HOST",
+                    message: this.$t("tronNodeIpPlaceholder"),
                     trigger: "blur"
                 },
                 port: {
                     required: true,
-                    message: "请填写PORT",
+                    message: this.$t("tronNodePortPlaceholder"),
                     trigger: "blur"
                 },
                 isSr: {
                     required: true,
-                    message: "请选择是否为SR",
+                    message: this.$t("tronNodeSRPlaceholder"),
                     trigger: "blur"
                 }
             }
@@ -157,6 +177,9 @@ export default {
 <style lang="scss" rel="stylesheet/scss" scoped>
 .textCenter {
     text-align: center;
+}
+.nodeDialogForm {
+    padding: 0 20px;
 }
 </style>
 

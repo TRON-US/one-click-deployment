@@ -2,70 +2,122 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 19:00:22
- * @tron node list  
+ * @Last Modified time: 2019-10-23 17:32:43
+ * @tron setting list  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="mini" @click="addNodeFun()" type="primary">申请配置</el-button>
+                <el-button
+                    size="mini"
+                    @click="addNodeFun()"
+                    type="primary"
+                >{{$t('tronSettingApplication')}}</el-button>
             </div>
             <div class="filter-container tron-table tabSection">
                 <!--tron table-->
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th>创世信息配置</th>
+                        <th>{{$t('tronSettingGenesis')}}</th>
                         <th>
-                            <el-button size="mini" type="warning" @click="modifySettingFun(1)">修改配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="modifySettingFun(1)"
+                            >{{$t('tronModifySetting')}}</el-button>
                         </th>
                         <th>
-                            <el-button size="mini" type="danger" @click="resetSettingFun(1)">重置配置</el-button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>基础配置</th>
-                        <th>
-                            <el-button size="mini" type="warning" @click="modifySettingFun(2)">修改配置</el-button>
-                        </th>
-                        <th>
-                            <el-button size="mini" type="danger" @click="resetSettingFun(2)">重置配置</el-button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>p2p配置</th>
-                        <th>
-                            <el-button size="mini" type="warning" @click="modifySettingFun(3)">修改配置</el-button>
-                        </th>
-                        <th>
-                            <el-button size="mini" type="danger" @click="resetSettingFun(3)">重置配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="resetSettingFun(1)"
+                            >{{$t('tronResetSetting')}}</el-button>
                         </th>
                     </tr>
                     <tr>
-                        <th>数据库基础配置</th>
+                        <th>{{$t('tronSettingBase')}}</th>
                         <th>
-                            <el-button size="mini" type="warning" @click="modifySettingFun(4)">修改配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="modifySettingFun(2)"
+                            >{{$t('tronModifySetting')}}</el-button>
                         </th>
                         <th>
-                            <el-button size="mini" type="danger" @click="resetSettingFun(4)">重置配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="resetSettingFun(2)"
+                            >{{$t('tronResetSetting')}}</el-button>
                         </th>
                     </tr>
                     <tr>
-                        <th>网络链接配置(http/rpc)</th>
+                        <th>{{$t('tronSettingP2p')}}</th>
                         <th>
-                            <el-button size="mini" type="warning" @click="modifySettingFun(5)">修改配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="modifySettingFun(3)"
+                            >{{$t('tronModifySetting')}}</el-button>
                         </th>
                         <th>
-                            <el-button size="mini" type="danger" @click="resetSettingFun(5)">重置配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="resetSettingFun(3)"
+                            >{{$t('tronResetSetting')}}</el-button>
                         </th>
                     </tr>
                     <tr>
-                        <th>跨链配置</th>
+                        <th>{{$t('tronSettingDb')}}</th>
                         <th>
-                            <el-button size="mini" type="warning" @click="modifySettingFun(6)">修改配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="modifySettingFun(4)"
+                            >{{$t('tronModifySetting')}}</el-button>
                         </th>
                         <th>
-                            <el-button size="mini" type="danger" @click="resetSettingFun(6)">重置配置</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="resetSettingFun(4)"
+                            >{{$t('tronResetSetting')}}</el-button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>{{$t('tronSettingHttp')}}</th>
+                        <th>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="modifySettingFun(5)"
+                            >{{$t('tronModifySetting')}}</el-button>
+                        </th>
+                        <th>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="resetSettingFun(5)"
+                            >{{$t('tronResetSetting')}}</el-button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>{{$t('tronCrossChain')}}</th>
+                        <th>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="modifySettingFun(6)"
+                            >{{$t('tronModifySetting')}}</el-button>
+                        </th>
+                        <th>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="resetSettingFun(6)"
+                            >{{$t('tronResetSetting')}}</el-button>
                         </th>
                     </tr>
                 </table>

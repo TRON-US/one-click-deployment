@@ -2,15 +2,15 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 16:23:32
+ * @Last Modified time: 2019-10-23 16:52:43
  * @tron node list  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="mini" @click="addNodeFun()" type="primary">添加节点</el-button>
-                <el-button size="mini" type="info" @click>批量部署</el-button>
+                <el-button size="mini" @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
+                <el-button size="mini" type="info" @click>{{$t('tronNodeBulkDeployment')}}</el-button>
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->
@@ -25,24 +25,28 @@
                     @selection-change="handleSelectionChange"
                 >
                     <el-table-column type="selection" width="55"></el-table-column>
-                    <el-table-column prop="nodeName" label="节点名称" align="center"></el-table-column>
+                    <el-table-column prop="nodeName" :label="$t('tronNodeName')" align="center"></el-table-column>
                     <el-table-column prop="ip" label="IP/HOST" align="center"></el-table-column>
                     <el-table-column prop="port" label="SSH PORT" align="center"></el-table-column>
-                    <el-table-column label="是否为SR" align="center">
+                    <el-table-column :label="$t('tronNodeWhetherIsSR')" align="center">
                         <template slot-scope="scope">
                             <el-tag type="success" v-if="scope.row.isSr">yes</el-tag>
                             <el-tag type="error" v-else>yes</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="status" label="节点状态" align="center">
+                    <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.status">成功</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" align="center">
-                        <el-button size="mini" type="warning">修改</el-button>
-                        <el-button size="mini" type="danger" @click="deleteNodeListFun()">删除</el-button>
+                    <el-table-column :label="$t('tronNodeOperate')" align="center">
+                        <el-button size="mini" type="warning">{{$t('tronNodeOperate')}}</el-button>
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            @click="deleteNodeListFun()"
+                        >{{$t('tronNodeDelete')}}</el-button>
                     </el-table-column>
                 </el-table>
             </div>

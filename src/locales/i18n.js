@@ -7,11 +7,18 @@ Vue.use(VueI18n)
 
 const messages = {
   en: en,
-  cn: cn
+  zh: cn
 }
 
+let curBrowserLang = navigator.language || navigator.userLanguage;
+let curLanAbbreviation = curBrowserLang.substr(0, 2);
+var languageAry = ['zh', 'en'];
+if (languageAry.indexOf(curLanAbbreviation) < 0) {
+  curLanAbbreviation = 'en';
+}
+console.log(curLanAbbreviation)
 const i18n = new VueI18n({
-  locale: 'en', // 设置默认语言
+  locale: curLanAbbreviation, // 设置默认语言
   messages
 })
 locale.i18n((key, value) => i18n.t(key, value)) //为了实现element插件的多语言切换

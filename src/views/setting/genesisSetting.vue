@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 18:19:16
+ * @Last Modified time: 2019-10-23 18:42:29
  * @setting genesis setting
  */
 
@@ -58,7 +58,7 @@
             <el-dialog
                 center
                 width="700px"
-                title="asset配置"
+                :title="$t('tronAssetSetting')"
                 :visible.sync="innerAssetVisible"
                 append-to-body
             >
@@ -73,33 +73,36 @@
                         <el-input
                             :maxlength="50"
                             v-model="assetForm.id"
-                            placeholder="请填写accountName"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="accountType" prop="accountType">
                         <el-input
                             :maxlength="50"
                             v-model="assetForm.accountType"
-                            placeholder="请填写accountType"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="address" prop="address">
                         <el-input
                             :maxlength="50"
                             v-model="assetForm.address"
-                            placeholder="请填写address"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="balance" prop="balance">
                         <el-input
                             :maxlength="50"
                             v-model="assetForm.balance"
-                            placeholder="请填写balance"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label-width="0" class="textCenter">
-                        <el-button type="primary" @click="saveData('assetDialogForm')">保存</el-button>
-                        <el-button @click="innerAssetVisible = false">取消</el-button>
+                        <el-button
+                            type="primary"
+                            @click="saveData('assetDialogForm')"
+                        >{{$t('tronSettingSave')}}</el-button>
+                        <el-button @click="innerAssetVisible = false">{{$t('tronSettingCancel')}}</el-button>
                     </el-form-item>
                 </el-form>
             </el-dialog>
@@ -107,7 +110,7 @@
             <el-dialog
                 center
                 width="700px"
-                title="witeness配置"
+                :title="$t('tronWitenessSetting')"
                 :visible.sync="innerWitenessVisible"
                 append-to-body
             >
@@ -122,29 +125,36 @@
                         <el-input
                             :maxlength="50"
                             v-model="witenessForm.address"
-                            placeholder="请填写address"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="url" prop="url">
-                        <el-input :maxlength="50" v-model="witenessForm.url" placeholder="请填写url"></el-input>
+                        <el-input
+                            :maxlength="50"
+                            v-model="witenessForm.url"
+                            :placeholder="$t('tronSettingPlaceholder')"
+                        ></el-input>
                     </el-form-item>
                     <el-form-item label="voteCount" prop="voteCount">
                         <el-input
                             :maxlength="50"
                             v-model="witenessForm.voteCount"
-                            placeholder="请填写voteCount"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="privateKey" prop="privateKey">
                         <el-input
                             :maxlength="50"
                             v-model="witenessForm.privateKey"
-                            placeholder="请填写privateKey"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label-width="0" class="textCenter">
-                        <el-button type="primary" @click="saveData('witenessDialogForm')">保存</el-button>
-                        <el-button @click="innerWitenessVisible = false">取消</el-button>
+                        <el-button
+                            type="primary"
+                            @click="saveData('witenessDialogForm')"
+                        >{{$t('tronSettingSave')}}</el-button>
+                        <el-button @click="innerWitenessVisible = false">{{$t('tronSettingCancel')}}</el-button>
                     </el-form-item>
                 </el-form>
             </el-dialog>
@@ -160,7 +170,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.genesisDialogVisible,
-            dialogTitle: "创世纪信息配置",
+            dialogTitle: this.$t("tronSettingGenesis"),
             innerAssetVisible: false,
             innerWitenessVisible: false,
             assetRules: {

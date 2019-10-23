@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 17:53:01
+ * @Last Modified time: 2019-10-23 18:41:11
  * @setting base setting 
  */
 
@@ -31,68 +31,71 @@
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.chainId"
-                        placeholder="请填写chainId"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="chainName" prop="chainName">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.chainName"
-                        placeholder="请填写chainName"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="blockProducedTimeOut" prop="blockProducedTimeOut">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.blockProducedTimeOut"
-                        placeholder="请填写blockProducedTimeOut"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="nextMaintenanceTime" prop="nextMaintenanceTime">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.nextMaintenanceTime"
-                        placeholder="请填写nextMaintenanceTime"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="proposalExpireTime" prop="proposalExpireTime">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.proposalExpireTime"
-                        placeholder="请填写proposalExpireTime"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="maxActiveNodes" prop="maxActiveNodes">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.maxActiveNodes"
-                        placeholder="请填写maxActiveNodes"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="logConfigPath" prop="logConfigPath">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.logConfigPath"
-                        placeholder="请填写logConfigPath"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="dbDirectory" prop="dbDirectory">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.dbDirectory"
-                        placeholder="请填写dbDirectory"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="minParticipationRate" prop="minParticipationRate">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.minParticipationRate"
-                        placeholder="请填写minParticipationRate"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('branchDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('branchDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -108,7 +111,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "基础配置",
+            dialogTitle: this.$t("tronSettingBase"),
             baseSettingForm: {},
             branchRules: {
                 chainId: [

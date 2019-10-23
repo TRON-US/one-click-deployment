@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 18:19:16
+ * @Last Modified time: 2019-10-23 18:43:44
  * @setting cross setting
  */
 
@@ -31,40 +31,43 @@
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.enableCrossChain"
-                        placeholder="请填写enableCrossChain"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="maxValidatorNumber" prop="maxValidatorNumber">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.maxValidatorNumber"
-                        placeholder="请填写maxValidatorNumber"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="minValidatorNumber" prop="minValidatorNumber">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.minValidatorNumber"
-                        placeholder="请填写minValidatorNumber"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="chainIdList" prop="chainIdList">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.chainIdList"
-                        placeholder="请填写chainIdList"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="crossChainFee" prop="crossChainFee">
                     <el-input
                         :maxlength="50"
                         v-model="baseSettingForm.crossChainFee"
-                        placeholder="请填写crossChainFee"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('crossSettingDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('crossSettingDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -80,7 +83,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "跨链配置",
+            dialogTitle: this.$t("tronCrossChain"),
             baseSettingForm: {},
             branchRules: {
                 enableCrossChain: [

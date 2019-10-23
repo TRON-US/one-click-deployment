@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 19:09:10
+ * @Last Modified time: 2019-10-23 18:58:58
  * @setting db setting
  */
 
@@ -23,75 +23,75 @@
                 ref="dbSettingDialogForm"
                 :rules="branchRules"
                 :model="dbSettingForm"
-                label-width="200px"
+                label-width="230px"
                 class="trondbSettingForm"
                 label-position="left"
             >
-                <el-form-item label="是否同步写入" prop="isSyncWrite">
+                <el-form-item :label="$t('tronSettingwriteSynchronously')" prop="isSyncWrite">
                     <el-switch v-model="dbSettingForm.isSyncWrite"></el-switch>
                 </el-form-item>
-                <el-form-item label="是否打开transaction" prop="isOpenTransaction">
+                <el-form-item :label="$t('tronSettingOpenTransaction')" prop="isOpenTransaction">
                     <el-switch v-model="dbSettingForm.isOpenTransaction"></el-switch>
                 </el-form-item>
-                <el-form-item label="选择数据库配置" prop="rpcPort">
+                <el-form-item :label="$t('tronSelectDatabaseConfiguration')" prop="rpcPort">
                     <el-radio-group v-model="radioVal">
                         <el-radio :label="0">leveldb</el-radio>
                         <el-radio :label="1">rocksdb</el-radio>
-                        <el-radio :label="2">自定义数据库配置</el-radio>
+                        <el-radio :label="2">{{$t('tronSelectCustomDatebaseSetting')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <div v-if="radioVal == 0">
-                    <el-divider>leveldb数据库配置</el-divider>
+                    <el-divider>{{$t('tronSelectleveldbDatebaseSetting')}}</el-divider>
                     <el-form-item label="writeBufferSize" prop="writeBufferSize">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.writeBufferSize"
-                            placeholder="请填写writeBufferSize"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="maxOpenFiles" prop="maxOpenFiles">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.maxOpenFiles"
-                            placeholder="请填写maxOpenFiles"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="blockSize" prop="blockSize">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.blockSize"
-                            placeholder="请填写blockSize"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="compressionType" prop="compressionType">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.compressionType"
-                            placeholder="请填写compressionType"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                 </div>
                 <div v-if="radioVal == 1">
-                    <el-divider>rocksdb数据库配置</el-divider>
+                    <el-divider>{{$t('tronSelectrocksdbDatebaseSetting')}}</el-divider>
                     <el-form-item label="levelNumber" prop="levelNumber">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.levelNumber"
-                            placeholder="请填写levelNumber"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="blocksize" prop="blocksize">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.blocksize"
-                            placeholder="请填写blocksize"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="maxBytesForLevelBase" prop="maxBytesForLevelBase">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.maxBytesForLevelBase"
-                            placeholder="请填写maxBytesForLevelBase"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item
@@ -101,33 +101,40 @@
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.maxBytesForLevelMultiplier"
-                            placeholder="请填写maxBytesForLevelMultiplier"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="targetFileSizeBase" prop="targetFileSizeBase">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.targetFileSizeBase"
-                            placeholder="请填写targetFileSizeBase"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="targetFileSizeMultiplier" prop="targetFileSizeMultiplier">
                         <el-input
                             :maxlength="50"
                             v-model="dbSettingForm.targetFileSizeMultiplier"
-                            placeholder="请填写targetFileSizeMultiplier"
+                            :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
                 </div>
                 <div v-if="radioVal == 2">
-                    <el-divider>自定义数据库配置</el-divider>
-                    <el-form-item label="自定义数据库配置" prop="otherdb">
-                        <el-input :maxlength="50" v-model="dbSettingForm.otherdb" placeholder="请填写"></el-input>
+                    <el-divider>{{$t('tronSelectCustomDatebaseSetting')}}</el-divider>
+                    <el-form-item :label="$t('tronSelectCustomDatebaseSetting')" prop="otherdb">
+                        <el-input
+                            :maxlength="50"
+                            v-model="dbSettingForm.otherdb"
+                            :placeholder="$t('tronSettingPlaceholder')"
+                        ></el-input>
                     </el-form-item>
                 </div>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('dbSettingDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('dbSettingDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -143,7 +150,7 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            dialogTitle: "数据库基本配置",
+            dialogTitle: this.$t("tronSettingDb"),
             dbSettingForm: {},
             radioVal: 0,
             branchRules: {

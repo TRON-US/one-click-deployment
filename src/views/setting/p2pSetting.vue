@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 18:12:00
+ * @Last Modified time: 2019-10-23 18:43:29
  * @setting p2p setting 
  */
 
@@ -31,47 +31,50 @@
                     <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.p2pVersion"
-                        placeholder="请填写p2pVersion"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="maxActionNodes" prop="maxActionNodes">
                     <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.maxActionNodes"
-                        placeholder="请填写maxActionNodes"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="maxActiveNodesWithSample" prop="blockProducedTimeOut">
                     <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.maxActiveNodesWithSample"
-                        placeholder="请填写maxActiveNodesWithSample"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="activeConnectFactor" prop="activeConnectFactor">
                     <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.activeConnectFactor"
-                        placeholder="请填写activeConnectFactor"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="seedNode" prop="seedNode">
                     <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.seedNode"
-                        placeholder="请填写seedNode"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="trustNode" prop="trustNode">
                     <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.trustNode"
-                        placeholder="请填写trustNode"
+                        :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary" @click="saveData('p2pSettingDialogForm')">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveData('p2pSettingDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
