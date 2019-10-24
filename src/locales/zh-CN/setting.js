@@ -21,6 +21,18 @@ export default {
   'tronSelectleveldbDatebaseSetting': 'leveldb数据库配置',
   'tronSelectrocksdbDatebaseSetting': 'rocksdb数据库配置',
   'tronSelectCustomDatebaseSetting': '自定义数据库配置',
+  'tronSettingMenuBranch': '分支管理',
+  'tronSettingMenuNode': '节点管理',
+  'tronSettingMenuSetting': '配置管理',
+  'tronSettingMenuPlugin': '导入插件',
+  'tronSettingMenuDashboard': '一键部署系统',
+  'tronSettingChooseLanguage': '选择语言',
+
+
+
+
+
+
 
 
 

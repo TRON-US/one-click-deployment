@@ -53,7 +53,7 @@ export const constantRoutes = [
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: {
-        title: '一键部署系统',
+        title: 'tronSettingMenuDashboard',
         icon: 'dashboard'
       }
     }]
@@ -69,7 +69,7 @@ export const constantRoutes = [
       name: 'list',
       component: () => import('@/views/branch/index'),
       meta: {
-        title: '分支管理',
+        title: 'tronSettingMenuBranch',
         icon: 'branch'
       }
     }]
@@ -88,7 +88,7 @@ export const constantRoutes = [
       name: 'settinglist',
       component: () => import('@/views/setting/index'),
       meta: {
-        title: '配置管理',
+        title: 'tronSettingMenuSetting',
         icon: 'setting'
       }
     }]
@@ -104,7 +104,7 @@ export const constantRoutes = [
         name: 'table',
         component: () => import('@/views/node/index'),
         meta: {
-          title: '节点管理',
+          title: 'tronSettingMenuNode',
           icon: 'tree'
         }
       },
@@ -144,7 +144,7 @@ export const constantRoutes = [
       name: 'pluginlist',
       component: () => import('@/views/pluginList/index'),
       meta: {
-        title: '导入插件',
+        title: 'tronSettingMenuPlugin',
         icon: 'plugins'
       }
     }]

@@ -11,15 +11,21 @@
             </router-link>
         </div>
         <div class="breadcrumb-title">{{title}}</div>
-
         <div class="right-menu">
-            <div class="avatar-container">
-                <!-- <div class="avatar-wrapper">
-                    <div class="user-avatar">
-                        <i class="el-icon-user-solid"></i>
-                    </div>
-                </div>-->
-            </div>
+            <el-dropdown
+                class="avatar-container right-menu-item hover-effect"
+                trigger="click"
+                @command="handleCommand"
+            >
+                <div class="avatar-wrapper">
+                    {{$t('tronSettingChooseLanguage')}}
+                    <i class="el-icon-caret-bottom" />
+                </div>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="en">English</el-dropdown-item>
+                    <el-dropdown-item command="zh">简体中文</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </div>
 </template>
@@ -49,9 +55,17 @@ export default {
         toggleSideBar() {
             this.$store.dispatch("app/toggleSideBar");
         },
-        async logout() {
-            await this.$store.dispatch("user/logout");
-            this.$router.push(`/login`);
+        // async logout() {
+        //     await this.$store.dispatch("user/logout");
+        //     this.$router.push(`/login`);
+        // },
+        handleCommand(val) {
+            if (val === "zh") {
+                this.$i18n.locale = "zh-CN"; //关键语句
+            } else {
+                this.$i18n.locale = "en-US"; //关键语句
+                console.log("zh-CN");
+            }
         }
     }
 };
@@ -142,22 +156,17 @@ export default {
             .avatar-wrapper {
                 margin-top: 5px;
                 position: relative;
-
-                .user-avatar {
-                    cursor: pointer;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 10px;
-                    line-height: 40px;
-                    text-align: center;
-                }
-
+                line-height: 40px;
+                font-size: 0.9rem;
+                height: 40px;
+                padding: 0 15px;
+                cursor: pointer;
                 .el-icon-caret-bottom {
                     cursor: pointer;
                     position: absolute;
-                    right: -20px;
+                    right: 0px;
                     top: 25px;
-                    color: #000;
+                    color: #aaa;
                     font-size: 12px;
                 }
             }

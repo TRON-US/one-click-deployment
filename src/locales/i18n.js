@@ -2,19 +2,19 @@ import Vue from 'vue'
 import locale from 'element-ui/lib/locale';
 import VueI18n from 'vue-i18n'
 import en from './en-US'
-import cn from './zh-CN'
+import zh from './zh-CN'
 Vue.use(VueI18n)
 
 const messages = {
-  en: en,
-  zh: cn
+  'en-US': en,
+  'zh-CN': zh
 }
 
 let curBrowserLang = navigator.language || navigator.userLanguage;
 let curLanAbbreviation = curBrowserLang.substr(0, 2);
-var languageAry = ['zh', 'en'];
+var languageAry = ['zh-CN', 'en-US'];
 if (languageAry.indexOf(curLanAbbreviation) < 0) {
-  curLanAbbreviation = 'en';
+  curLanAbbreviation = 'en-US';
 }
 console.log(curLanAbbreviation)
 const i18n = new VueI18n({

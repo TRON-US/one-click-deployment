@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-21 15:25:02 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-21 17:05:53
+ * @Last Modified time: 2019-10-24 15:45:31
  * @dashboard-index
  */
 
@@ -78,7 +78,7 @@
             <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
                 <div class="card-panel" @click="handleSetLineChartData('messages')">
                     <div class="card-panel-description">
-                        <div class="card-panel-text">正常节点</div>
+                        <div class="card-panel-text">{{$t('tronSettingNormalNode')}}</div>
                         <count-to
                             :start-val="0"
                             :end-val="81212"
@@ -94,7 +94,7 @@
             <el-col :xs="16" :sm="16" :lg="8" class="card-panel-col">
                 <div class="card-panel" @click="handleSetLineChartData('purchases')">
                     <div class="card-panel-description">
-                        <div class="card-panel-text">非正常节点</div>
+                        <div class="card-panel-text">{{$t('tronSettingUnnormalNode')}}</div>
                         <count-to
                             :start-val="0"
                             :end-val="9280"

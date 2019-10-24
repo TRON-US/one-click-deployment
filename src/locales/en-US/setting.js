@@ -21,6 +21,14 @@ export default {
   'tronSelectleveldbDatebaseSetting': 'Leveldb database configuration',
   'tronSelectrocksdbDatebaseSetting': 'Rocksdb database configuration',
   'tronSelectCustomDatebaseSetting': 'Custom database configuration',
+  'tronSettingMenuBranch': 'Branch management',
+  'tronSettingMenuNode': 'Node management',
+  'tronSettingMenuSetting': 'Deploy management',
+  'tronSettingMenuPlugin': 'Import plugin',
+  'tronSettingMenuDashboard': 'deployment system',
+  'tronSettingChooseLanguage': 'Languages',
+  'tronSettingNormalNode': 'Normal node',
+  'tronSettingUnnormalNode': 'Abnormal node',
 
 
 }
