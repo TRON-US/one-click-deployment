@@ -10,8 +10,10 @@ export default {
   'tronBranchOperate': '操作',
   'tronBranchPperateModify': '修改分支信息',
   'tronTableNodata': '暂无数据',
-  'tronBranchTableHasNote': '已添加分支,请操作当前分支信息',
   'tronBranchSave': '保存',
   'tronBranchCancel': '取消',
+  'tronBranchTipsInfo': '已添加分支,请操作当前分支信息',
+  'tronBranchAddSuccess': '添加成功',
+
 
 }

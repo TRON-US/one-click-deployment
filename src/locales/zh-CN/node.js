@@ -14,6 +14,12 @@ export default {
   'tronNodeSRPlaceholder': '请选择是否为SR',
   'tronNodeSave': '保存',
   'tronNodeCancel': '取消',
+  'tronNodeOperate': '确定',
+  'tronNodeAddSuccess': '添加节点成功',
+  'tronNodesDeleteTips': '此操作将删除该节点信息, 是否继续?',
+  'tronNodesDeleteTipsTitle': '提示',
+  'tronNodesDeleteSuccess': "删除节点信息成功",
+
 
 
 }

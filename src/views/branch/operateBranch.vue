@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 16:56:15
+ * @Last Modified time: 2019-10-25 14:40:07
  * @operation branch 
  */
 
@@ -27,16 +27,16 @@
                 class="tronBranchForm"
                 label-position="left"
             >
-                <el-form-item :label="$t('tronBranchCode')" prop="branchCode">
+                <!-- <el-form-item :label="$t('tronBranchCode')" prop="branchCode">
                     <el-input
                         :maxlength="20"
                         v-model="branchForm.branchCode"
                         :placeholder="$t('tronBranchCodePlaceholder')"
                     ></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('tronBranchName')" prop="branchName">
+                </el-form-item>-->
+                <el-form-item :label="$t('tronBranchName')" prop="branch">
                     <el-select
-                        v-model="branchForm.branchName"
+                        v-model="branchForm.branch"
                         :placeholder="$t('tronBranchNamePlaceholder')"
                     >
                         <el-option
@@ -47,11 +47,11 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('tronBranchNote')" prop="note">
+                <el-form-item :label="$t('tronBranchNote')" prop="branchNote">
                     <el-input
                         type="textarea"
                         :maxlength="20"
-                        v-model="branchForm.note"
+                        v-model="branchForm.branchNote"
                         :placeholder="$t('tronBranchNotePlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -75,27 +75,23 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
-            branchForm: {},
+            branchForm: {
+                branch: "",
+                branchNote: ""
+            },
             branchAry: [
                 { id: 0, label: "master", value: "master" },
-                { id: 1, label: "dev", value: "dev" }
+                { id: 1, label: "develop", value: "develop" }
             ],
             branchRules: {
-                branchCode: [
-                    {
-                        required: true,
-                        message: this.$t("tronBranchNamePlaceholder"),
-                        trigger: "change"
-                    }
-                ],
-                branchName: [
+                branch: [
                     {
                         required: true,
                         message: this.$t("tronBranchCodePlaceholder"),
                         trigger: "change"
                     }
                 ],
-                note: {
+                branchNote: {
                     required: true,
                     message: this.$t("tronBranchNotePlaceholder"),
                     trigger: "change"
@@ -116,23 +112,19 @@ export default {
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.$set(
-                        this.branchForm,
-                        "nursery_id",
-                        this.$route.query.id
-                    );
-
-                    // branchSave(this.branchForm)
-                    //     .then(response => {
-                    //         this.$emit("addClassSuccess", true);
-                    //         this.$refs.branchDialogForm.resetFields();
-                    //         this.$message.success("添加班级信息成功");
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         // this.listLoading = false;
-                    //         console.log(error);
-                    //     });
+                    branchSaveApi(this.branchForm)
+                        .then(response => {
+                            this.$emit("addBranchSuccess", true);
+                            this.$refs.branchDialogForm.resetFields();
+                            this.$message.success(
+                                this.$t("tronBranchAddSuccess")
+                            );
+                            this.dialogVisible = false;
+                        })
+                        .catch(error => {
+                            // this.listLoading = false;
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;
@@ -142,6 +134,7 @@ export default {
     },
     watch: {
         detailInfoData(val) {
+            console.log(val);
             this.branchForm = this.detailInfoData;
         },
         branchDialogVisible(val) {

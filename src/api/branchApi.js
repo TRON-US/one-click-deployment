@@ -2,15 +2,15 @@ import request from '@/utils/request'
 
 export function branchSaveApi(params) {
   return request({
-    url: '/savebranch',
-    method: 'get',
+    url: '/projectBranch',
+    method: 'post',
     params
   })
 }
 
 export function branchGetApi(params) {
   return request({
-    url: '/getbranch',
+    url: '/projectBranch',
     method: 'get',
     params
   })

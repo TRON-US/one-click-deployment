@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 17:13:42
+ * @Last Modified time: 2019-10-25 14:48:22
  * @operation node 
  */
 
@@ -55,8 +55,8 @@
                         :placeholder="$t('tronNodePortPlaceholder')"
                     ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('tronNodeWhetherIsSR')" prop="isSr">
-                    <el-select v-model="nodeForm.isSr" :placeholder="$t('tronNodeSRPlaceholder')">
+                <el-form-item :label="$t('tronNodeWhetherIsSR')" prop="isSR">
+                    <el-select v-model="nodeForm.isSR" :placeholder="$t('tronNodeSRPlaceholder')">
                         <el-option
                             v-for="item in srAry"
                             :key="item.value"
@@ -77,7 +77,7 @@
     </div>
 </template>
 <script>
-// import { nodeSaveApi, nodeGetApi } from "@/api/nodeApi";
+import { addNote } from "@/api/nodeApi";
 export default {
     name: "operationNode",
     props: ["nodeDialogVisible", "detailInfoData", "editStatus"],
@@ -86,7 +86,13 @@ export default {
             classLoading: false,
             dialogVisible: this.nodeDialogVisible,
             dialogTitle: this.$t("tronNodeAdd"),
-            nodeForm: {},
+            nodeForm: {
+                id: "",
+                nodeName: "",
+                ip: "",
+                port: "",
+                isSR: ""
+            },
             srAry: [
                 { id: 0, label: "是", value: true },
                 { id: 1, label: "否", value: false }
@@ -116,7 +122,7 @@ export default {
                     message: this.$t("tronNodePortPlaceholder"),
                     trigger: "blur"
                 },
-                isSr: {
+                isSR: {
                     required: true,
                     message: this.$t("tronNodeSRPlaceholder"),
                     trigger: "blur"
@@ -137,23 +143,19 @@ export default {
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.$set(
-                        this.nodeForm,
-                        "nursery_id",
-                        this.$route.query.id
-                    );
-
-                    // nodeSave(this.nodeForm)
-                    //     .then(response => {
-                    //         this.$emit("addClassSuccess", true);
-                    //         this.$refs.nodeDialogForm.resetFields();
-                    //         this.$message.success("添加班级信息成功");
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         // this.listLoading = false;
-                    //         console.log(error);
-                    //     });
+                    addNote(this.nodeForm)
+                        .then(response => {
+                            this.$emit("addNodeSuccess", true);
+                            this.$refs.nodeDialogForm.resetFields();
+                            this.$message.success(
+                                this.$t("tronNodeAddSuccess")
+                            );
+                            this.dialogVisible = false;
+                        })
+                        .catch(error => {
+                            // this.listLoading = false;
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;

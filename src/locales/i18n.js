@@ -11,14 +11,14 @@ const messages = {
 }
 
 let curBrowserLang = navigator.language || navigator.userLanguage;
-let curLanAbbreviation = curBrowserLang.substr(0, 2);
-var languageAry = ['zh-CN', 'en-US'];
-if (languageAry.indexOf(curLanAbbreviation) < 0) {
+let curLanAbbreviation = curBrowserLang;
+var languageAry = ['', 'en-US', 'zh-CN'];
+if (languageAry.indexOf(curBrowserLang) < 0) {
   curLanAbbreviation = 'en-US';
 }
 console.log(curLanAbbreviation)
 const i18n = new VueI18n({
-  locale: curLanAbbreviation, // 设置默认语言
+  locale: curBrowserLang, // 设置默认语言
   messages
 })
 locale.i18n((key, value) => i18n.t(key, value)) //为了实现element插件的多语言切换

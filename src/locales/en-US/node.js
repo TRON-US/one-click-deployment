@@ -14,5 +14,10 @@ export default {
   'tronNodeSRPlaceholder': 'please choose',
   'tronNodeSave': 'save',
   'tronNodeCancel': 'cancel',
+  'tronNodeOperateDetermine': 'determine',
+  'tronNodeAddSuccess': 'Added successfully',
+  'tronNodesDeleteTips': 'This action will delete the node information, will it continue?',
+  'tronNodesDeleteTipsTitle': 'prompt',
+  'tronNodesDeleteSuccess': "Delete node information successfully"
 
 }

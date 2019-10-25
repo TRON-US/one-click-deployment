@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 16:52:43
+ * @Last Modified time: 2019-10-25 15:17:42
  * @tron node list  
  */
 <template>
@@ -30,8 +30,8 @@
                     <el-table-column prop="port" label="SSH PORT" align="center"></el-table-column>
                     <el-table-column :label="$t('tronNodeWhetherIsSR')" align="center">
                         <template slot-scope="scope">
-                            <el-tag type="success" v-if="scope.row.isSr">yes</el-tag>
-                            <el-tag type="error" v-else>yes</el-tag>
+                            <el-tag type="success" v-if="scope.row.isSR">yes</el-tag>
+                            <el-tag type="danger" v-else>no</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
@@ -41,12 +41,14 @@
                         </template>
                     </el-table-column>
                     <el-table-column :label="$t('tronNodeOperate')" align="center">
-                        <el-button size="mini" type="warning">{{$t('tronNodeOperate')}}</el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteNodeListFun()"
-                        >{{$t('tronNodeDelete')}}</el-button>
+                        <template slot-scope="scope">
+                            <el-button size="mini" type="warning">{{$t('tronNodeOperate')}}</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="deleteNodeListFun(scope.row.id)"
+                            >{{$t('tronNodeDelete')}}</el-button>
+                        </template>
                     </el-table-column>
                 </el-table>
             </div>
@@ -55,11 +57,12 @@
             :nodeDialogVisible="nodeObj.visible"
             :detailInfoData="nodeObj.detail"
             @dialog="nodeDetailFun"
+            @addNodeSuccess="addNodeSuccessFun"
         ></operate-node>
     </div>
 </template>
 <script>
-// import { getNodeList, deleteNode, updateNode } from "@/api/nodeApi.js";
+import { allNodeInfo, deleteNote } from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
 export default {
     name: "nodelist",
@@ -68,15 +71,7 @@ export default {
     },
     data() {
         return {
-            list: [
-                {
-                    id: 0,
-                    nodeName: "节点一",
-                    ip: "127.0.0.1",
-                    port: "8080",
-                    isSr: false
-                }
-            ],
+            list: [],
             listLoading: false,
             filterItem: {
                 name: ""
@@ -105,23 +100,16 @@ export default {
             this.nodeObj.visible = true;
         },
         getDataListFun() {
-            // getAgentList(this.parames)
-            //     .then(response => {
-            //         let resBody = response.items || [];
-            //         resBody.forEach(element => {
-            //             if (element.status == 1) {
-            //                 element.statusName = true;
-            //             } else {
-            //                 element.statusName = false;
-            //             }
-            //         });
-            //         this.list = resBody;
-            //         this.listQuery.total = response.total;
-            //         this.listLoading = false;
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     });
+            allNodeInfo()
+                .then(response => {
+                    return response.data;
+                })
+                .then(res => {
+                    this.list = res;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;
@@ -131,23 +119,28 @@ export default {
             this.getDataListFun();
         },
         handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
             this.listQuery.page = val;
             this.getDataListFun();
         },
         deleteNodeListFun(_id) {
-            this.$confirm("此操作将删除该节点信息, 是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "warning"
-            })
+            this.$confirm(
+                this.$t("tronNodesDeleteTips"),
+                this.$t("tronNodesDeleteTipsTitle"),
+                {
+                    confirmButtonText: this.$t("tronNodeOperateDetermine"),
+                    cancelButtonText: this.$t("tronNodeCancel"),
+                    type: "warning"
+                }
+            )
                 .then(() => {
-                    // deleteAgent(_id)
-                    //     .then(response => {
-                    //         this.$message.success("删除节点信息成功");
-                    //         this.getDataListFun();
-                    //     })
-                    //     .catch(err => {});
+                    deleteNote({ id: _id })
+                        .then(response => {
+                            this.$message.success(
+                                this.$t("tronNodesDeleteSuccess")
+                            );
+                            this.getDataListFun();
+                        })
+                        .catch(err => {});
                 })
                 .catch(() => {
                     this.$message({
@@ -158,6 +151,11 @@ export default {
         },
         nodeDetailFun(val) {
             this.nodeObj.visible = val;
+        },
+        addNodeSuccessFun(val) {
+            if (val) {
+                this.getDataListFun();
+            }
         }
     }
 };

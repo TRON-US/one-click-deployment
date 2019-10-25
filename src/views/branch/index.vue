@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 15:00:21
+ * @Last Modified time: 2019-10-25 15:06:28
  * @tron node list  
  */
 <template>
@@ -27,22 +27,18 @@
                     border
                     @selection-change="handleSelectionChange"
                 >
-                    <el-table-column
+                    <!-- <el-table-column
                         prop="branch_code"
                         :label="$t('tronBranchCode')"
                         align="center"
-                    ></el-table-column>
-                    <el-table-column
-                        prop="branch_name"
-                        :label="$t('tronBranchName')"
-                        align="center"
-                    ></el-table-column>
+                    ></el-table-column>-->
+                    <el-table-column prop="branch" :label="$t('tronBranchName')" align="center"></el-table-column>
+                    <el-table-column prop="branchNote" :label="$t('tronBranchNote')" align="center"></el-table-column>
                     <el-table-column
                         prop="branch_status"
                         :label="$t('tronBranchStatus')"
                         align="center"
                     ></el-table-column>
-                    <el-table-column prop="note" :label="$t('tronBranchNote')" align="center"></el-table-column>
                     <el-table-column :label="$t('tronBranchOperate')" align="center">
                         <el-button
                             size="mini"
@@ -70,6 +66,7 @@
             :branchDialogVisible="branchObj.visible"
             :detailInfoData="branchObj.detail"
             @dialog="branchDetailFun"
+            @addBranchSuccess="addBranchSuccessFun"
         ></operate-branch>
     </div>
 </template>
@@ -83,15 +80,7 @@ export default {
     },
     data() {
         return {
-            list: [
-                {
-                    id: 0,
-                    branch_code: "123",
-                    branch_name: "dev",
-                    branch_status: true,
-                    note: "暂无"
-                }
-            ],
+            list: [],
             listLoading: false,
             filterItem: {
                 name: ""
@@ -118,26 +107,22 @@ export default {
     methods: {
         addBranchFun() {
             if (this.list.length === 1) {
-                this.$message("已添加分支,请操作当前分支信息");
+                this.$message(this.$t("tronBranchTipsInfo"));
                 return;
             }
             this.branchObj.visible = true;
         },
         modifyBranchFun() {
-            this.branchObj.detail = {
-                id: 0,
-                branch_code: "123",
-                branch_name: "dev",
-                branch_status: true,
-                note: "暂无"
-            };
+            this.branchObj.detail = this.list[0];
             this.branchObj.visible = true;
         },
         getDataListFun() {
             branchGetApi()
                 .then(response => {
-                    let resBody = response.items || [];
-                    this.list = resBody;
+                    return response.data;
+                })
+                .then(res => {
+                    this.list.push(res);
                 })
                 .catch(error => {
                     console.log(error);
@@ -146,10 +131,10 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
-        handleSizeChange(val) {
-            this.listQuery.limit = val;
-            this.getDataListFun();
-        },
+        // handleSizeChange(val) {
+        //     this.listQuery.limit = val;
+        //     this.getDataListFun();
+        // },
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
             this.listQuery.page = val;
@@ -157,6 +142,12 @@ export default {
         },
         branchDetailFun(val) {
             this.branchObj.visible = val;
+        },
+        addBranchSuccessFun(val) {
+            if (val) {
+                this.list = [];
+                this.getDataListFun();
+            }
         }
     }
 };

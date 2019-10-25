@@ -10,7 +10,9 @@ export default {
   'tronBranchOperate': 'operating',
   'tronBranchPperateModify': 'Modify branch information',
   'tronTableNodata': 'No data',
-  'tronBranchTableHasNote': 'Branch has been added, please operate the current branch information',
   'tronBranchSave': 'save',
   'tronBranchCancel': 'cancel',
+  'tronBranchTipsInfo': 'Branch has been added, please operate the current branch information',
+  'tronBranchAddSuccess': 'Added successfully',
+
 }

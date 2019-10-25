@@ -27,19 +27,8 @@ export default {
   'tronSettingMenuPlugin': '导入插件',
   'tronSettingMenuDashboard': '一键部署系统',
   'tronSettingChooseLanguage': '选择语言',
-
-
-
-
-
-
-
-
-
-
-
-
-
+  'tronSettingNormalNode': '正常节点',
+  'tronSettingUnnormalNode': '非正常节点',
 
 
 
