@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-25 15:25:02
+ * @Last Modified time: 2019-10-25 15:43:48
  * @tron node list  
  */
 <template>
@@ -17,7 +17,7 @@
                 <el-table
                     v-loading="listLoading"
                     ref="multipleTable"
-                    empty-text="暂无数据"
+                    :empty-text="$t('tronNodesNoData')"
                     :data="list"
                     tooltip-effect="dark"
                     style="width: 100%"
@@ -43,7 +43,11 @@
                     </el-table-column>
                     <el-table-column :label="$t('tronNodeOperate')" align="center">
                         <template slot-scope="scope">
-                            <el-button size="mini" type="warning">{{$t('tronNodeOperate')}}</el-button>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                @click="operateNodeFun(scope.row)"
+                            >{{$t('tronNodeOperate')}}</el-button>
                             <el-button
                                 size="mini"
                                 type="danger"
@@ -56,6 +60,7 @@
         </div>
         <operate-node
             :nodeDialogVisible="nodeObj.visible"
+            :editStatus="nodeObj.status"
             :detailInfoData="nodeObj.detail"
             @dialog="nodeDetailFun"
             @addNodeSuccess="addNodeSuccessFun"
@@ -84,7 +89,8 @@ export default {
             },
             nodeObj: {
                 visible: false,
-                detail: {}
+                detail: {},
+                status: 0
             }
         };
     },
@@ -98,6 +104,11 @@ export default {
     },
     methods: {
         addNodeFun() {
+            this.nodeObj.visible = true;
+        },
+        operateNodeFun(val) {
+            this.nodeObj.detail = val;
+            this.nodeObj.status = 1;
             this.nodeObj.visible = true;
         },
         getDataListFun() {

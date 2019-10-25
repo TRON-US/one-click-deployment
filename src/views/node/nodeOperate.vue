@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-25 14:48:22
+ * @Last Modified time: 2019-10-25 15:47:11
  * @operation node 
  */
 
@@ -77,7 +77,7 @@
     </div>
 </template>
 <script>
-import { addNote } from "@/api/nodeApi";
+import { addNote, editNote } from "@/api/nodeApi";
 export default {
     name: "operationNode",
     props: ["nodeDialogVisible", "detailInfoData", "editStatus"],
@@ -85,7 +85,10 @@ export default {
         return {
             classLoading: false,
             dialogVisible: this.nodeDialogVisible,
-            dialogTitle: this.$t("tronNodeAdd"),
+            dialogTitle:
+                this.editStatus == 1
+                    ? this.$t("tronNodeEditTitle")
+                    : this.$t("tronNodeAdd"),
             nodeForm: {
                 id: "",
                 nodeName: "",
@@ -143,6 +146,22 @@ export default {
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
+                    if (this.editStatus == 1) {
+                        editNote(this.nodeForm)
+                            .then(response => {
+                                this.$emit("addNodeSuccess", true);
+                                this.$refs.nodeDialogForm.resetFields();
+                                this.$message.success(
+                                    this.$t("tronNodeAddSuccess")
+                                );
+                                this.dialogVisible = false;
+                            })
+                            .catch(error => {
+                                // this.listLoading = false;
+                                console.log(error);
+                            });
+                        return;
+                    }
                     addNote(this.nodeForm)
                         .then(response => {
                             this.$emit("addNodeSuccess", true);

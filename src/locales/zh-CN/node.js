@@ -1,5 +1,6 @@
 export default {
   'tronNodeAdd': '添加节点',
+  'tronNodeEditTitle': '操作节点',
   'tronNodeBulkDeployment': '批量部署',
   'tronNodeName': '节点名称',
   'tronNodeWhetherIsSR': '是否为SR',
@@ -19,6 +20,7 @@ export default {
   'tronNodesDeleteTips': '此操作将删除该节点信息, 是否继续?',
   'tronNodesDeleteTipsTitle': '提示',
   'tronNodesDeleteSuccess': "删除节点信息成功",
+  'tronNodesNoData': '暂无数据'
 
 
 

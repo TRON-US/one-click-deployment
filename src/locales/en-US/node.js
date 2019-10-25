@@ -1,5 +1,6 @@
 export default {
   'tronNodeAdd': 'Add node',
+  'tronNodeEditTitle': 'Operation node',
   'tronNodeBulkDeployment': 'Bulk deployment',
   'tronNodeName': 'Node name',
   'tronNodeWhetherIsSR': 'Whether it is SR',
@@ -18,6 +19,7 @@ export default {
   'tronNodeAddSuccess': 'Added successfully',
   'tronNodesDeleteTips': 'This action will delete the node information, will it continue?',
   'tronNodesDeleteTipsTitle': 'prompt',
-  'tronNodesDeleteSuccess': "Delete node information successfully"
+  'tronNodesDeleteSuccess': "Delete node information successfully",
+  'tronNodesNoData': 'No data'
 
 }

@@ -18,6 +18,15 @@ export function deleteNote(params) {
   })
 }
 
+// edit nodeInfo
+export function editNote(params) {
+  return request({
+    url: '/nodeInfo',
+    method: 'PUT',
+    params
+  })
+}
+
 
 // node status
 export function nodeInfo(params) {
