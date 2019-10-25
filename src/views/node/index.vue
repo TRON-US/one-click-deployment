@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-25 15:17:42
+ * @Last Modified time: 2019-10-25 15:25:02
  * @tron node list  
  */
 <template>
@@ -25,6 +25,7 @@
                     @selection-change="handleSelectionChange"
                 >
                     <el-table-column type="selection" width="55"></el-table-column>
+                    <el-table-column prop="id" label="ID" align="center"></el-table-column>
                     <el-table-column prop="nodeName" :label="$t('tronNodeName')" align="center"></el-table-column>
                     <el-table-column prop="ip" label="IP/HOST" align="center"></el-table-column>
                     <el-table-column prop="port" label="SSH PORT" align="center"></el-table-column>
@@ -127,7 +128,7 @@ export default {
                 this.$t("tronNodesDeleteTips"),
                 this.$t("tronNodesDeleteTipsTitle"),
                 {
-                    confirmButtonText: this.$t("tronNodeOperateDetermine"),
+                    confirmButtonText: this.$t("tronNodeDetermine"),
                     cancelButtonText: this.$t("tronNodeCancel"),
                     type: "warning"
                 }
