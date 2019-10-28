@@ -17,6 +17,8 @@ export default {
   'tronSettingPlaceholder': '请填写',
   'tronSettingwriteSynchronously': '是否同步写入',
   'tronSettingOpenTransaction': '是否打开transaction',
+  'tronSettingIndexDirectory': '是否打开index开关',
+  'tronSettingNeedToUpdateAsset': '是否需要更新assets',
   'tronSelectDatabaseConfiguration': '选择数据库配置',
   'tronSelectleveldbDatebaseSetting': 'leveldb数据库配置',
   'tronSelectrocksdbDatebaseSetting': 'rocksdb数据库配置',
@@ -29,6 +31,17 @@ export default {
   'tronSettingChooseLanguage': '选择语言',
   'tronSettingNormalNode': '正常节点',
   'tronSettingUnnormalNode': '非正常节点',
+  'tronSettingNumberPlaceholder': '填写必须为数字且为正整数',
+  'tronSettingNumberTwoDecimal': '填写必须为数字且最多两位小数',
+  'tronSettingBaseSaveSuccess': '保存基础配置成功',
+  'tronSettingCrossChainSaveSuccess': '保存跨链配置成功',
+  'tronSettingNetworkSaveSuccess': '保存网络链接配置成功',
+  'tronSettingGenesisSaveSuccess': '保存创世信息配置成功',
+  'tronSettingp2pSaveSuccess': '保存p2p配置成功',
+  'tronSettingDBSaveSuccess': '保存数据库配置成功',
+
+
+
 
 
 

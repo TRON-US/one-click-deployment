@@ -18,3 +18,16 @@ export function validUsername(str) {
   const valid_map = ['admin', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
 }
+
+
+/* number */
+export function isvalidateNum(str) {
+  const reg = /^[0-9]*$/;
+  return reg.test(str);
+}
+
+/* twoDecimal */
+export function twoDecimal(str) {
+  const reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+  return reg.test(str);
+}

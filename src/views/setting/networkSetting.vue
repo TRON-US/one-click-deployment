@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 18:44:08
+ * @Last Modified time: 2019-10-28 18:22:13
  * @setting cross setting
  */
 
@@ -27,38 +27,39 @@
                 class="tronbaseSettingForm"
                 label-position="left"
             >
-                <el-form-item label="maxHttpConnectNumber" prop="maxHttpConnectNumber">
+                <el-form-item label="maxHttpConnectNumber" prop="node_maxHttpConnectNumber">
                     <el-input
                         :maxlength="50"
-                        v-model="baseSettingForm.maxHttpConnectNumber"
+                        v-model="baseSettingForm.node_maxHttpConnectNumber"
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="httpEnable" prop="httpEnable">
-                    <el-switch
-                        v-model="baseSettingForm.httpEnable"
-                        active-text="On"
-                        inactive-text="Off"
-                    ></el-switch>
-                </el-form-item>
-                <el-form-item label="httpPort" prop="httpPort">
+                <el-form-item label="httpFullNodePort" prop="node_http_fullNodePort">
                     <el-input
                         :maxlength="50"
-                        v-model="baseSettingForm.httpPort"
+                        v-model="baseSettingForm.node_http_fullNodePort"
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="rpcEnable" prop="rpcEnable">
-                    <el-switch
-                        v-model="baseSettingForm.rpcEnable"
-                        active-text="On"
-                        inactive-text="Off"
-                    ></el-switch>
-                </el-form-item>
-                <el-form-item label="rpcPort" prop="rpcPort">
+                <el-form-item label="httpSolidityPort" prop="node_http_solidityPort">
                     <el-input
                         :maxlength="50"
-                        v-model="baseSettingForm.rpcPort"
+                        v-model="baseSettingForm.node_http_solidityPort"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+
+                <el-form-item label="rpcPort" prop="node_rpc_port">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.node_rpc_port"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="rpcSolidityPort" prop="node_rpc_solidityPort">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.node_rpc_solidityPort"
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -74,70 +75,131 @@
     </div>
 </template>
 <script>
-import { branchSaveApi, branchGetApi } from "@/api/branchApi";
-
+import { networkSettingApi } from "@/api/settingApi";
+import { isvalidateNum } from "@/utils/validate.js";
 export default {
-    name: "baseSetting",
+    name: "networkSetting",
     props: ["branchDialogVisible", "detailInfoData", "editStatus"],
     data() {
+        const validNum = (rule, value, callback) => {
+            if (!isvalidateNum(value)) {
+                callback(new Error(this.$t("tronSettingNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
             dialogTitle: this.$t("tronSettingHttp"),
-            baseSettingForm: {},
+            baseSettingForm: {
+                node_maxHttpConnectNumber: "",
+                node_http_solidityPort: "",
+                node_http_fullNodePort: "",
+                node_rpc_port: "",
+                node_rpc_solidityPort: ""
+            },
             branchRules: {
-                maxHttpConnectNumber: [
+                node_maxHttpConnectNumber: [
                     {
                         required: true,
-                        message: "请填写maxHttpConnectNumber",
-                        trigger: "change"
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
                     }
                 ],
-                httpEnable: [
+                node_http_fullNodePort: [
                     {
                         required: true,
-                        message: "请填写maxValidatorNumber",
-                        trigger: "change"
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
                     }
                 ],
-                httpPort: {
-                    required: true,
-                    message: "请填写httpPort",
-                    trigger: "change"
-                }
+                node_http_solidityPort: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ],
+                node_rpc_port: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ],
+                node_rpc_solidityPort: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ]
             }
         };
     },
     methods: {
         openDialogFun() {},
         closeFun() {
-            this.$refs.crossSettingDialogForm.resetFields();
+            // this.$refs.crossSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         cancelFun() {
-            this.$refs.crossSettingDialogForm.resetFields();
+            // this.$refs.crossSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.$set(
-                        this.baseSettingForm,
-                        "nursery_id",
-                        this.$route.query.id
-                    );
-
-                    // branchSave(this.baseSettingForm)
-                    //     .then(response => {
-                    //         this.$emit("addClassSuccess", true);
-                    //         this.$refs.crossSettingDialogForm.resetFields();
-                    //         this.$message.success("添加班级信息成功");
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         // this.listLoading = false;
-                    //         console.log(error);
-                    //     });
+                    const newSettingForm = {
+                        maxHttpConnectNumber: this.baseSettingForm
+                            .node_maxHttpConnectNumber,
+                        rpcPort: this.baseSettingForm.node_rpc_port,
+                        rpcSolidityPort: this.baseSettingForm
+                            .node_rpc_solidityPort,
+                        httpFullNodePort: this.baseSettingForm
+                            .node_http_fullNodePort,
+                        httpSolidityPort: this.baseSettingForm
+                            .node_http_solidityPort
+                    };
+                    networkSettingApi(newSettingForm)
+                        .then(response => {
+                            this.$emit("addSettingSuccess", true);
+                            // this.$refs.crossSettingDialogForm.resetFields();
+                            this.$message.success(
+                                this.$t("tronSettingNetworkSaveSuccess")
+                            );
+                            this.dialogVisible = false;
+                        })
+                        .catch(error => {
+                            // this.listLoading = false;
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;

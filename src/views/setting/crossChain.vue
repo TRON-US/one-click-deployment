@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 18:43:44
+ * @Last Modified time: 2019-10-28 18:21:26
  * @setting cross setting
  */
 
@@ -28,11 +28,11 @@
                 label-position="left"
             >
                 <el-form-item label="enableCrossChain" prop="enableCrossChain">
-                    <el-input
-                        :maxlength="50"
+                    <el-switch
                         v-model="baseSettingForm.enableCrossChain"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                    ></el-switch>
                 </el-form-item>
                 <el-form-item label="maxValidatorNumber" prop="maxValidatorNumber">
                     <el-input
@@ -48,19 +48,16 @@
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="chainIdList" prop="chainIdList">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.chainIdList"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
+
                 <el-form-item label="crossChainFee" prop="crossChainFee">
-                    <el-input
+                    <el-input-number
+                        controls-position="right"
+                        :min="0"
+                        :step="0.01"
                         :maxlength="50"
                         v-model="baseSettingForm.crossChainFee"
                         :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
+                    ></el-input-number>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
                     <el-button
@@ -74,12 +71,26 @@
     </div>
 </template>
 <script>
-import { branchSaveApi, branchGetApi } from "@/api/branchApi";
-
+import { crossChainSettingApi } from "@/api/settingApi";
+import { isvalidateNum, twoDecimal } from "@/utils/validate.js";
 export default {
-    name: "baseSetting",
+    name: "corssChain",
     props: ["branchDialogVisible", "detailInfoData", "editStatus"],
     data() {
+        const validNum = (rule, value, callback) => {
+            if (!isvalidateNum(value)) {
+                callback(new Error(this.$t("tronSettingNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
+        const validTwoDecimalFun = (rule, value, callback) => {
+            if (!twoDecimal(value)) {
+                callback(new Error(this.$t("validTwoDecimal")));
+            } else {
+                callback();
+            }
+        };
         return {
             classLoading: false,
             dialogVisible: this.branchDialogVisible,
@@ -89,55 +100,75 @@ export default {
                 enableCrossChain: [
                     {
                         required: true,
-                        message: "请填写分支编码",
+                        message: this.$t("tronSettingPlaceholder"),
                         trigger: "change"
                     }
                 ],
                 maxValidatorNumber: [
                     {
                         required: true,
-                        message: "请选择分支名称",
+                        message: this.$t("tronSettingPlaceholder"),
                         trigger: "change"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
                     }
                 ],
-                minValidatorNumber: {
-                    required: true,
-                    message: "请填写备注",
-                    trigger: "change"
-                }
+                minValidatorNumber: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "change"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ],
+                crossChainFee: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "change"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberTwoDecimal"),
+                        validator: validTwoDecimalFun,
+                        trigger: "blur"
+                    }
+                ]
             }
         };
     },
     methods: {
         openDialogFun() {},
         closeFun() {
-            this.$refs.crossSettingDialogForm.resetFields();
+            // this.$refs.crossSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         cancelFun() {
-            this.$refs.crossSettingDialogForm.resetFields();
+            // this.$refs.crossSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.$set(
-                        this.baseSettingForm,
-                        "nursery_id",
-                        this.$route.query.id
-                    );
-
-                    // branchSave(this.baseSettingForm)
-                    //     .then(response => {
-                    //         this.$emit("addClassSuccess", true);
-                    //         this.$refs.crossSettingDialogForm.resetFields();
-                    //         this.$message.success("添加班级信息成功");
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         // this.listLoading = false;
-                    //         console.log(error);
-                    //     });
+                    crossChainSettingApi(this.baseSettingForm)
+                        .then(response => {
+                            this.$emit("addSettingSuccess", true);
+                            // this.$refs.crossSettingDialogForm.resetFields();
+                            this.$message.success(
+                                this.$t("tronSettingCrossChainSaveSuccess")
+                            );
+                            this.dialogVisible = false;
+                        })
+                        .catch(error => {
+                            // this.listLoading = false;
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;

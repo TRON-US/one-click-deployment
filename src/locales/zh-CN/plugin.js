@@ -10,5 +10,6 @@ export default {
   'tronPluginInputPlaceholder': '请填写',
   'tronPluginInputSave': '保存',
   'tronPluginInputCancel': '取消',
+  'tronPluginInputSaveSuccess': '保存成功'
 
 }

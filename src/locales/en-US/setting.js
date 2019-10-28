@@ -15,8 +15,10 @@ export default {
   'tronSettingSave': 'save',
   'tronSettingCancel': 'cancel',
   'tronSettingPlaceholder': 'Please fill out',
-  'tronSettingwriteSynchronously': 'Whether to write synchronously',
-  'tronSettingOpenTransaction': 'Whether to open the transaction',
+  'tronSettingwriteSynchronously': 'Whether to write synchronously?',
+  'tronSettingIndexDirectory': 'Whether to open the index switch?',
+  'tronSettingNeedToUpdateAsset': 'Do you need to update assets?',
+  'tronSettingOpenTransaction': 'Whether to open the transaction?',
   'tronSelectDatabaseConfiguration': 'Select database configuration',
   'tronSelectleveldbDatebaseSetting': 'Leveldb database configuration',
   'tronSelectrocksdbDatebaseSetting': 'Rocksdb database configuration',
@@ -29,6 +31,17 @@ export default {
   'tronSettingChooseLanguage': 'Languages',
   'tronSettingNormalNode': 'Normal node',
   'tronSettingUnnormalNode': 'Abnormal node',
+  'tronSettingNumberPlaceholder': 'Fill in must be a number and be a positive integer',
+  'tronSettingNumberTwoDecimal': 'Fill in must be a number and up to two decimal places',
+  'tronSettingBaseSaveSuccess': 'Save the basic configuration successfully',
+  'tronSettingCrossChainSaveSuccess': 'Save cross-chain configuration successfully',
+  'tronSettingNetworkSaveSuccess': 'Save network link configuration successfully',
+  'tronSettingGenesisSaveSuccess': 'Save the creation information configuration successfully',
+  'tronSettingp2pSaveSuccess': 'Save p2p configuration successfully',
+  'tronSettingDBSaveSuccess': 'Save the database configuration successfully',
+
+
+
 
 
 }

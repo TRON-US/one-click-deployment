@@ -45,3 +45,13 @@ export function allNodeInfo(params) {
     params
   })
 }
+
+
+// deployNode Info
+export function deployNodeApi(params) {
+  return request({
+    url: '/deployNode',
+    method: 'post',
+    data: params
+  })
+}

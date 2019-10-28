@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-25 15:43:48
+ * @Last Modified time: 2019-10-28 21:19:36
  * @tron node list  
  */
 <template>
@@ -10,7 +10,11 @@
         <div class="tron-content">
             <div class="tron-filter-section">
                 <el-button size="mini" @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
-                <el-button size="mini" type="info" @click>{{$t('tronNodeBulkDeployment')}}</el-button>
+                <el-button
+                    size="mini"
+                    type="info"
+                    @click="bulkDeploymentFun"
+                >{{$t('tronNodeBulkDeployment')}}</el-button>
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->
@@ -68,7 +72,7 @@
     </div>
 </template>
 <script>
-import { allNodeInfo, deleteNote } from "@/api/nodeApi.js";
+import { allNodeInfo, deleteNote, deployNodeApi } from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
 export default {
     name: "nodelist",
@@ -91,10 +95,18 @@ export default {
                 visible: false,
                 detail: {},
                 status: 0
-            }
+            },
+            multipleSelection: []
         };
     },
     computed: {
+        multipleSelectionIds() {
+            let arr = [];
+            this.multipleSelection.map(item => {
+                arr.push(item.id);
+            });
+            return arr.join(",");
+        }
         // parames() {
         //     return Object.assign(this.filterItem, this.listQuery);
         // }
@@ -110,6 +122,42 @@ export default {
             this.nodeObj.detail = val;
             this.nodeObj.status = 1;
             this.nodeObj.visible = true;
+        },
+        bulkDeploymentFun() {
+            if (this.multipleSelectionIds.length > 0) {
+                this.$confirm("此操作将批量部署, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                })
+                    .then(() => {
+                        deployNodeApi(this.multipleSelectionIds)
+                            .then(res => {
+                                this.$message({
+                                    type: "success",
+                                    message: "部署成功!"
+                                });
+                                this.fetchData();
+                            })
+                            .catch(err => {
+                                this.$message({
+                                    type: "info",
+                                    message: "部署失败"
+                                });
+                            });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            type: "info",
+                            message: "已取消删除"
+                        });
+                    });
+            } else {
+                this.$message({
+                    type: "warning",
+                    message: "请选择至少一个节点"
+                });
+            }
         },
         getDataListFun() {
             allNodeInfo()

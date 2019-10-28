@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-23 18:42:29
+ * @Last Modified time: 2019-10-28 21:05:02
  * @setting genesis setting
  */
 
@@ -20,33 +20,30 @@
             center
         >
             <el-form
-                ref="crossSettingDialogForm"
+                ref="genesisSettingDialogForm"
                 label-width="200px"
                 class="tronbaseSettingForm"
                 label-position="left"
             >
                 <div class="asset">
                     <el-button class="newAsset" @click="innerAssetVisible = true">new asset</el-button>
-                    <el-row>
-                        <el-button style="width:100%">Asset A</el-button>
-                    </el-row>
-                    <el-row>
-                        <el-button style="width:100%;">Asset B</el-button>
-                    </el-row>
-                    <el-row>
-                        <el-button style="width:100%;">Asset C</el-button>
+                    <el-row
+                        v-for="(item,index) in detailInfoData.genesis_block_assets"
+                        :key="index"
+                    >
+                        <el-button
+                            @click="currentAssetFun(item)"
+                            style="width:100%"
+                        >{{item.accountName}}</el-button>
                     </el-row>
                 </div>
                 <div class="witeness">
                     <el-button class="newWiteness" @click="innerWitenessVisible = true">new witeness</el-button>
-                    <el-row>
-                        <el-button style="width:100%">witeness A</el-button>
-                    </el-row>
-                    <el-row>
-                        <el-button style="width:100%;">witeness B</el-button>
-                    </el-row>
-                    <el-row>
-                        <el-button style="width:100%;">witeness C</el-button>
+                    <el-row
+                        v-for="(item,index) in detailInfoData.genesis_block_witnesses"
+                        :key="index"
+                    >
+                        <el-button style="width:100%">{{item.address}}</el-button>
                     </el-row>
                 </div>
                 <!-- <el-form-item label-width="0" class="textCenter">
@@ -72,7 +69,7 @@
                     <el-form-item label="accountName" prop="accountName">
                         <el-input
                             :maxlength="50"
-                            v-model="assetForm.id"
+                            v-model="assetForm.accountName"
                             :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
@@ -152,7 +149,7 @@
                     <el-form-item label-width="0" class="textCenter">
                         <el-button
                             type="primary"
-                            @click="saveData('witenessDialogForm')"
+                            @click="saveWitenessData('witenessDialogForm')"
                         >{{$t('tronSettingSave')}}</el-button>
                         <el-button @click="innerWitenessVisible = false">{{$t('tronSettingCancel')}}</el-button>
                     </el-form-item>
@@ -162,9 +159,9 @@
     </div>
 </template>
 <script>
-import { branchSaveApi, branchGetApi } from "@/api/branchApi";
+import { genesisSettingApi } from "@/api/settingApi";
 export default {
-    name: "baseSetting",
+    name: "genesisSetting",
     props: ["genesisDialogVisible", "detailInfoData"],
     data() {
         return {
@@ -173,29 +170,30 @@ export default {
             dialogTitle: this.$t("tronSettingGenesis"),
             innerAssetVisible: false,
             innerWitenessVisible: false,
+            genesisSetting: {},
             assetRules: {
                 accountName: [
                     {
                         required: true,
-                        message: "请填写accountName",
+                        message: this.$t("tronSettingPlaceholder"),
                         trigger: "blur"
                     }
                 ],
                 accountType: [
                     {
                         required: true,
-                        message: "请填写accountType",
+                        message: this.$t("tronSettingPlaceholder"),
                         trigger: "blur"
                     }
                 ],
                 address: {
                     required: true,
-                    message: "请填写address",
+                    message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 },
                 balance: {
                     required: true,
-                    message: "请填写balance",
+                    message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 }
             },
@@ -208,22 +206,22 @@ export default {
             witenessRules: {
                 address: {
                     required: true,
-                    message: "请填写address",
+                    message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 },
                 url: {
                     required: true,
-                    message: "请填写url",
+                    message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 },
                 voteCount: {
                     required: true,
-                    message: "请填写voteCount",
+                    message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 },
                 privateKey: {
                     required: true,
-                    message: "请填写privateKey",
+                    message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 }
             },
@@ -237,19 +235,76 @@ export default {
     },
     methods: {
         openDialogFun() {},
+        currentAssetFun(item) {
+            console.log(item);
+        },
         closeFun() {
-            this.$refs.crossSettingDialogForm.resetFields();
+            // this.$refs.genesisSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         cancelFun() {
-            this.$refs.crossSettingDialogForm.resetFields();
+            // this.$refs.genesisSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
-        saveData() {}
+        saveData(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    console.log(this.assetForm);
+                    this.genesisSetting.genesis_block_assets.push(
+                        this.assetForm
+                    );
+                    const newSettingForm = {
+                        assets: this.genesisSetting.genesis_block_assets,
+                        witness: this.genesisSetting.genesis_block_witnesses
+                    };
+                    genesisSettingApi(newSettingForm)
+                        .then(response => {
+                            this.$emit("addSettingSuccess", true);
+                            // this.$refs.genesisSettingDialogForm.resetFields();
+                            this.$message.success(
+                                this.$t("tronSettingGenesisSaveSuccess")
+                            );
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                } else {
+                    console.log("error submit!!");
+                    return false;
+                }
+            });
+        },
+        saveWitenessData(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    console.log(this.assetForm);
+                    this.genesisSetting.genesis_block_assets.push(
+                        this.assetForm
+                    );
+                    // genesisSettingApi(this.genesisSetting)
+                    //     .then(response => {
+                    //         this.$emit("addSettingSuccess", true);
+                    //         // this.$refs.genesisSettingDialogForm.resetFields();
+                    //         this.$message.success(
+                    //             this.$t("tronSettingGenesisSaveSuccess")
+                    //         );
+                    //         // this.dialogVisible = false;
+                    //     })
+                    //     .catch(error => {
+                    //         // this.listLoading = false;
+                    //         console.log(error);
+                    //     });
+                } else {
+                    console.log("error submit!!");
+                    return false;
+                }
+            });
+        }
     },
     watch: {
         detailInfoData(val) {
             this.baseSettingForm = this.detailInfoData;
+            this.genesisSetting = this.detailInfoData;
         },
         genesisDialogVisible(val) {
             this.dialogVisible = val;

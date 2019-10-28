@@ -59,21 +59,22 @@ export const constantRoutes = [
     }]
   },
 
-  {
-    path: '/branch',
-    component: Layout,
-    redirect: '/branch/list',
-    name: 'branch',
-    children: [{
-      path: 'list',
-      name: 'list',
-      component: () => import('@/views/branch/index'),
-      meta: {
-        title: 'tronSettingMenuBranch',
-        icon: 'branch'
-      }
-    }]
-  },
+  // {
+  //   path: '/branch',
+  //   component: Layout,
+  //   redirect: '/branch/list',
+  //   name: 'branch',
+  //   children: [{
+  //     path: 'list',
+  //     name: 'list',
+  //     component: () => import('@/views/branch/index'),
+  //     meta: {
+  //       title: 'tronSettingMenuBranch',
+  //       icon: 'branch'
+  //     }
+  //   }]
+  // },
+
   {
     path: '/setting',
     component: Layout,
