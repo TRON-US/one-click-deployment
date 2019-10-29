@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 18:21:49
+ * @Last Modified time: 2019-10-29 15:05:02
  * @setting db setting
  */
 
@@ -42,11 +42,11 @@
                 </el-form-item>
                 <el-form-item
                     :label="$t('tronSelectDatabaseConfiguration')"
-                    prop="storage_db_Enine"
+                    prop="storage_db_engine"
                 >
-                    <el-radio-group v-model="dbSettingForm.storage_db_Enine">
-                        <el-radio label="LEVELDB">leveldb</el-radio>
-                        <el-radio label="ROCKSDB">rocksdb</el-radio>
+                    <el-radio-group v-model="dbSettingForm.storage_db_engine">
+                        <el-radio :label="'LEVELDB'">leveldb</el-radio>
+                        <el-radio :label="'ROCKSDB'">rocksdb</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item
@@ -189,7 +189,7 @@ export default {
                     message: this.$t("tronSettingPlaceholder"),
                     trigger: "change"
                 },
-                storage_db_Enine: {
+                storage_db_engine: {
                     required: true,
                     message: this.$t("tronSettingPlaceholder"),
                     trigger: "change"
@@ -224,7 +224,7 @@ export default {
                         isDBSync: this.dbSettingForm.storage_db_sync,
                         isOpenTransaction: this.dbSettingForm
                             .storage_transHistory_switch,
-                        dbEnine: this.dbSettingForm.storage_db_Enine,
+                        dbEnine: this.dbSettingForm.storage_db_engine,
                         indexDirectory: this.dbSettingForm
                             .storage_index_directory,
                         needToUpdateAsset: this.dbSettingForm

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 21:19:36
+ * @Last Modified time: 2019-10-29 11:05:30
  * @tron node list  
  */
 <template>
@@ -103,9 +103,9 @@ export default {
         multipleSelectionIds() {
             let arr = [];
             this.multipleSelection.map(item => {
-                arr.push(item.id);
+                arr.push({ ip: item.ip, port: item.port });
             });
-            return arr.join(",");
+            return arr;
         }
         // parames() {
         //     return Object.assign(this.filterItem, this.listQuery);
@@ -131,6 +131,7 @@ export default {
                     type: "warning"
                 })
                     .then(() => {
+                        console.log(this.multipleSelectionIds);
                         deployNodeApi(this.multipleSelectionIds)
                             .then(res => {
                                 this.$message({

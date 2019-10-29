@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 21:05:02
+ * @Last Modified time: 2019-10-29 11:55:29
  * @setting genesis setting
  */
 
@@ -253,14 +253,20 @@ export default {
                     this.genesisSetting.genesis_block_assets.push(
                         this.assetForm
                     );
+
                     const newSettingForm = {
                         assets: this.genesisSetting.genesis_block_assets,
                         witness: this.genesisSetting.genesis_block_witnesses
                     };
+
+                    newSettingForm.witness.forEach(item => {
+                        console.log(`'\'+${item.url}+'\'`);
+                        item.url = `\"+${item.url}+\"`;
+                    });
+                    console.log(newSettingForm);
                     genesisSettingApi(newSettingForm)
                         .then(response => {
                             this.$emit("addSettingSuccess", true);
-                            // this.$refs.genesisSettingDialogForm.resetFields();
                             this.$message.success(
                                 this.$t("tronSettingGenesisSaveSuccess")
                             );
