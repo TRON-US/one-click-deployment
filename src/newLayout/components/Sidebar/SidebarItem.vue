@@ -5,6 +5,7 @@
         >
             <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
                 <el-menu-item
+                    :id="onlyOneChild.name"
                     :index="resolvePath(onlyOneChild.path)"
                     :class="{'submenu-title-noDropdown':!isNest}"
                 >

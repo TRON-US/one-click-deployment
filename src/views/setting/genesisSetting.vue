@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-29 11:55:29
+ * @Last Modified time: 2019-10-29 18:56:28
  * @setting genesis setting
  */
 
@@ -74,11 +74,22 @@
                         ></el-input>
                     </el-form-item>
                     <el-form-item label="accountType" prop="accountType">
-                        <el-input
+                        <!-- <el-input
                             :maxlength="50"
                             v-model="assetForm.accountType"
                             :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
+                        ></el-input>-->
+                        <el-select
+                            v-model="assetForm.accountType"
+                            :placeholder="$t('tronSettingSelectPlaceholder')"
+                        >
+                            <el-option
+                                v-for="item in accountTypeOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            ></el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item label="address" prop="address">
                         <el-input
@@ -155,15 +166,43 @@
                     </el-form-item>
                 </el-form>
             </el-dialog>
+            <div label-width="0" class="textCenter">
+                <el-button type="primary" @click="saveAllData()">{{$t('tronSettingSave')}}</el-button>
+                <el-button @click="dialogVisible = false">{{$t('tronSettingCancel')}}</el-button>
+            </div>
         </el-dialog>
     </div>
 </template>
 <script>
 import { genesisSettingApi } from "@/api/settingApi";
+import TronWeb from "tronweb";
 export default {
     name: "genesisSetting",
     props: ["genesisDialogVisible", "detailInfoData"],
     data() {
+        const validNum = (rule, value, callback) => {
+            if (value > 9223372036854775807 || value < -9223372036854775808) {
+                callback(new Error(this.$t("tronSettingNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
+        const validAddress = (rule, value, callback) => {
+            if (!TronWeb.isAddress(value)) {
+                callback(new Error(this.$t("tronSettingAddressPlaceholder")));
+            } else {
+                callback();
+            }
+        };
+        const validPrivateKey = (rule, value, callback) => {
+            const address = TronWeb.address.fromPrivateKey(value);
+            console.log(address);
+            if (!TronWeb.isAddress(address)) {
+                callback(new Error(this.$t("tronSettingAddressPlaceholder")));
+            } else {
+                callback();
+            }
+        };
         return {
             classLoading: false,
             dialogVisible: this.genesisDialogVisible,
@@ -171,6 +210,16 @@ export default {
             innerAssetVisible: false,
             innerWitenessVisible: false,
             genesisSetting: {},
+            accountTypeOptions: [
+                {
+                    value: "AssetIssue",
+                    label: "AssetIssue"
+                },
+                {
+                    value: "Contract",
+                    label: "Contract"
+                }
+            ],
             assetRules: {
                 accountName: [
                     {
@@ -186,16 +235,30 @@ export default {
                         trigger: "blur"
                     }
                 ],
-                address: {
-                    required: true,
-                    message: this.$t("tronSettingPlaceholder"),
-                    trigger: "blur"
-                },
-                balance: {
-                    required: true,
-                    message: this.$t("tronSettingPlaceholder"),
-                    trigger: "blur"
-                }
+                address: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validAddress,
+                        trigger: "blur"
+                    }
+                ],
+                balance: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ]
             },
             assetForm: {
                 accountName: "",
@@ -204,11 +267,18 @@ export default {
                 balance: ""
             },
             witenessRules: {
-                address: {
-                    required: true,
-                    message: this.$t("tronSettingPlaceholder"),
-                    trigger: "blur"
-                },
+                address: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validAddress,
+                        trigger: "blur"
+                    }
+                ],
                 url: {
                     required: true,
                     message: this.$t("tronSettingPlaceholder"),
@@ -219,11 +289,18 @@ export default {
                     message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 },
-                privateKey: {
-                    required: true,
-                    message: this.$t("tronSettingPlaceholder"),
-                    trigger: "blur"
-                }
+                privateKey: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validPrivateKey,
+                        trigger: "blur"
+                    }
+                ]
             },
             witenessForm: {
                 address: "",
@@ -260,20 +337,21 @@ export default {
                     };
 
                     newSettingForm.witness.forEach(item => {
-                        console.log(`'\'+${item.url}+'\'`);
-                        item.url = `\"+${item.url}+\"`;
+                        console.log(`"${item.url}"`);
+                        item.url = `"${item.url}"`;
                     });
                     console.log(newSettingForm);
-                    genesisSettingApi(newSettingForm)
-                        .then(response => {
-                            this.$emit("addSettingSuccess", true);
-                            this.$message.success(
-                                this.$t("tronSettingGenesisSaveSuccess")
-                            );
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
+                    // genesisSettingApi(newSettingForm)
+                    //     .then(response => {
+                    //         this.$emit("addSettingSuccess", true);
+                    //         this.$message.success(
+                    //             this.$t("tronSettingGenesisSaveSuccess")
+                    //         );
+                    //         this.dialogVisible = false;
+                    //     })
+                    //     .catch(error => {
+                    //         console.log(error);
+                    //     });
                 } else {
                     console.log("error submit!!");
                     return false;
@@ -283,28 +361,59 @@ export default {
         saveWitenessData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    console.log(this.assetForm);
-                    this.genesisSetting.genesis_block_assets.push(
-                        this.assetForm
+                    console.log(this.witenessForm);
+                    this.genesisSetting.genesis_block_witnesses.push(
+                        this.witenessForm
                     );
-                    // genesisSettingApi(this.genesisSetting)
-                    //     .then(response => {
-                    //         this.$emit("addSettingSuccess", true);
-                    //         // this.$refs.genesisSettingDialogForm.resetFields();
-                    //         this.$message.success(
-                    //             this.$t("tronSettingGenesisSaveSuccess")
-                    //         );
-                    //         // this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         // this.listLoading = false;
-                    //         console.log(error);
-                    //     });
+                    const newSettingForm = {
+                        assets: this.genesisSetting.genesis_block_assets,
+                        witness: this.genesisSetting.genesis_block_witnesses
+                    };
+
+                    newSettingForm.witness.forEach(item => {
+                        console.log(`"${item.url}"`);
+                        item.url = `"${item.url}"`;
+                    });
+                    genesisSettingApi(newSettingForm)
+                        .then(response => {
+                            this.$emit("addSettingSuccess", true);
+                            // this.$refs.genesisSettingDialogForm.resetFields();
+                            this.$message.success(
+                                this.$t("tronSettingGenesisSaveSuccess")
+                            );
+                            // this.dialogVisible = false;
+                        })
+                        .catch(error => {
+                            // this.listLoading = false;
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;
                 }
             });
+        },
+        saveAllData() {
+            // save current data
+            const newSettingForm = {
+                assets: this.genesisSetting.genesis_block_assets,
+                witness: this.genesisSetting.genesis_block_witnesses
+            };
+            newSettingForm.witness.forEach(item => {
+                console.log(`"${item.url}"`);
+                item.url = `"${item.url}"`;
+            });
+            genesisSettingApi(newSettingForm)
+                .then(response => {
+                    this.$emit("addSettingSuccess", true);
+                    this.$message.success(
+                        this.$t("tronSettingGenesisSaveSuccess")
+                    );
+                    this.dialogVisible = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     watch: {

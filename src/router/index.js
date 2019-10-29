@@ -99,10 +99,10 @@ export const constantRoutes = [
     path: '/node',
     component: Layout,
     redirect: '/node/list',
-    name: 'Example',
+    name: 'node',
     children: [{
-        path: 'table',
-        name: 'table',
+        path: 'list',
+        name: 'nodeMenu',
         component: () => import('@/views/node/index'),
         meta: {
           title: 'tronSettingMenuNode',
@@ -135,7 +135,7 @@ export const constantRoutes = [
     path: '/plugin',
     component: Layout,
     redirect: '/plugin/list',
-    name: 'plugin',
+    name: 'pluginMenu',
     meta: {
       title: '插件管理',
       icon: 'example'
@@ -149,6 +149,24 @@ export const constantRoutes = [
         icon: 'plugins'
       }
     }]
+  },
+  {
+    path: '/tronscan',
+    component: Layout,
+    redirect: '/tronscan/list',
+    name: 'tronscanMenu',
+    meta: {
+      title: 'tronscan浏览器',
+      icon: 'example'
+    },
+    children: [{
+      path: 'https://tronscan.org/#/',
+      meta: {
+        title: 'tronscan浏览器',
+        icon: 'link'
+      }
+    }]
+
   },
 
   // 404 page must be placed at the end !!!

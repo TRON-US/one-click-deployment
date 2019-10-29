@@ -15,6 +15,8 @@ export default {
   'tronSettingSave': '保存',
   'tronSettingCancel': '取消',
   'tronSettingPlaceholder': '请填写',
+
+  'tronSettingSelectPlaceholder': '请选择',
   'tronSettingwriteSynchronously': '是否同步写入',
   'tronSettingOpenTransaction': '是否打开transaction',
   'tronSettingIndexDirectory': '是否打开index开关',
@@ -32,6 +34,7 @@ export default {
   'tronSettingNormalNode': '正常节点',
   'tronSettingUnnormalNode': '非正常节点',
   'tronSettingNumberPlaceholder': '填写必须为数字且为正整数',
+  'tronSettingAddressPlaceholder': '请填写正确地址',
   'tronSettingNumberTwoDecimal': '填写必须为数字且最多两位小数',
   'tronSettingBaseSaveSuccess': '保存基础配置成功',
   'tronSettingCrossChainSaveSuccess': '保存跨链配置成功',
