@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-29 11:05:30
+ * @Last Modified time: 2019-10-30 12:05:20
  * @tron node list  
  */
 <template>
@@ -30,7 +30,7 @@
                 >
                     <el-table-column type="selection" width="55"></el-table-column>
                     <el-table-column prop="id" label="ID" align="center"></el-table-column>
-                    <el-table-column prop="nodeName" :label="$t('tronNodeName')" align="center"></el-table-column>
+                    <el-table-column prop="userName" :label="$t('tronNodeName')" align="center"></el-table-column>
                     <el-table-column prop="ip" label="IP/HOST" align="center"></el-table-column>
                     <el-table-column prop="port" label="SSH PORT" align="center"></el-table-column>
                     <el-table-column :label="$t('tronNodeWhetherIsSR')" align="center">
@@ -116,6 +116,7 @@ export default {
     },
     methods: {
         addNodeFun() {
+            this.nodeObj.status = 0;
             this.nodeObj.visible = true;
         },
         operateNodeFun(val) {
@@ -166,7 +167,9 @@ export default {
                     return response.data;
                 })
                 .then(res => {
-                    this.list = res;
+                    let resData = res;
+                    resData.forEach(item => {});
+                    //  this.list = res;
                 })
                 .catch(error => {
                     console.log(error);

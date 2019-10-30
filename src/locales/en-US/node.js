@@ -12,6 +12,7 @@ export default {
   'tronNodeNamePlaceholder': 'Please fill in the node name',
   'tronNodeIpPlaceholder': 'Please fill in IP/HOST',
   'tronNodePortPlaceholder': 'Please fill in PORT',
+  'tronNodePrivateKeyPlaceholder': "Please fill in privateKey",
   'tronNodeSRPlaceholder': 'please choose',
   'tronNodeSave': 'save',
   'tronNodeCancel': 'cancel',

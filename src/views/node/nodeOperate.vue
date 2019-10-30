@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-25 15:47:11
+ * @Last Modified time: 2019-10-30 11:54:52
  * @operation node 
  */
 
@@ -34,10 +34,10 @@
                         :placeholder="$t('tronNodeIDPlaceholder')"
                     ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('tronNodeName')" prop="nodeName">
+                <el-form-item :label="$t('tronNodeName')" prop="userName">
                     <el-input
                         :maxlength="50"
-                        v-model="nodeForm.nodeName"
+                        v-model="nodeForm.userName"
                         :placeholder="$t('tronNodeNamePlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -65,6 +65,14 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="privateKey" prop="privateKey" v-if="nodeForm.isSR">
+                    <el-input
+                        type="textarea"
+                        :maxlength="50"
+                        v-model="nodeForm.privateKey"
+                        :placeholder="$t('tronNodePrivateKeyPlaceholder')"
+                    ></el-input>
+                </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
                     <el-button
                         type="primary"
@@ -78,10 +86,29 @@
 </template>
 <script>
 import { addNote, editNote } from "@/api/nodeApi";
+import { isvalidateNum } from "@/utils/validate.js";
+import TronWeb from "tronweb";
 export default {
     name: "operationNode",
     props: ["nodeDialogVisible", "detailInfoData", "editStatus"],
     data() {
+        const validNum = (rule, value, callback) => {
+            if (!isvalidateNum(value)) {
+                callback(new Error(this.$t("tronSettingNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
+        const validPrivateKey = (rule, value, callback) => {
+            console.log(value, "value");
+            const address = TronWeb.address.fromPrivateKey(value);
+            console.log(address);
+            if (!TronWeb.isAddress(address)) {
+                callback(new Error(this.$t("tronSettingAddressPlaceholder")));
+            } else {
+                callback();
+            }
+        };
         return {
             classLoading: false,
             dialogVisible: this.nodeDialogVisible,
@@ -91,7 +118,7 @@ export default {
                     : this.$t("tronNodeAdd"),
             nodeForm: {
                 id: "",
-                nodeName: "",
+                userName: "",
                 ip: "",
                 port: "",
                 isSR: ""
@@ -106,9 +133,14 @@ export default {
                         required: true,
                         message: this.$t("tronNodeIDPlaceholder"),
                         trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validNum,
+                        trigger: "blur"
                     }
                 ],
-                nodeName: [
+                userName: [
                     {
                         required: true,
                         message: this.$t("tronNodeNamePlaceholder"),
@@ -120,16 +152,35 @@ export default {
                     message: this.$t("tronNodeIpPlaceholder"),
                     trigger: "blur"
                 },
-                port: {
-                    required: true,
-                    message: this.$t("tronNodePortPlaceholder"),
-                    trigger: "blur"
-                },
+                port: [
+                    {
+                        required: true,
+                        message: this.$t("tronNodePortPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ],
                 isSR: {
                     required: true,
                     message: this.$t("tronNodeSRPlaceholder"),
                     trigger: "blur"
-                }
+                },
+                privateKey: [
+                    {
+                        required: true,
+                        message: this.$t("tronNodePrivateKeyPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validPrivateKey,
+                        trigger: "blur"
+                    }
+                ]
             }
         };
     },

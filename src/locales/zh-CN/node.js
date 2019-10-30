@@ -13,6 +13,7 @@ export default {
   'tronNodeIpPlaceholder': '请填写IP/HOST',
   'tronNodePortPlaceholder': '请填写PORT',
   'tronNodeSRPlaceholder': '请选择是否为SR',
+  'tronNodePrivateKeyPlaceholder': "请填写privateKey",
   'tronNodeSave': '保存',
   'tronNodeCancel': '取消',
   'tronNodeDetermine': '确定',
