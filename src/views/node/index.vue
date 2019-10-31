@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-31 16:21:34
+ * @Last Modified time: 2019-10-31 18:03:50
  * @tron node list  
  */
 <template>
@@ -81,6 +81,7 @@
                 <el-button
                     style="margin-left: 30px;"
                     :loading="deplogUploadLoading"
+                    v-if="deploymentLoadingTips"
                 >{{$t('deploymentSearchLoading')}}</el-button>
             </div>
             <div v-else>
@@ -137,11 +138,13 @@ export default {
     data() {
         return {
             list: [],
+
             currentlogInfoData: [],
             deplogUploadLoading: false,
             deploymentDialogVisible: false,
             isDeploymentStatus: false,
             currentLogDialog: false,
+            deploymentLoadingTips: true,
             listLoading: false,
             currentPath: "",
             filterItem: {
@@ -213,7 +216,6 @@ export default {
             this.deplogUploadLoading = true;
             this.multipleSelectionIds.forEach(async item => {
                 await this.deployNodeApiFun(item);
-                // this.deploymentDialogVisible = false;
             });
         },
         deployNodeApiFun(item) {
@@ -230,10 +232,11 @@ export default {
                 })
                 .catch(err => {
                     this.deplogUploadLoading = false;
-                    // this.$message({
-                    //     type: "info",
-                    //     message: this.$t("deploymentFail")
-                    // });
+                    this.isDeploymentStatus = false;
+                    this.$message({
+                        type: "info",
+                        message: this.$t("deploymentFail")
+                    });
                 });
         },
         viewNodeListFun(_id) {
@@ -251,9 +254,20 @@ export default {
                                 await this.getDataListFun();
                                 this.deplogUploadLoading = false;
                                 this.deploymentDialogVisible = false;
+                                this.isDeploymentStatus = false;
                                 this.$message({
                                     type: "info",
                                     message: this.$t("deploymentSuccess")
+                                });
+                            } else if (item == "ssh connect failed") {
+                                clearInterval(timer);
+                                this.deplogUploadLoading = false;
+                                this.deploymentDialogVisible = false;
+                                this.isDeploymentStatus = false;
+                                this.deploymentLoadingTips = false;
+                                this.$message({
+                                    type: "info",
+                                    message: this.$t("deploymentFail")
                                 });
                             }
                         });

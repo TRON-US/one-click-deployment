@@ -222,7 +222,6 @@ export default {
                                 port: ""
                             });
                         });
-                        console.log(newIpList);
                         this.seedNodeIpList = newIpList;
                     }
                 })

@@ -40,7 +40,8 @@ export default {
                     stageBackground: "rgba(0, 0, 0,0)",
                     popover: {
                         title: "配置管理",
-                        description: "默认所有设置,点击修改",
+                        description:
+                            "默认所有设置,可以进行个性化修改或者默认设置",
                         position: "right"
                     }
                 },
@@ -59,7 +60,7 @@ export default {
                     stageBackground: "rgba(0, 0, 0,0)",
                     popover: {
                         title: "节点部署",
-                        description: "最后部署节点信息",
+                        description: "最后部署节点信息 支持单个部署和批量部署",
                         position: "right"
                     }
                 }
