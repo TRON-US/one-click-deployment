@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-30 15:24:44
+ * @Last Modified time: 2019-10-31 11:53:33
  * @tron setting list  
  */
 <template>
@@ -131,10 +131,10 @@
         <p2p-setting
             :branchDialogVisible="p2pSetting.visible"
             :detailInfoData="p2pSetting.detail"
-            :nodeListData="seedNodeIpList"
             @addSettingSuccess="addSettingSuccessFun"
             @dialog="p2pSettingDetailFun"
         ></p2p-setting>
+        <!--       :nodeListData="seedNodeIpList" -->
         <databaseSetting
             :branchDialogVisible="databaseSettingForm.visible"
             :detailInfoData="databaseSettingForm.detail"

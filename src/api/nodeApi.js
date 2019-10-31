@@ -55,3 +55,13 @@ export function deployNodeApi(params) {
     params
   })
 }
+
+
+// getLogInfo
+export function deployLogInfoApi(params) {
+  return request({
+    url: '/getLogInfo',
+    method: 'get',
+    params
+  })
+}

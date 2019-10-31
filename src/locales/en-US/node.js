@@ -8,6 +8,7 @@ export default {
   'tronNodeOperate': 'operating',
   'tronNodeModify': 'modify',
   'tronNodeDelete': 'delete',
+  'tronNodeView': 'Node log',
   'tronNodeIDPlaceholder': 'Please fill in the ID',
   'tronNodeNamePlaceholder': 'Please fill in the user name',
   'tronNodeIpPlaceholder': 'Please fill in IP/HOST',
@@ -26,6 +27,7 @@ export default {
   'tronNodesMaxTips': 'Exceed the maximum node add limit',
   'deploymentUpload': 'First, you need to fill in the local jar package file address before batch deployment.',
   'deploymentSuccess': 'Successful deployment',
+  'deploymentLoading': 'Deploying, please wait',
   'deploymentFail': 'Deployment failed',
 
 

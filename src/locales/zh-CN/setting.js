@@ -15,6 +15,7 @@ export default {
   'tronSettingSave': '保存',
   'tronSettingCancel': '取消',
   'tronSettingPlaceholder': '请填写',
+  'tronSettingPortPlaceholder': '请填写当前端口',
 
   'tronSettingSelectPlaceholder': '请选择',
   'tronSettingwriteSynchronously': '是否同步写入',

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-31 11:19:29
+ * @Last Modified time: 2019-10-31 12:27:03
  * @tron node list  
  */
 <template>
@@ -45,7 +45,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="$t('tronNodeOperate')" align="center">
+                    <el-table-column :label="$t('tronNodeOperate')" align="center" width="300">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
@@ -77,8 +77,24 @@
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                 <div slot="tip" class="el-upload__tip">{{$t('deploymentUpload')}}</div>
             </el-upload>-->
-            <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="currentPath"></el-input>
-            <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
+            <div v-if="isDeploymentStatus">
+                <el-timeline>
+                    <el-timeline-item
+                        type="primary"
+                        v-for="(activity, index) in logInfoData"
+                        :key="index"
+                    >{{activity}}</el-timeline-item>
+                </el-timeline>
+            </div>
+            <div v-else>
+                <el-input
+                    type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 4}"
+                    v-model="currentPath"
+                ></el-input>
+                <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
+            </div>
+
             <span slot="footer" class="dialog-footer">
                 <el-button @click="deploymentDialogVisible = false">{{$t('tronNodeCancel')}}</el-button>
                 <el-button
@@ -98,7 +114,12 @@
     </div>
 </template>
 <script>
-import { allNodeInfo, deleteNote, deployNodeApi } from "@/api/nodeApi.js";
+import {
+    allNodeInfo,
+    deleteNote,
+    deployNodeApi,
+    deployLogInfoApi
+} from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
 export default {
     name: "nodelist",
@@ -110,6 +131,7 @@ export default {
             list: [],
             deplogUploadLoading: false,
             deploymentDialogVisible: false,
+            isDeploymentStatus: false,
             listLoading: false,
             currentPath: "",
             filterItem: {
@@ -125,6 +147,7 @@ export default {
                 detail: {},
                 status: 0
             },
+            logInfoData: [],
             multipleSelection: []
         };
     },
@@ -171,21 +194,24 @@ export default {
             this.nodeObj.visible = true;
         },
         deployMentFun() {
+            // deploy
             this.deplogUploadLoading = true;
             this.multipleSelectionIds.forEach(async item => {
                 await this.deployNodeApiFun(item);
+                // this.deploymentDialogVisible = false;
             });
         },
         deployNodeApiFun(item) {
+            // deploy
             console.log(item);
-
             deployNodeApi(item)
                 .then(res => {
                     this.$message({
                         type: "success",
-                        message: this.$t("deploymentSuccess")
+                        message: this.$t("deploymentLoading")
                     });
-                    this.deplogUploadLoading = false;
+                    this.isDeploymentStatus = true;
+                    this.viewNodeListFun(item.id);
                 })
                 .catch(err => {
                     this.deplogUploadLoading = false;
@@ -194,6 +220,36 @@ export default {
                     //     message: this.$t("deploymentFail")
                     // });
                 });
+        },
+        viewNodeListFun(_id) {
+            // view current node detail
+            let timer = setInterval(() => {
+                deployLogInfoApi({ id: _id })
+                    .then(response => {
+                        console.log(response);
+                        return response.data;
+                        // this.$message.success(this.$t("tronNodesDeleteSuccess"));
+                        // this.getDataListFun();
+                    })
+                    .then(res => {
+                        this.logInfoData = res.logInfo;
+                        this.logInfoData.forEach(item => {
+                            console.log(item);
+                            if (item == "Finish") {
+                                clearInterval(timer);
+                                this.deplogUploadLoading = false;
+                                this.$message({
+                                    type: "info",
+                                    message: this.$t("deploymentSuccess")
+                                });
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        this.deplogUploadLoading = false;
+                        clearInterval(timer);
+                    });
+            }, 2000);
         },
         bulkDeploymentFun() {
             if (this.multipleSelectionIds.length > 0) {
@@ -284,6 +340,7 @@ export default {
                     });
                 });
         },
+
         nodeDetailFun(val) {
             this.nodeObj.visible = val;
         },

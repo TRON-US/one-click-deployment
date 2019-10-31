@@ -8,6 +8,7 @@ export default {
   'tronNodeOperate': '操作',
   'tronNodeModify': '修改',
   'tronNodeDelete': '删除',
+  'tronNodeView': '节点日志',
   'tronNodeIDPlaceholder': '请填写ID',
   'tronNodeNamePlaceholder': '请填写用户名称',
   'tronNodeIpPlaceholder': '请填写IP/HOST',
@@ -26,6 +27,7 @@ export default {
   'tronNodesMaxTips': '超过最大节点添加限制',
   'deploymentUpload': '批量部署前首先需要填写本地jar包文件地址',
   'deploymentSuccess': '部署成功',
+  'deploymentLoading': '正在部署,请稍候',
   'deploymentFail': '部署失败',
 
 

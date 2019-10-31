@@ -15,6 +15,7 @@ export default {
   'tronSettingSave': 'save',
   'tronSettingCancel': 'cancel',
   'tronSettingPlaceholder': 'Please fill out',
+  'tronSettingPortPlaceholder': 'Please fill in the current port',
   'tronSettingSelectPlaceholder': 'please choose',
   'tronSettingwriteSynchronously': 'Whether to write synchronously?',
   'tronSettingIndexDirectory': 'Whether to open the index switch?',

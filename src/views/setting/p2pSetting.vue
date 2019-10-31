@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-30 17:32:38
+ * @Last Modified time: 2019-10-31 11:56:50
  * @setting p2p setting 
  */
 
@@ -83,18 +83,25 @@
                     >
                         <el-checkbox
                             class="checkBox"
-                            v-for="(item,ind) in nodeListData"
+                            v-for="(item,ind) in seedNodeIpList"
                             :key="item.ip"
                             :label="item.ip"
                         >
-                            {{item.ip}}:
+                            <!-- {{item.ip}}: -->
                             <el-input
-                                style="margin-left:10px;width:100px;"
+                                size="small"
+                                :placeholder="$t('tronSettingPortPlaceholder')"
+                                v-model="item.port"
+                            >
+                                <template slot="prepend">{{item.ip}}</template>
+                            </el-input>
+                            <!-- <el-input
+                                style="margin-left:10px;"
                                 size="mini"
                                 :maxlength="50"
-                                v-model="item.port"
-                                :placeholder="$t('tronSettingPlaceholder')"
-                            ></el-input>
+                                v-model=""
+                              
+                            ></el-input>-->
                         </el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
@@ -114,7 +121,7 @@ import { mapGetters } from "vuex";
 import { p2pSettingApi } from "@/api/settingApi";
 import { isvalidateNum } from "@/utils/validate.js";
 export default {
-    name: "baseSetting",
+    name: "p2pSettingDialog",
     props: [
         "branchDialogVisible",
         "detailInfoData",
@@ -143,6 +150,7 @@ export default {
                 connectFactor: "",
                 node_activeConnectFactor: ""
             },
+            seedNodeIpList: [],
             ipOptions: [],
             p2pSettingRules: {
                 node_p2p_version: [
@@ -198,19 +206,43 @@ export default {
             }
         };
     },
+    created() {
+        this.getOriginSettingFun();
+    },
     methods: {
+        getOriginSettingFun() {
+            this.$store
+                .dispatch("tronSetting/getOriginConfig")
+                .then(response => {
+                    this.originSettingObj = response;
+                    if (response.p2pConfig.seed_node_ip_list) {
+                        let newIpList = [];
+                        response.p2pConfig.seed_node_ip_list.forEach(item => {
+                            newIpList.push({
+                                ip: item,
+                                port: ""
+                            });
+                        });
+                        console.log(newIpList);
+                        this.seedNodeIpList = newIpList;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         openDialogFun() {},
         closeFun() {
             // this.$refs.p2pSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
         checkBoxChangeFun(val) {
-            console.log(val);
-            // this.p2pSettingForm.
+            console.log(val, this.seedNodeIpList);
+
             let newipOptions = [];
-            val.forEach(item => {
-                newipOptions.push(`${item}":"18889`);
-            });
+            // val.forEach(item => {
+            //     newipOptions.push(`${item}":${item.port}`);
+            // });
             console.log(newipOptions);
             this.ipOptions = newipOptions;
         },
@@ -240,18 +272,18 @@ export default {
                     //     );
                     // });
                     // console.log(newNodeList);
-                    p2pSettingApi(newp2pForm, this.ipOptions)
-                        .then(response => {
-                            this.$emit("addSettingSuccess", true);
-                            this.$message.success(
-                                this.$t("tronSettingp2pSaveSuccess")
-                            );
-                            this.dialogVisible = false;
-                        })
-                        .catch(error => {
-                            // this.listLoading = false;
-                            console.log(error);
-                        });
+                    // p2pSettingApi(newp2pForm, this.ipOptions)
+                    //     .then(response => {
+                    //         this.$emit("addSettingSuccess", true);
+                    //         this.$message.success(
+                    //             this.$t("tronSettingp2pSaveSuccess")
+                    //         );
+                    //         this.dialogVisible = false;
+                    //     })
+                    //     .catch(error => {
+                    //         // this.listLoading = false;
+                    //         console.log(error);
+                    //     });
                 } else {
                     console.log("error submit!!");
                     return false;
