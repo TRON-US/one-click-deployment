@@ -162,7 +162,7 @@ export const constantRoutes = [
     children: [{
       path: 'https://tronscan.org/#/',
       meta: {
-        title: 'tronscan浏览器',
+        title: 'tronscanMenu',
         icon: 'link'
       }
     }]

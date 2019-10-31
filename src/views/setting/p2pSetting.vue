@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 19:33:16
+ * @Last Modified time: 2019-10-30 17:32:38
  * @setting p2p setting 
  */
 
@@ -16,7 +16,7 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             v-loading="classLoading"
-            width="1200px"
+            width="800px"
             center
         >
             <el-form
@@ -71,19 +71,31 @@
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input-number>
                 </el-form-item>
-                <el-form-item label="seedNode">
+                <el-form-item label="seedNode" prop="seedNode">
                     <!-- <el-input
                         :maxlength="50"
                         v-model="p2pSettingForm.seedNode"
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>-->
-                    <el-checkbox-group v-model="p2pSettingForm.seed_node_ip_list">
+                    <el-checkbox-group
+                        v-model="p2pSettingForm.defalutSelectedIp"
+                        @change="checkBoxChangeFun"
+                    >
                         <el-checkbox
                             class="checkBox"
                             v-for="(item,ind) in nodeListData"
-                            :key="item"
-                            :label="item"
-                        >{{item}}</el-checkbox>
+                            :key="item.ip"
+                            :label="item.ip"
+                        >
+                            {{item.ip}}:
+                            <el-input
+                                style="margin-left:10px;width:100px;"
+                                size="mini"
+                                :maxlength="50"
+                                v-model="item.port"
+                                :placeholder="$t('tronSettingPlaceholder')"
+                            ></el-input>
+                        </el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
@@ -192,6 +204,16 @@ export default {
             // this.$refs.p2pSettingDialogForm.resetFields();
             this.dialogVisible = false;
         },
+        checkBoxChangeFun(val) {
+            console.log(val);
+            // this.p2pSettingForm.
+            let newipOptions = [];
+            val.forEach(item => {
+                newipOptions.push(`${item}":"18889`);
+            });
+            console.log(newipOptions);
+            this.ipOptions = newipOptions;
+        },
         cancelFun() {
             // this.$refs.p2pSettingDialogForm.resetFields();
             this.dialogVisible = false;
@@ -212,13 +234,13 @@ export default {
                     let nodeList = this.p2pSettingForm.seed_node_ip_list;
                     console.log(nodeList);
                     let newNodeList = [];
-                    nodeList.forEach(item => {
-                        newNodeList.push(
-                            item.split(":")[0] + '":"' + item.split(":")[1]
-                        );
-                    });
-                    console.log(newNodeList);
-                    p2pSettingApi(newp2pForm, newNodeList)
+                    // nodeList.forEach(item => {
+                    //     newNodeList.push(
+                    //         item.split(":")[0] + '":"' + item.split(":")[1]
+                    //     );
+                    // });
+                    // console.log(newNodeList);
+                    p2pSettingApi(newp2pForm, this.ipOptions)
                         .then(response => {
                             this.$emit("addSettingSuccess", true);
                             this.$message.success(

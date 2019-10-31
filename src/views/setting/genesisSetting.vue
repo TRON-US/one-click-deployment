@@ -32,7 +32,7 @@
                         :key="index"
                     >
                         <el-button
-                            @click="currentAssetFun(item)"
+                            @click="currentAssetFun(item,index)"
                             style="width:100%"
                         >{{item.accountName}}</el-button>
                     </el-row>
@@ -43,7 +43,10 @@
                         v-for="(item,index) in detailInfoData.genesis_block_witnesses"
                         :key="index"
                     >
-                        <el-button style="width:100%">{{item.address}}</el-button>
+                        <el-button
+                            @click="currenWitenessFun(item,index)"
+                            style="width:100%"
+                        >{{item.address}}</el-button>
                     </el-row>
                 </div>
                 <!-- <el-form-item label-width="0" class="textCenter">
@@ -150,13 +153,7 @@
                             :placeholder="$t('tronSettingPlaceholder')"
                         ></el-input>
                     </el-form-item>
-                    <el-form-item label="privateKey" prop="privateKey">
-                        <el-input
-                            :maxlength="50"
-                            v-model="witenessForm.privateKey"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
+
                     <el-form-item label-width="0" class="textCenter">
                         <el-button
                             type="primary"
@@ -205,6 +202,10 @@ export default {
         };
         return {
             classLoading: false,
+            assetEditStatus: 0,
+            currentAssetEditInd: "",
+            currentWitenessEditInd: "",
+            witenessEditStatus: 0,
             dialogVisible: this.genesisDialogVisible,
             dialogTitle: this.$t("tronSettingGenesis"),
             innerAssetVisible: false,
@@ -312,8 +313,17 @@ export default {
     },
     methods: {
         openDialogFun() {},
-        currentAssetFun(item) {
-            console.log(item);
+        currentAssetFun(item, ind) {
+            this.assetForm = item;
+            this.assetEditStatus = 1;
+            this.currentAssetEditInd = ind;
+            this.innerAssetVisible = true;
+        },
+        currenWitenessFun(item, ind) {
+            this.witenessForm = item;
+            this.witenessEditStatus = 1;
+            this.currentWitenessEditInd = ind;
+            this.innerWitenessVisible = true;
         },
         closeFun() {
             // this.$refs.genesisSettingDialogForm.resetFields();
@@ -327,9 +337,15 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     console.log(this.assetForm);
-                    this.genesisSetting.genesis_block_assets.push(
-                        this.assetForm
-                    );
+                    if (this.assetEditStatus == 0) {
+                        this.genesisSetting.genesis_block_assets.push(
+                            this.assetForm
+                        );
+                    } else {
+                        this.genesisSetting.genesis_block_assets[
+                            this.currentAssetEditInd
+                        ] = this.assetForm;
+                    }
 
                     const newSettingForm = {
                         assets: this.genesisSetting.genesis_block_assets,
@@ -341,17 +357,18 @@ export default {
                         item.url = `"${item.url}"`;
                     });
                     console.log(newSettingForm);
-                    // genesisSettingApi(newSettingForm)
-                    //     .then(response => {
-                    //         this.$emit("addSettingSuccess", true);
-                    //         this.$message.success(
-                    //             this.$t("tronSettingGenesisSaveSuccess")
-                    //         );
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         console.log(error);
-                    //     });
+                    genesisSettingApi(newSettingForm)
+                        .then(response => {
+                            this.$emit("addSettingSuccess", true);
+                            this.$message.success(
+                                this.$t("tronSettingGenesisSaveSuccess")
+                            );
+                            this.innerAssetVisible = false;
+                            this.assetEditStatus = 0;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;
@@ -362,9 +379,16 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     console.log(this.witenessForm);
-                    this.genesisSetting.genesis_block_witnesses.push(
-                        this.witenessForm
-                    );
+                    if (this.witenessEditStatus == 0) {
+                        this.genesisSetting.genesis_block_witnesses.push(
+                            this.witenessForm
+                        );
+                    } else {
+                        this.genesisSetting.genesis_block_witnesses[
+                            this.currentWitenessEditInd
+                        ] = this.witenessForm;
+                    }
+
                     const newSettingForm = {
                         assets: this.genesisSetting.genesis_block_assets,
                         witness: this.genesisSetting.genesis_block_witnesses
@@ -381,7 +405,8 @@ export default {
                             this.$message.success(
                                 this.$t("tronSettingGenesisSaveSuccess")
                             );
-                            // this.dialogVisible = false;
+                            this.witenessEditStatus = 0;
+                            this.innerWitenessVisible = false;
                         })
                         .catch(error => {
                             // this.listLoading = false;

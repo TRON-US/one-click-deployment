@@ -29,6 +29,7 @@ export default {
   'tronSettingMenuNode': '节点管理',
   'tronSettingMenuSetting': '配置管理',
   'tronSettingMenuPlugin': '导入插件',
+  'tronscanMenu': 'tronscan',
   'tronSettingMenuDashboard': '一键部署系统',
   'tronSettingChooseLanguage': '选择语言',
   'tronSettingNormalNode': '正常节点',

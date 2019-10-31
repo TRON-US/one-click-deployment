@@ -2,14 +2,14 @@ export default {
   'tronNodeAdd': 'Add node',
   'tronNodeEditTitle': 'Operation node',
   'tronNodeBulkDeployment': 'Bulk deployment',
-  'tronNodeName': 'Node name',
+  'tronNodeName': 'user name',
   'tronNodeWhetherIsSR': 'Whether it is SR',
   'tronNodeStatus': 'Node status',
   'tronNodeOperate': 'operating',
   'tronNodeModify': 'modify',
   'tronNodeDelete': 'delete',
   'tronNodeIDPlaceholder': 'Please fill in the ID',
-  'tronNodeNamePlaceholder': 'Please fill in the node name',
+  'tronNodeNamePlaceholder': 'Please fill in the user name',
   'tronNodeIpPlaceholder': 'Please fill in IP/HOST',
   'tronNodePortPlaceholder': 'Please fill in PORT',
   'tronNodePrivateKeyPlaceholder': "Please fill in privateKey",
@@ -21,6 +21,12 @@ export default {
   'tronNodesDeleteTips': 'This action will delete the node information, will it continue?',
   'tronNodesDeleteTipsTitle': 'prompt',
   'tronNodesDeleteSuccess': "Delete node information successfully",
-  'tronNodesNoData': 'No data'
+  'tronNodesNoData': 'No data',
+  'tronNodesCancelDelete': 'Undelete',
+  'tronNodesMaxTips': 'Exceed the maximum node add limit',
+  'deploymentUpload': 'First, you need to fill in the local jar package file address before batch deployment.',
+  'deploymentSuccess': 'Successful deployment',
+  'deploymentFail': 'Deployment failed',
+
 
 }

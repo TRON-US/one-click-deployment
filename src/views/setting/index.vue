@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 19:28:59
+ * @Last Modified time: 2019-10-30 15:24:44
  * @tron setting list  
  */
 <template>
@@ -215,8 +215,15 @@ export default {
                 .then(response => {
                     this.originSettingObj = response;
                     if (response.p2pConfig.seed_node_ip_list) {
-                        this.seedNodeIpList =
-                            response.p2pConfig.seed_node_ip_list;
+                        let newIpList = [];
+                        response.p2pConfig.seed_node_ip_list.forEach(item => {
+                            newIpList.push({
+                                ip: item,
+                                port: ""
+                            });
+                        });
+                        console.log(newIpList);
+                        this.seedNodeIpList = newIpList;
                     }
                 })
                 .catch(error => {
@@ -229,7 +236,10 @@ export default {
                 .then(response => {
                     this.genesisSetting.detail = response.genesisSetting;
                     this.baseSetting.detail = response.baseSettingConfig;
-                    this.p2pSetting.detail = response.p2pConfig;
+                    this.p2pSetting.detail = {
+                        ...response.p2pConfig,
+                        defalutSelectedIp: []
+                    };
                     this.databaseSettingForm.detail = response.dbConfig;
                     this.networkSetting.detail = response.networkConfig;
                     this.crossChainSetting.detail = response.crossChainConfig;

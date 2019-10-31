@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-30 12:05:20
+ * @Last Modified time: 2019-10-31 11:19:29
  * @tron node list  
  */
 <template>
@@ -62,6 +62,32 @@
                 </el-table>
             </div>
         </div>
+        <el-dialog
+            :title="$t('tronNodeBulkDeployment')"
+            :visible.sync="deploymentDialogVisible"
+            width="500px"
+        >
+            <!-- <el-upload
+                action
+                class="upload-demo"
+                ref="upload"
+                :on-change="beforeUploadChange"
+                :auto-upload="false"
+            >
+                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                <div slot="tip" class="el-upload__tip">{{$t('deploymentUpload')}}</div>
+            </el-upload>-->
+            <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="currentPath"></el-input>
+            <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="deploymentDialogVisible = false">{{$t('tronNodeCancel')}}</el-button>
+                <el-button
+                    type="primary"
+                    @click="deployMentFun"
+                    :loading="deplogUploadLoading"
+                >{{$t('tronNodeSave')}}</el-button>
+            </span>
+        </el-dialog>
         <operate-node
             :nodeDialogVisible="nodeObj.visible"
             :editStatus="nodeObj.status"
@@ -82,7 +108,10 @@ export default {
     data() {
         return {
             list: [],
+            deplogUploadLoading: false,
+            deploymentDialogVisible: false,
             listLoading: false,
+            currentPath: "",
             filterItem: {
                 name: ""
             },
@@ -103,7 +132,10 @@ export default {
         multipleSelectionIds() {
             let arr = [];
             this.multipleSelection.map(item => {
-                arr.push({ ip: item.ip, port: item.port });
+                arr.push({
+                    id: item.id,
+                    path: this.currentPath
+                });
             });
             return arr;
         }
@@ -115,7 +147,21 @@ export default {
         this.getDataListFun();
     },
     methods: {
+        beforeUploadChange(file) {
+            console.log(file);
+        },
+        sortIdFun(a, b) {
+            return a.id - b.id;
+        },
         addNodeFun() {
+            if (this.list.length > 50) {
+                this.$message({
+                    type: "info",
+                    message: this.$t("tronNodesMaxTips")
+                });
+                return;
+            }
+            this.nodeObj.detail = {};
             this.nodeObj.status = 0;
             this.nodeObj.visible = true;
         },
@@ -124,36 +170,62 @@ export default {
             this.nodeObj.status = 1;
             this.nodeObj.visible = true;
         },
+        deployMentFun() {
+            this.deplogUploadLoading = true;
+            this.multipleSelectionIds.forEach(async item => {
+                await this.deployNodeApiFun(item);
+            });
+        },
+        deployNodeApiFun(item) {
+            console.log(item);
+
+            deployNodeApi(item)
+                .then(res => {
+                    this.$message({
+                        type: "success",
+                        message: this.$t("deploymentSuccess")
+                    });
+                    this.deplogUploadLoading = false;
+                })
+                .catch(err => {
+                    this.deplogUploadLoading = false;
+                    // this.$message({
+                    //     type: "info",
+                    //     message: this.$t("deploymentFail")
+                    // });
+                });
+        },
         bulkDeploymentFun() {
             if (this.multipleSelectionIds.length > 0) {
-                this.$confirm("此操作将批量部署, 是否继续?", "提示", {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    type: "warning"
-                })
-                    .then(() => {
-                        console.log(this.multipleSelectionIds);
-                        deployNodeApi(this.multipleSelectionIds)
-                            .then(res => {
-                                this.$message({
-                                    type: "success",
-                                    message: "部署成功!"
-                                });
-                                this.fetchData();
-                            })
-                            .catch(err => {
-                                this.$message({
-                                    type: "info",
-                                    message: "部署失败"
-                                });
-                            });
-                    })
-                    .catch(() => {
-                        this.$message({
-                            type: "info",
-                            message: "已取消删除"
-                        });
-                    });
+                this.deploymentDialogVisible = true;
+                // this.$confirm("此操作将批量部署, 是否继续?", "提示", {
+                //     confirmButtonText: "确定",
+                //     cancelButtonText: "取消",
+                //     type: "warning"
+                // })
+                //     .then(() => {
+                //         console.log(this.multipleSelectionIds);
+                //         deployNodeApi(this.multipleSelectionIds)
+                //             .then(res => {
+                //                 this.$message({
+                //                     type: "success",
+                //                     message: "部署成功!"
+                //                 });
+                //                 this.fetchData();
+                //             })
+                //             .catch(err => {
+                //                 this.$message({
+                //                     type: "info",
+                //                     message: "部署失败"
+                //                 });
+                //             });
+                //     })
+                //     .catch(() => {
+                //         this.$message({
+                //             type: "info",
+                //             message: "已取消删除"
+                //         });
+                //     });
             } else {
                 this.$message({
                     type: "warning",
@@ -168,8 +240,7 @@ export default {
                 })
                 .then(res => {
                     let resData = res;
-                    resData.forEach(item => {});
-                    //  this.list = res;
+                    this.list = resData.sort(this.sortIdFun);
                 })
                 .catch(error => {
                     console.log(error);
@@ -209,7 +280,7 @@ export default {
                 .catch(() => {
                     this.$message({
                         type: "info",
-                        message: "已取消删除"
+                        message: this.$t("tronNodesCancelDelete")
                     });
                 });
         },

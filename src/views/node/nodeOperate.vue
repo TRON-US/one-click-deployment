@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-30 11:54:52
+ * @Last Modified time: 2019-10-30 14:36:41
  * @operation node 
  */
 
@@ -32,6 +32,7 @@
                         :maxlength="50"
                         v-model="nodeForm.id"
                         :placeholder="$t('tronNodeIDPlaceholder')"
+                        :disabled="editStatus ==1"
                     ></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('tronNodeName')" prop="userName">
@@ -68,7 +69,7 @@
                 <el-form-item label="privateKey" prop="privateKey" v-if="nodeForm.isSR">
                     <el-input
                         type="textarea"
-                        :maxlength="50"
+                        :maxlength="100"
                         v-model="nodeForm.privateKey"
                         :placeholder="$t('tronNodePrivateKeyPlaceholder')"
                     ></el-input>
@@ -187,12 +188,14 @@ export default {
     methods: {
         openDialogFun() {},
         closeFun() {
-            this.$refs.nodeDialogForm.resetFields();
+            // this.$refs.nodeDialogForm.resetFields();
             this.dialogVisible = false;
+            this.$emit("addNodeSuccess", true);
         },
         cancelFun() {
-            this.$refs.nodeDialogForm.resetFields();
+            // this.$refs.nodeDialogForm.resetFields();
             this.dialogVisible = false;
+            this.$emit("addNodeSuccess", true);
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
