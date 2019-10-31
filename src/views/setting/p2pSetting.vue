@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-31 11:56:50
+ * @Last Modified time: 2019-10-31 16:20:52
  * @setting p2p setting 
  */
 
@@ -72,11 +72,6 @@
                     ></el-input-number>
                 </el-form-item>
                 <el-form-item label="seedNode" prop="seedNode">
-                    <!-- <el-input
-                        :maxlength="50"
-                        v-model="p2pSettingForm.seedNode"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>-->
                     <el-checkbox-group
                         v-model="p2pSettingForm.defalutSelectedIp"
                         @change="checkBoxChangeFun"
@@ -87,21 +82,13 @@
                             :key="item.ip"
                             :label="item.ip"
                         >
-                            <!-- {{item.ip}}: -->
                             <el-input
                                 size="small"
                                 :placeholder="$t('tronSettingPortPlaceholder')"
                                 v-model="item.port"
                             >
-                                <template slot="prepend">{{item.ip}}</template>
+                                <template slot="prepend" style="width:100px">{{item.ip}}</template>
                             </el-input>
-                            <!-- <el-input
-                                style="margin-left:10px;"
-                                size="mini"
-                                :maxlength="50"
-                                v-model=""
-                              
-                            ></el-input>-->
                         </el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
@@ -151,7 +138,7 @@ export default {
                 node_activeConnectFactor: ""
             },
             seedNodeIpList: [],
-            ipOptions: [],
+            checkedSeedNodeList: [],
             p2pSettingRules: {
                 node_p2p_version: [
                     {
@@ -220,10 +207,9 @@ export default {
                         response.p2pConfig.seed_node_ip_list.forEach(item => {
                             newIpList.push({
                                 ip: item,
-                                port: ""
+                                port: "18889"
                             });
                         });
-                        console.log(newIpList);
                         this.seedNodeIpList = newIpList;
                     }
                 })
@@ -237,14 +223,7 @@ export default {
             this.dialogVisible = false;
         },
         checkBoxChangeFun(val) {
-            console.log(val, this.seedNodeIpList);
-
-            let newipOptions = [];
-            // val.forEach(item => {
-            //     newipOptions.push(`${item}":${item.port}`);
-            // });
-            console.log(newipOptions);
-            this.ipOptions = newipOptions;
+            this.checkedSeedNodeList = val;
         },
         cancelFun() {
             // this.$refs.p2pSettingDialogForm.resetFields();
@@ -264,26 +243,32 @@ export default {
                     };
 
                     let nodeList = this.p2pSettingForm.seed_node_ip_list;
-                    console.log(nodeList);
-                    let newNodeList = [];
-                    // nodeList.forEach(item => {
-                    //     newNodeList.push(
-                    //         item.split(":")[0] + '":"' + item.split(":")[1]
-                    //     );
-                    // });
-                    // console.log(newNodeList);
-                    // p2pSettingApi(newp2pForm, this.ipOptions)
-                    //     .then(response => {
-                    //         this.$emit("addSettingSuccess", true);
-                    //         this.$message.success(
-                    //             this.$t("tronSettingp2pSaveSuccess")
-                    //         );
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         // this.listLoading = false;
-                    //         console.log(error);
-                    //     });
+                    // console.log(newp2pForm, this.seedNodeIpList);
+                    let passNodeData = [];
+                    this.seedNodeIpList.forEach(item => {
+                        this.checkedSeedNodeList.forEach(checkedItem => {
+                            if (checkedItem == item.ip) {
+                                passNodeData.push(item);
+                            }
+                        });
+                    });
+                    let newPassNodeData = [];
+                    passNodeData.forEach(item => {
+                        newPassNodeData.push(`${item.ip}":"${item.port}`);
+                    });
+                    // console.log(newPassNodeData);
+                    p2pSettingApi(newp2pForm, newPassNodeData)
+                        .then(response => {
+                            this.$emit("addSettingSuccess", true);
+                            this.$message.success(
+                                this.$t("tronSettingp2pSaveSuccess")
+                            );
+                            this.dialogVisible = false;
+                        })
+                        .catch(error => {
+                            // this.listLoading = false;
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;

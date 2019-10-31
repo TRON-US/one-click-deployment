@@ -4,7 +4,9 @@ export default {
   'tronNodeBulkDeployment': '批量部署',
   'tronNodeName': '用户名称',
   'tronNodeWhetherIsSR': '是否为SR',
-  'tronNodeStatus': '节点状态',
+  'tronNodeStatus': '节点日志',
+  'tronNodeLog': '查看日志',
+  'tronNodeLogNodata': '暂无日志',
   'tronNodeOperate': '操作',
   'tronNodeModify': '修改',
   'tronNodeDelete': '删除',
@@ -25,10 +27,12 @@ export default {
   'tronNodesNoData': '暂无数据',
   'tronNodesCancelDelete': '已取消删除',
   'tronNodesMaxTips': '超过最大节点添加限制',
-  'deploymentUpload': '批量部署前首先需要填写本地jar包文件地址',
+  'deploymentUpload': '批量部署前首先需要填写本地jar包文件地址 如：/Users/xxx/xxx/FullNode.jar',
+  'deploymentSearchLoading': '正在查询节点记录，请稍等',
   'deploymentSuccess': '部署成功',
   'deploymentLoading': '正在部署,请稍候',
   'deploymentFail': '部署失败',
+  'deploymentSelectTips': '请选择至少一个节点'
 
 
 

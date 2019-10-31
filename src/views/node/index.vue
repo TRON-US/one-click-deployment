@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-31 12:27:03
+ * @Last Modified time: 2019-10-31 16:21:34
  * @tron node list  
  */
 <template>
@@ -41,11 +41,14 @@
                     </el-table-column>
                     <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.status">成功</span>
-                            <span v-else>-</span>
+                            <el-button
+                                size="mini"
+                                type="info"
+                                @click="viewLogFun(scope.row.id)"
+                            >{{$t('tronNodeLog')}}</el-button>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="$t('tronNodeOperate')" align="center" width="300">
+                    <el-table-column :label="$t('tronNodeOperate')" align="center" width="200">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
@@ -67,16 +70,6 @@
             :visible.sync="deploymentDialogVisible"
             width="500px"
         >
-            <!-- <el-upload
-                action
-                class="upload-demo"
-                ref="upload"
-                :on-change="beforeUploadChange"
-                :auto-upload="false"
-            >
-                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                <div slot="tip" class="el-upload__tip">{{$t('deploymentUpload')}}</div>
-            </el-upload>-->
             <div v-if="isDeploymentStatus">
                 <el-timeline>
                     <el-timeline-item
@@ -85,6 +78,10 @@
                         :key="index"
                     >{{activity}}</el-timeline-item>
                 </el-timeline>
+                <el-button
+                    style="margin-left: 30px;"
+                    :loading="deplogUploadLoading"
+                >{{$t('deploymentSearchLoading')}}</el-button>
             </div>
             <div v-else>
                 <el-input
@@ -104,6 +101,16 @@
                 >{{$t('tronNodeSave')}}</el-button>
             </span>
         </el-dialog>
+        <el-dialog :title="$t('tronNodeStatus')" :visible.sync="currentLogDialog" width="400px">
+            <el-timeline v-if="currentlogInfoData.length>0">
+                <el-timeline-item
+                    type="primary"
+                    v-for="(activity, index) in currentlogInfoData"
+                    :key="index"
+                >{{activity}}</el-timeline-item>
+            </el-timeline>
+            <span v-else>{{$t("tronNodeLogNodata")}}</span>
+        </el-dialog>
         <operate-node
             :nodeDialogVisible="nodeObj.visible"
             :editStatus="nodeObj.status"
@@ -118,7 +125,8 @@ import {
     allNodeInfo,
     deleteNote,
     deployNodeApi,
-    deployLogInfoApi
+    deployLogInfoApi,
+    nodeInfoApi
 } from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
 export default {
@@ -129,9 +137,11 @@ export default {
     data() {
         return {
             list: [],
+            currentlogInfoData: [],
             deplogUploadLoading: false,
             deploymentDialogVisible: false,
             isDeploymentStatus: false,
+            currentLogDialog: false,
             listLoading: false,
             currentPath: "",
             filterItem: {
@@ -162,17 +172,11 @@ export default {
             });
             return arr;
         }
-        // parames() {
-        //     return Object.assign(this.filterItem, this.listQuery);
-        // }
     },
     created() {
         this.getDataListFun();
     },
     methods: {
-        beforeUploadChange(file) {
-            console.log(file);
-        },
         sortIdFun(a, b) {
             return a.id - b.id;
         },
@@ -193,6 +197,17 @@ export default {
             this.nodeObj.status = 1;
             this.nodeObj.visible = true;
         },
+        viewLogFun(_id) {
+            deployLogInfoApi({ id: _id })
+                .then(response => {
+                    return response.data;
+                })
+                .then(res => {
+                    this.currentlogInfoData = res.logInfo;
+                    this.currentLogDialog = true;
+                })
+                .catch(err => {});
+        },
         deployMentFun() {
             // deploy
             this.deplogUploadLoading = true;
@@ -203,7 +218,7 @@ export default {
         },
         deployNodeApiFun(item) {
             // deploy
-            console.log(item);
+            // console.log(item);
             deployNodeApi(item)
                 .then(res => {
                     this.$message({
@@ -226,18 +241,16 @@ export default {
             let timer = setInterval(() => {
                 deployLogInfoApi({ id: _id })
                     .then(response => {
-                        console.log(response);
                         return response.data;
-                        // this.$message.success(this.$t("tronNodesDeleteSuccess"));
-                        // this.getDataListFun();
                     })
                     .then(res => {
                         this.logInfoData = res.logInfo;
-                        this.logInfoData.forEach(item => {
-                            console.log(item);
+                        this.logInfoData.forEach(async item => {
                             if (item == "Finish") {
                                 clearInterval(timer);
+                                await this.getDataListFun();
                                 this.deplogUploadLoading = false;
+                                this.deploymentDialogVisible = false;
                                 this.$message({
                                     type: "info",
                                     message: this.$t("deploymentSuccess")
@@ -254,38 +267,10 @@ export default {
         bulkDeploymentFun() {
             if (this.multipleSelectionIds.length > 0) {
                 this.deploymentDialogVisible = true;
-                // this.$confirm("此操作将批量部署, 是否继续?", "提示", {
-                //     confirmButtonText: "确定",
-                //     cancelButtonText: "取消",
-                //     type: "warning"
-                // })
-                //     .then(() => {
-                //         console.log(this.multipleSelectionIds);
-                //         deployNodeApi(this.multipleSelectionIds)
-                //             .then(res => {
-                //                 this.$message({
-                //                     type: "success",
-                //                     message: "部署成功!"
-                //                 });
-                //                 this.fetchData();
-                //             })
-                //             .catch(err => {
-                //                 this.$message({
-                //                     type: "info",
-                //                     message: "部署失败"
-                //                 });
-                //             });
-                //     })
-                //     .catch(() => {
-                //         this.$message({
-                //             type: "info",
-                //             message: "已取消删除"
-                //         });
-                //     });
             } else {
                 this.$message({
                     type: "warning",
-                    message: "请选择至少一个节点"
+                    message: this.$t("deploymentSelectTips")
                 });
             }
         },

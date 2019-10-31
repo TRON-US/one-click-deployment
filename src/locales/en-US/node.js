@@ -4,7 +4,9 @@ export default {
   'tronNodeBulkDeployment': 'Bulk deployment',
   'tronNodeName': 'user name',
   'tronNodeWhetherIsSR': 'Whether it is SR',
-  'tronNodeStatus': 'Node status',
+  'tronNodeStatus': 'Node logs',
+  'tronNodeLog': 'view the log',
+  'tronNodeLogNodata': 'No log',
   'tronNodeOperate': 'operating',
   'tronNodeModify': 'modify',
   'tronNodeDelete': 'delete',
@@ -25,10 +27,13 @@ export default {
   'tronNodesNoData': 'No data',
   'tronNodesCancelDelete': 'Undelete',
   'tronNodesMaxTips': 'Exceed the maximum node add limit',
-  'deploymentUpload': 'First, you need to fill in the local jar package file address before batch deployment.',
+  'deploymentUpload': 'First, you need to fill in the local jar package file address before batch deployment.ex:/Users/xxx/xxx/FullNode.jar',
+  'deploymentSearchLoading': 'Querying node records, please wait',
   'deploymentSuccess': 'Successful deployment',
   'deploymentLoading': 'Deploying, please wait',
   'deploymentFail': 'Deployment failed',
+  'deploymentSelectTips': 'Please select at least one node'
+
 
 
 }

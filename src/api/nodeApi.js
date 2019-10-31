@@ -29,7 +29,7 @@ export function editNote(params) {
 
 
 // node status
-export function nodeInfo(params) {
+export function nodeInfoApi(params) {
   return request({
     url: '/nodeInfo',
     method: 'get',
