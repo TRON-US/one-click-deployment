@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 18:22:13
+ * @Last Modified time: 2019-11-01 14:28:41
  * @setting cross setting
  */
 
@@ -63,6 +63,13 @@
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
+                <el-form-item label="listenPort" prop="node_listen_port">
+                    <el-input
+                        :maxlength="50"
+                        v-model="baseSettingForm.node_listen_port"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
                     <el-button
                         type="primary"
@@ -97,7 +104,8 @@ export default {
                 node_http_solidityPort: "",
                 node_http_fullNodePort: "",
                 node_rpc_port: "",
-                node_rpc_solidityPort: ""
+                node_rpc_solidityPort: "",
+                listenPort: ""
             },
             branchRules: {
                 node_maxHttpConnectNumber: [
@@ -159,6 +167,18 @@ export default {
                         validator: validNum,
                         trigger: "blur"
                     }
+                ],
+                node_listen_port: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingNumberPlaceholder"),
+                        validator: validNum,
+                        trigger: "blur"
+                    }
                 ]
             }
         };
@@ -185,7 +205,8 @@ export default {
                         httpFullNodePort: this.baseSettingForm
                             .node_http_fullNodePort,
                         httpSolidityPort: this.baseSettingForm
-                            .node_http_solidityPort
+                            .node_http_solidityPort,
+                        listenPort: this.baseSettingForm.node_listen_port
                     };
                     networkSettingApi(newSettingForm)
                         .then(response => {

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-29 18:56:28
+ * @Last Modified time: 2019-11-01 14:41:08
  * @setting genesis setting
  */
 
@@ -26,7 +26,7 @@
                 label-position="left"
             >
                 <div class="asset">
-                    <el-button class="newAsset" @click="innerAssetVisible = true">new asset</el-button>
+                    <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
                     <el-row
                         v-for="(item,index) in detailInfoData.genesis_block_assets"
                         :key="index"
@@ -38,7 +38,7 @@
                     </el-row>
                 </div>
                 <div class="witeness">
-                    <el-button class="newWiteness" @click="innerWitenessVisible = true">new witeness</el-button>
+                    <el-button class="newWiteness" @click="newWitenessFun()">new witeness</el-button>
                     <el-row
                         v-for="(item,index) in detailInfoData.genesis_block_witnesses"
                         :key="index"
@@ -172,11 +172,19 @@
 </template>
 <script>
 import { genesisSettingApi } from "@/api/settingApi";
+import { isvalidateNum } from "@/utils/validate.js";
 import TronWeb from "tronweb";
 export default {
     name: "genesisSetting",
     props: ["genesisDialogVisible", "detailInfoData"],
     data() {
+        const validNormalNum = (rule, value, callback) => {
+            if (!isvalidateNum(value)) {
+                callback(new Error(this.$t("tronSettingNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
         const validNum = (rule, value, callback) => {
             if (value > 9223372036854775807 || value < -9223372036854775808) {
                 callback(new Error(this.$t("tronSettingNumberPlaceholder")));
@@ -210,7 +218,10 @@ export default {
             dialogTitle: this.$t("tronSettingGenesis"),
             innerAssetVisible: false,
             innerWitenessVisible: false,
-            genesisSetting: {},
+            genesisSetting: {
+                genesis_block_assets: [],
+                genesis_block_witnesses: []
+            },
             accountTypeOptions: [
                 {
                     value: "AssetIssue",
@@ -285,11 +296,18 @@ export default {
                     message: this.$t("tronSettingPlaceholder"),
                     trigger: "blur"
                 },
-                voteCount: {
-                    required: true,
-                    message: this.$t("tronSettingPlaceholder"),
-                    trigger: "blur"
-                },
+                voteCount: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validNormalNum,
+                        trigger: "blur"
+                    }
+                ],
                 privateKey: [
                     {
                         required: true,
@@ -313,6 +331,24 @@ export default {
     },
     methods: {
         openDialogFun() {},
+        newAssetFun() {
+            this.assetForm = {
+                accountName: "",
+                accountType: "",
+                address: "",
+                balance: ""
+            };
+            this.innerAssetVisible = true;
+        },
+        newWitenessFun() {
+            this.witenessForm = {
+                address: "",
+                url: "",
+                voteCount: "",
+                privateKey: ""
+            };
+            this.innerWitenessVisible = true;
+        },
         currentAssetFun(item, ind) {
             this.assetForm = item;
             this.assetEditStatus = 1;
@@ -320,6 +356,7 @@ export default {
             this.innerAssetVisible = true;
         },
         currenWitenessFun(item, ind) {
+            console.log(item, "item");
             this.witenessForm = item;
             this.witenessEditStatus = 1;
             this.currentWitenessEditInd = ind;
@@ -388,30 +425,35 @@ export default {
                             this.currentWitenessEditInd
                         ] = this.witenessForm;
                     }
+                    console.log(this.genesisSetting, "genesisSetting");
+                    let passAssetsAry = this.genesisSetting
+                        .genesis_block_assets;
+                    let passWitnessAry = this.genesisSetting
+                        .genesis_block_witnesses;
 
-                    const newSettingForm = {
-                        assets: this.genesisSetting.genesis_block_assets,
-                        witness: this.genesisSetting.genesis_block_witnesses
-                    };
-
-                    newSettingForm.witness.forEach(item => {
-                        console.log(`"${item.url}"`);
+                    passWitnessAry.forEach(item => {
                         item.url = `"${item.url}"`;
                     });
-                    genesisSettingApi(newSettingForm)
-                        .then(response => {
-                            this.$emit("addSettingSuccess", true);
-                            // this.$refs.genesisSettingDialogForm.resetFields();
-                            this.$message.success(
-                                this.$t("tronSettingGenesisSaveSuccess")
-                            );
-                            this.witenessEditStatus = 0;
-                            this.innerWitenessVisible = false;
-                        })
-                        .catch(error => {
-                            // this.listLoading = false;
-                            console.log(error);
-                        });
+                    let newSettingForm = {
+                        assets: passAssetsAry,
+                        witness: passWitnessAry
+                    };
+                    console.log(newSettingForm);
+
+                    // genesisSettingApi(newSettingForm)
+                    //     .then(response => {
+                    //         this.$emit("addSettingSuccess", true);
+
+                    //         this.$message.success(
+                    //             this.$t("tronSettingGenesisSaveSuccess")
+                    //         );
+                    //         this.witenessEditStatus = 0;
+                    //         this.innerWitenessVisible = false;
+                    //     })
+                    //     .catch(error => {
+                    //         // this.listLoading = false;
+                    //         console.log(error);
+                    //     });
                 } else {
                     console.log("error submit!!");
                     return false;

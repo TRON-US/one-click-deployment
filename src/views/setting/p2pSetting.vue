@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-31 16:31:15
+ * @Last Modified time: 2019-11-01 12:23:04
  * @setting p2p setting 
  */
 
@@ -256,7 +256,7 @@ export default {
                     passNodeData.forEach(item => {
                         newPassNodeData.push(`${item.ip}":"${item.port}`);
                     });
-                    // console.log(newPassNodeData);
+                    console.log(newPassNodeData);
                     p2pSettingApi(newp2pForm, newPassNodeData)
                         .then(response => {
                             this.$emit("addSettingSuccess", true);

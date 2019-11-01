@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-31 18:03:50
+ * @Last Modified time: 2019-11-01 15:23:45
  * @tron node list  
  */
 <template>
@@ -65,34 +65,14 @@
                 </el-table>
             </div>
         </div>
+        <!--tron Node Bulk Deployment  -->
         <el-dialog
             :title="$t('tronNodeBulkDeployment')"
             :visible.sync="deploymentDialogVisible"
             width="500px"
         >
-            <div v-if="isDeploymentStatus">
-                <el-timeline>
-                    <el-timeline-item
-                        type="primary"
-                        v-for="(activity, index) in logInfoData"
-                        :key="index"
-                    >{{activity}}</el-timeline-item>
-                </el-timeline>
-                <el-button
-                    style="margin-left: 30px;"
-                    :loading="deplogUploadLoading"
-                    v-if="deploymentLoadingTips"
-                >{{$t('deploymentSearchLoading')}}</el-button>
-            </div>
-            <div v-else>
-                <el-input
-                    type="textarea"
-                    :autosize="{ minRows: 2, maxRows: 4}"
-                    v-model="currentPath"
-                ></el-input>
-                <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
-            </div>
-
+            <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="currentPath"></el-input>
+            <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="deploymentDialogVisible = false">{{$t('tronNodeCancel')}}</el-button>
                 <el-button
@@ -110,7 +90,11 @@
                     :key="index"
                 >{{activity}}</el-timeline-item>
             </el-timeline>
-            <span v-else>{{$t("tronNodeLogNodata")}}</span>
+            <el-button
+                style="margin-left: 30px;"
+                :loading="deplogUploadLoading"
+                v-if="deploymentLoadingTips"
+            >{{deploymentLoadingText}}</el-button>
         </el-dialog>
         <operate-node
             :nodeDialogVisible="nodeObj.visible"
@@ -138,13 +122,13 @@ export default {
     data() {
         return {
             list: [],
-
             currentlogInfoData: [],
             deplogUploadLoading: false,
             deploymentDialogVisible: false,
-            isDeploymentStatus: false,
+            // isDeploymentStatus: false,
             currentLogDialog: false,
             deploymentLoadingTips: true,
+            deploymentLoadingText: this.$t("deploymentSearchLoading"),
             listLoading: false,
             currentPath: "",
             filterItem: {
@@ -201,85 +185,72 @@ export default {
             this.nodeObj.visible = true;
         },
         viewLogFun(_id) {
+            this.deploymentLoadingText = this.$t("deploymentSearchLoading");
             deployLogInfoApi({ id: _id })
                 .then(response => {
                     return response.data;
                 })
                 .then(res => {
                     this.currentlogInfoData = res.logInfo;
+                    this.deplogUploadLoading = true;
                     this.currentLogDialog = true;
+                    this.deploymentLoadingTips = true;
+                    this.currentlogInfoData.forEach(async item => {
+                        if (item == "Finish") {
+                            this.deplogUploadLoading = false;
+                            this.deploymentDialogVisible = false;
+                            this.deploymentLoadingText = this.$t(
+                                "deploymentSuccess"
+                            );
+                        } else if (item == "ssh connect failed") {
+                            this.deplogUploadLoading = false;
+                            this.deploymentDialogVisible = false;
+                            this.deploymentLoadingText = this.$t(
+                                "deploymentFail"
+                            );
+                        }
+                    });
                 })
                 .catch(err => {});
         },
         deployMentFun() {
             // deploy
             this.deplogUploadLoading = true;
-            this.multipleSelectionIds.forEach(async item => {
-                await this.deployNodeApiFun(item);
-            });
+            if (this.currentPath != "") {
+                this.multipleSelectionIds.forEach(async item => {
+                    // console.log(item);
+                    await this.deployNodeApiFun(item);
+                });
+                this.$message({
+                    type: "success",
+                    message: this.$t("deploymentLoading")
+                });
+            } else {
+                this.deplogUploadLoading = false;
+                this.$message({
+                    type: "warning",
+                    message: this.$t("deploymentPath")
+                });
+            }
         },
         deployNodeApiFun(item) {
-            // deploy
             // console.log(item);
             deployNodeApi(item)
                 .then(res => {
-                    this.$message({
-                        type: "success",
-                        message: this.$t("deploymentLoading")
-                    });
-                    this.isDeploymentStatus = true;
-                    this.viewNodeListFun(item.id);
+                    this.deplogUploadLoading = false;
+                    this.deploymentDialogVisible = false;
                 })
                 .catch(err => {
                     this.deplogUploadLoading = false;
-                    this.isDeploymentStatus = false;
                     this.$message({
                         type: "info",
                         message: this.$t("deploymentFail")
                     });
                 });
         },
-        viewNodeListFun(_id) {
-            // view current node detail
-            let timer = setInterval(() => {
-                deployLogInfoApi({ id: _id })
-                    .then(response => {
-                        return response.data;
-                    })
-                    .then(res => {
-                        this.logInfoData = res.logInfo;
-                        this.logInfoData.forEach(async item => {
-                            if (item == "Finish") {
-                                clearInterval(timer);
-                                await this.getDataListFun();
-                                this.deplogUploadLoading = false;
-                                this.deploymentDialogVisible = false;
-                                this.isDeploymentStatus = false;
-                                this.$message({
-                                    type: "info",
-                                    message: this.$t("deploymentSuccess")
-                                });
-                            } else if (item == "ssh connect failed") {
-                                clearInterval(timer);
-                                this.deplogUploadLoading = false;
-                                this.deploymentDialogVisible = false;
-                                this.isDeploymentStatus = false;
-                                this.deploymentLoadingTips = false;
-                                this.$message({
-                                    type: "info",
-                                    message: this.$t("deploymentFail")
-                                });
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        this.deplogUploadLoading = false;
-                        clearInterval(timer);
-                    });
-            }, 2000);
-        },
         bulkDeploymentFun() {
             if (this.multipleSelectionIds.length > 0) {
+                this.logInfoData = [];
                 this.deploymentDialogVisible = true;
             } else {
                 this.$message({
