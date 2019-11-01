@@ -75,25 +75,7 @@ export const constantRoutes = [
   //   }]
   // },
 
-  {
-    path: '/setting',
-    component: Layout,
-    redirect: '/setting/list',
-    name: 'setting',
-    meta: {
-      title: '配置',
-      icon: 'example'
-    },
-    children: [{
-      path: 'list',
-      name: 'settinglist',
-      component: () => import('@/views/setting/index'),
-      meta: {
-        title: 'tronSettingMenuSetting',
-        icon: 'setting'
-      }
-    }]
-  },
+
 
   {
     path: '/node',
@@ -129,6 +111,25 @@ export const constantRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/setting',
+    component: Layout,
+    redirect: '/setting/list',
+    name: 'setting',
+    meta: {
+      title: '配置',
+      icon: 'example'
+    },
+    children: [{
+      path: 'list',
+      name: 'settinglist',
+      component: () => import('@/views/setting/index'),
+      meta: {
+        title: 'tronSettingMenuSetting',
+        icon: 'setting'
+      }
+    }]
   },
 
   {

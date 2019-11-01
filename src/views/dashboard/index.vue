@@ -1,9 +1,9 @@
 <template>
     <div class="dashboard-container">
+        <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">使用引导</el-button>
         <div id="first-element-introduction">
             <panel-group />
         </div>
-        <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">使用引导</el-button>
     </div>
 </template>
 

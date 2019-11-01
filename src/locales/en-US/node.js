@@ -32,7 +32,8 @@ export default {
   'deploymentSuccess': 'Successful deployment',
   'deploymentLoading': 'Deploying, please wait,Click on the list to view details to view deployment status',
   'deploymentFail': 'Deployment failed',
-  'deploymentSelectTips': 'Please select at least one node'
+  'deploymentSelectTips': 'Please select at least one node',
+  'deploymentPath': 'Please fill in the path'
 
 
 
