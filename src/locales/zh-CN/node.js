@@ -27,13 +27,22 @@ export default {
   'tronNodesNoData': '暂无数据',
   'tronNodesCancelDelete': '已取消删除',
   'tronNodesMaxTips': '超过最大节点添加限制',
-  'deploymentUpload': '批量部署前首先需要填写本地jar包文件地址 如：/Users/xxx/xxx/FullNode.jar',
+  'deploymentUpload': '批量部署前首先需要填写本地jar包文件路径 如：/Users/xxx/xxx/FullNode.jar',
   'deploymentSearchLoading': '正在查询节点记录，请稍等',
   'deploymentSuccess': '部署成功',
   'deploymentLoading': '正在部署,请稍候,点击列表查看详情查看部署状态',
   'deploymentFail': '部署失败',
   'deploymentSelectTips': '请选择至少一个节点',
-  'deploymentPath': '请填写路径'
+  'deploymentPath': '请填写路径',
+  'deploymentNodeIdTips': 'ID作为节点唯一标识',
+  'deploymentNodeUsernameTips': 'ssh用户名',
+  'deploymentNodeIpTips': '部署节点IP',
+  'deploymentNodePortTips': '部署节点端口号',
+  'deploymentNodeSrTips': '是代表witeness 否代表fullNode',
+  'deploymentNodePrivateKeyTips': '请输入64位私钥(保存于本地，不会上传服务器)',
+  'tronNodeNextStep': '下一步',
+
+
 
 
 

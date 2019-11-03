@@ -27,13 +27,20 @@ export default {
   'tronNodesNoData': 'No data',
   'tronNodesCancelDelete': 'Undelete',
   'tronNodesMaxTips': 'Exceed the maximum node add limit',
-  'deploymentUpload': 'First, you need to fill in the local jar package file address before batch deployment.ex:/Users/xxx/xxx/FullNode.jar',
+  'deploymentUpload': 'First, you need to fill in the local jar package file path before batch deployment. ex:/Users/xxx/xxx/FullNode.jar',
   'deploymentSearchLoading': 'Querying node records, please wait',
   'deploymentSuccess': 'Successful deployment',
   'deploymentLoading': 'Deploying, please wait,Click on the list to view details to view deployment status',
   'deploymentFail': 'Deployment failed',
   'deploymentSelectTips': 'Please select at least one node',
-  'deploymentPath': 'Please fill in the path'
+  'deploymentPath': 'Please fill in the path',
+  'deploymentNodeIdTips': 'ID as the node unique identifier',
+  'deploymentNodeUsernameTips': 'ssh username',
+  'deploymentNodeIpTips': 'deployment node IP',
+  'deploymentNodePortTips': 'deployment node port',
+  'deploymentNodeSrTips': 'Yes on behalf of witeness No on behalf of fullNode',
+  'deploymentNodePrivateKeyTips': 'Please enter a 64-bit private key (saved locally, will not upload the server)',
+  'tronNodeNextStep': 'Next step',
 
 
 

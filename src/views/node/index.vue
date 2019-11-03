@@ -2,19 +2,20 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-01 15:23:45
- * @tron node list  
+ * @Last Modified time: 2019-11-03 14:24:58
+ * @tron node list 
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
                 <el-button size="mini" @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
-                <el-button
+                <!-- <el-button
+                    style="float:right"
                     size="mini"
-                    type="info"
+                    :type="checkType"
                     @click="bulkDeploymentFun"
-                >{{$t('tronNodeBulkDeployment')}}</el-button>
+                >{{$t('tronNodeBulkDeployment')}}</el-button>-->
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->
@@ -28,7 +29,7 @@
                     border
                     @selection-change="handleSelectionChange"
                 >
-                    <el-table-column type="selection" width="55"></el-table-column>
+                    <!-- <el-table-column type="selection" width="55"></el-table-column> -->
                     <el-table-column prop="id" label="ID" align="center"></el-table-column>
                     <el-table-column prop="userName" :label="$t('tronNodeName')" align="center"></el-table-column>
                     <el-table-column prop="ip" label="IP/HOST" align="center"></el-table-column>
@@ -39,7 +40,7 @@
                             <el-tag type="danger" v-else>no</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
+                    <!-- <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
@@ -47,14 +48,14 @@
                                 @click="viewLogFun(scope.row.id)"
                             >{{$t('tronNodeLog')}}</el-button>
                         </template>
-                    </el-table-column>
+                    </el-table-column>-->
                     <el-table-column :label="$t('tronNodeOperate')" align="center" width="200">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
                                 type="warning"
                                 @click="operateNodeFun(scope.row)"
-                            >{{$t('tronNodeOperate')}}</el-button>
+                            >{{$t('tronNodeModify')}}</el-button>
                             <el-button
                                 size="mini"
                                 type="danger"
@@ -64,12 +65,22 @@
                     </el-table-column>
                 </el-table>
             </div>
+            <div class="mgt20">
+                <el-button
+                    size="small"
+                    style="float:right"
+                    :type="allStepsBtnType"
+                    :disabled="allStepsBtnDisable"
+                    @click="nextStepFun"
+                >{{$t('tronNodeNextStep')}}</el-button>
+            </div>
         </div>
         <!--tron Node Bulk Deployment  -->
         <el-dialog
             :title="$t('tronNodeBulkDeployment')"
             :visible.sync="deploymentDialogVisible"
-            width="500px"
+            width="900px"
+            center
         >
             <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="currentPath"></el-input>
             <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
@@ -82,7 +93,13 @@
                 >{{$t('tronNodeSave')}}</el-button>
             </span>
         </el-dialog>
-        <el-dialog :title="$t('tronNodeStatus')" :visible.sync="currentLogDialog" width="400px">
+        <!-- node log  -->
+        <el-dialog
+            :title="$t('tronNodeStatus')"
+            :visible.sync="currentLogDialog"
+            width="600px"
+            center
+        >
             <el-timeline v-if="currentlogInfoData.length>0">
                 <el-timeline-item
                     type="primary"
@@ -91,11 +108,13 @@
                 >{{activity}}</el-timeline-item>
             </el-timeline>
             <el-button
+                type="text"
                 style="margin-left: 30px;"
                 :loading="deplogUploadLoading"
                 v-if="deploymentLoadingTips"
             >{{deploymentLoadingText}}</el-button>
         </el-dialog>
+        <!-- node add and edit  -->
         <operate-node
             :nodeDialogVisible="nodeObj.visible"
             :editStatus="nodeObj.status"
@@ -125,15 +144,14 @@ export default {
             currentlogInfoData: [],
             deplogUploadLoading: false,
             deploymentDialogVisible: false,
-            // isDeploymentStatus: false,
             currentLogDialog: false,
             deploymentLoadingTips: true,
             deploymentLoadingText: this.$t("deploymentSearchLoading"),
             listLoading: false,
             currentPath: "",
-            filterItem: {
-                name: ""
-            },
+            checkType: "info",
+            allStepsBtnType: "info",
+            allStepsBtnDisable: true,
             listQuery: {
                 limit: 20,
                 page: 1,
@@ -168,7 +186,7 @@ export default {
             return a.id - b.id;
         },
         addNodeFun() {
-            if (this.list.length > 50) {
+            if (this.list.length > 20) {
                 this.$message({
                     type: "info",
                     message: this.$t("tronNodesMaxTips")
@@ -225,6 +243,7 @@ export default {
                     type: "success",
                     message: this.$t("deploymentLoading")
                 });
+                this.getDataListFun();
             } else {
                 this.deplogUploadLoading = false;
                 this.$message({
@@ -260,11 +279,19 @@ export default {
             }
         },
         getDataListFun() {
+            // defalut data list
             allNodeInfo()
                 .then(response => {
                     return response.data;
                 })
                 .then(res => {
+                    if (res.length > 0) {
+                        this.allStepsBtnType = "success";
+                        this.allStepsBtnDisable = false;
+                    } else {
+                        this.allStepsBtnType = "info";
+                        this.allStepsBtnDisable = true;
+                    }
                     let resData = res;
                     this.list = resData.sort(this.sortIdFun);
                 })
@@ -273,7 +300,13 @@ export default {
                 });
         },
         handleSelectionChange(val) {
+            // change select
             this.multipleSelection = val;
+            if (val.length > 0) {
+                this.checkType = "success";
+            } else {
+                this.checkType = "info";
+            }
         },
         handleSizeChange(val) {
             this.listQuery.limit = val;
@@ -310,7 +343,6 @@ export default {
                     });
                 });
         },
-
         nodeDetailFun(val) {
             this.nodeObj.visible = val;
         },
@@ -318,6 +350,9 @@ export default {
             if (val) {
                 this.getDataListFun();
             }
+        },
+        nextStepFun() {
+            this.$router.push({ path: "/setting/list" });
         }
     }
 };
