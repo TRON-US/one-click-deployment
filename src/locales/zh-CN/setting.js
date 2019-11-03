@@ -12,6 +12,7 @@ export default {
   'tronResetSettingSuccess': '重置配置成功',
   'tronAssetSetting': 'asset配置',
   'tronWitenessSetting': 'witeness配置',
+  'tronSettingNextStep': '下一步',
   'tronSettingSave': '保存',
   'tronSettingCancel': '取消',
   'tronSettingPlaceholder': '请填写',

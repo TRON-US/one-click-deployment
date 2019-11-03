@@ -2,52 +2,61 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 14:38:30
+ * @Last Modified time: 2019-11-03 15:29:10
  * @tron setting default  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <div style="height: 280px;">
-                    <el-steps direction="vertical" :active="1">
-                        <el-step title="配置管理"></el-step>
-                        <el-step title="导入插件"></el-step>
-                        <el-step title="节点部署"></el-step>
+                <div>
+                    <el-steps :active="currentStep" align-center type="mini">
+                        <el-step :title="$t('tronSettingGenesis')"></el-step>
+                        <el-step :title="$t('tronSettingBase')"></el-step>
+                        <el-step :title="$t('tronSettingP2p')"></el-step>
+                        <el-step :title="$t('tronSettingDb')"></el-step>
+                        <el-step :title="$t('tronSettingHttp')"></el-step>
+                        <el-step :title="$t('tronCrossChain')"></el-step>
                     </el-steps>
                 </div>
             </div>
             <div class="filter-container tron-table tabSection">
                 <!--tron form-->
                 <genesis-setting
+                    v-if="currentStep == 1"
                     :detailInfoData="genesisSetting.detail"
                     @dialog="genesisSettingDetailFun"
                 ></genesis-setting>
                 <base-setting
+                    v-if="currentStep == 2"
                     :branchDialogVisible="baseSetting.visible"
                     :detailInfoData="baseSetting.detail"
                     @dialog="baseSettingDetailFun"
                     @addSettingSuccess="addSettingSuccessFun"
                 ></base-setting>
                 <p2p-setting
+                    v-if="currentStep == 3"
                     :branchDialogVisible="p2pSetting.visible"
                     :detailInfoData="p2pSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
                     @dialog="p2pSettingDetailFun"
                 ></p2p-setting>
                 <databaseSetting
+                    v-if="currentStep == 4"
                     :branchDialogVisible="databaseSettingForm.visible"
                     :detailInfoData="databaseSettingForm.detail"
                     @addSettingSuccess="addSettingSuccessFun"
                     @dialog="dbSettingDetailFun"
                 ></databaseSetting>
                 <network-setting
+                    v-if="currentStep == 5"
                     :branchDialogVisible="networkSetting.visible"
                     :detailInfoData="networkSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
                     @dialog="networkSettingDetailFun"
                 ></network-setting>
                 <cross-chain
+                    v-if="currentStep == 6"
                     :branchDialogVisible="crossChainSetting.visible"
                     :detailInfoData="crossChainSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
@@ -77,6 +86,7 @@ export default {
     },
     data() {
         return {
+            currentStep: 1,
             genesisSetting: {
                 visible: false,
                 detail: {}
@@ -149,7 +159,7 @@ export default {
                     console.log(error);
                 });
         },
-        addNodeFun() {},
+
         async modifySettingFun(type) {
             await this.getCurrentSettingFun();
             switch (type) {

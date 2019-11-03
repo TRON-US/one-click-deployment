@@ -2,171 +2,170 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 14:40:31
+ * @Last Modified time: 2019-11-03 15:33:38
  * @setting genesis setting
  */
 
 <template>
     <div class="viewBranchDialog">
+        <el-row :gutter="12">
+            <el-col :span="24">
+                <el-card shadow="hover">
+                    <div>
+                        <div @click="genesisContentShow = !genesisContentShow">
+                            <i
+                                :class="genesisContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"
+                            ></i>
+                            {{$t('tronSettingGenesis')}}
+                        </div>
+                        <el-form
+                            v-if="genesisContentShow"
+                            ref="genesisSettingDialogForm"
+                            label-width="200px"
+                            class="tronbaseSettingForm"
+                            label-position="left"
+                        >
+                            <el-row>
+                                <el-col :span="12">
+                                    <div class="asset">
+                                        <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
+                                        <el-row
+                                            v-for="(item,index) in detailInfoData.genesis_block_assets"
+                                            :key="index"
+                                        >
+                                            <el-button
+                                                @click="currentAssetFun(item,index)"
+                                                style="width:100%"
+                                            >{{item.accountName}}</el-button>
+                                        </el-row>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div class="witeness">
+                                        <el-button
+                                            class="newWiteness"
+                                            @click="newWitenessFun()"
+                                        >new witeness</el-button>
+                                        <el-row
+                                            v-for="(item,index) in detailInfoData.genesis_block_witnesses"
+                                            :key="index"
+                                        >
+                                            <el-button
+                                                @click="currenWitenessFun(item,index)"
+                                                style="width:100%"
+                                            >{{item.address}}</el-button>
+                                        </el-row>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </el-form>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+        <div label-width="0" class="textRight">
+            <el-button type="primary" @click="saveAllData()">{{$t('tronSettingNextStep')}}</el-button>
+        </div>
         <el-dialog
-            :title="dialogTitle"
-            @open="openDialogFun"
-            @close="closeFun"
-            :visible.sync="dialogVisible"
-            :close-on-click-modal="false"
-            :close-on-press-escape="false"
-            v-loading="classLoading"
-            width="800px"
             center
+            width="700px"
+            :title="$t('tronAssetSetting')"
+            :visible.sync="innerAssetVisible"
         >
             <el-form
-                ref="genesisSettingDialogForm"
-                label-width="200px"
-                class="tronbaseSettingForm"
+                ref="assetDialogForm"
+                :rules="assetRules"
+                :model="assetForm"
+                label-width="120px"
                 label-position="left"
             >
-                <div class="asset">
-                    <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
-                    <el-row
-                        v-for="(item,index) in detailInfoData.genesis_block_assets"
-                        :key="index"
+                <el-form-item label="accountName" prop="accountName">
+                    <el-input
+                        :maxlength="50"
+                        v-model="assetForm.accountName"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="accountType" prop="accountType">
+                    <el-select
+                        v-model="assetForm.accountType"
+                        :placeholder="$t('tronSettingSelectPlaceholder')"
                     >
-                        <el-button
-                            @click="currentAssetFun(item,index)"
-                            style="width:100%"
-                        >{{item.accountName}}</el-button>
-                    </el-row>
-                </div>
-                <div class="witeness">
-                    <el-button class="newWiteness" @click="newWitenessFun()">new witeness</el-button>
-                    <el-row
-                        v-for="(item,index) in detailInfoData.genesis_block_witnesses"
-                        :key="index"
-                    >
-                        <el-button
-                            @click="currenWitenessFun(item,index)"
-                            style="width:100%"
-                        >{{item.address}}</el-button>
-                    </el-row>
-                </div>
-                <!-- <el-form-item label-width="0" class="textCenter">
-                    <el-button type="primary">保存</el-button>
-                    <el-button @click="cancelFun">取消</el-button>
-                </el-form-item>-->
+                        <el-option
+                            v-for="item in accountTypeOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="address" prop="address">
+                    <el-input
+                        :maxlength="50"
+                        v-model="assetForm.address"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="balance" prop="balance">
+                    <el-input
+                        :maxlength="50"
+                        v-model="assetForm.balance"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label-width="0" class="textCenter">
+                    <el-button
+                        type="primary"
+                        @click="saveData('assetDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="innerAssetVisible = false">{{$t('tronSettingCancel')}}</el-button>
+                </el-form-item>
             </el-form>
-            <!-- asset -->
-            <el-dialog
-                center
-                width="700px"
-                :title="$t('tronAssetSetting')"
-                :visible.sync="innerAssetVisible"
-                append-to-body
+        </el-dialog>
+        <!-- witeness -->
+        <el-dialog
+            center
+            width="700px"
+            :title="$t('tronWitenessSetting')"
+            :visible.sync="innerWitenessVisible"
+        >
+            <el-form
+                ref="witenessDialogForm"
+                :rules="witenessRules"
+                :model="witenessForm"
+                label-width="120px"
+                label-position="left"
             >
-                <el-form
-                    ref="assetDialogForm"
-                    :rules="assetRules"
-                    :model="assetForm"
-                    label-width="120px"
-                    label-position="left"
-                >
-                    <el-form-item label="accountName" prop="accountName">
-                        <el-input
-                            :maxlength="50"
-                            v-model="assetForm.accountName"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label="accountType" prop="accountType">
-                        <!-- <el-input
-                            :maxlength="50"
-                            v-model="assetForm.accountType"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>-->
-                        <el-select
-                            v-model="assetForm.accountType"
-                            :placeholder="$t('tronSettingSelectPlaceholder')"
-                        >
-                            <el-option
-                                v-for="item in accountTypeOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="address" prop="address">
-                        <el-input
-                            :maxlength="50"
-                            v-model="assetForm.address"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label="balance" prop="balance">
-                        <el-input
-                            :maxlength="50"
-                            v-model="assetForm.balance"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label-width="0" class="textCenter">
-                        <el-button
-                            type="primary"
-                            @click="saveData('assetDialogForm')"
-                        >{{$t('tronSettingSave')}}</el-button>
-                        <el-button @click="innerAssetVisible = false">{{$t('tronSettingCancel')}}</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-dialog>
-            <!-- witeness -->
-            <el-dialog
-                center
-                width="700px"
-                :title="$t('tronWitenessSetting')"
-                :visible.sync="innerWitenessVisible"
-                append-to-body
-            >
-                <el-form
-                    ref="witenessDialogForm"
-                    :rules="witenessRules"
-                    :model="witenessForm"
-                    label-width="120px"
-                    label-position="left"
-                >
-                    <el-form-item label="address" prop="address">
-                        <el-input
-                            :maxlength="50"
-                            v-model="witenessForm.address"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label="url" prop="url">
-                        <el-input
-                            :maxlength="50"
-                            v-model="witenessForm.url"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label="voteCount" prop="voteCount">
-                        <el-input
-                            :maxlength="50"
-                            v-model="witenessForm.voteCount"
-                            :placeholder="$t('tronSettingPlaceholder')"
-                        ></el-input>
-                    </el-form-item>
+                <el-form-item label="address" prop="address">
+                    <el-input
+                        :maxlength="50"
+                        v-model="witenessForm.address"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="url" prop="url">
+                    <el-input
+                        :maxlength="50"
+                        v-model="witenessForm.url"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="voteCount" prop="voteCount">
+                    <el-input
+                        :maxlength="50"
+                        v-model="witenessForm.voteCount"
+                        :placeholder="$t('tronSettingPlaceholder')"
+                    ></el-input>
+                </el-form-item>
 
-                    <el-form-item label-width="0" class="textCenter">
-                        <el-button
-                            type="primary"
-                            @click="saveWitenessData('witenessDialogForm')"
-                        >{{$t('tronSettingSave')}}</el-button>
-                        <el-button @click="innerWitenessVisible = false">{{$t('tronSettingCancel')}}</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-dialog>
-            <div label-width="0" class="textCenter">
-                <el-button type="primary" @click="saveAllData()">{{$t('tronSettingSave')}}</el-button>
-                <el-button @click="dialogVisible = false">{{$t('tronSettingCancel')}}</el-button>
-            </div>
+                <el-form-item label-width="0" class="textCenter">
+                    <el-button
+                        type="primary"
+                        @click="saveWitenessData('witenessDialogForm')"
+                    >{{$t('tronSettingSave')}}</el-button>
+                    <el-button @click="innerWitenessVisible = false">{{$t('tronSettingCancel')}}</el-button>
+                </el-form-item>
+            </el-form>
         </el-dialog>
     </div>
 </template>
@@ -210,6 +209,7 @@ export default {
         };
         return {
             classLoading: false,
+            genesisContentShow: true,
             assetEditStatus: 0,
             currentAssetEditInd: "",
             currentWitenessEditInd: "",
@@ -498,12 +498,15 @@ export default {
 };
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
-.textCenter {
-    text-align: center;
+.textRight {
+    margin-top: 40px;
+    text-align: right;
 }
 .tronbaseSettingForm {
+    margin-top: 40px;
     padding: 0;
 }
+
 .asset,
 .witeness {
     position: relative;
@@ -516,9 +519,7 @@ export default {
         margin-top: 15px;
     }
 }
-.witeness {
-    margin: 50px auto 50px;
-}
+
 .asset {
     .newAsset {
         position: absolute;
