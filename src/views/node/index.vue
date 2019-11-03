@@ -2,14 +2,14 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 14:24:58
+ * @Last Modified time: 2019-11-03 18:03:50
  * @tron node list 
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="mini" @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
+                <el-button size="small" @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
                 <!-- <el-button
                     style="float:right"
                     size="mini"
@@ -52,12 +52,12 @@
                     <el-table-column :label="$t('tronNodeOperate')" align="center" width="200">
                         <template slot-scope="scope">
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="warning"
                                 @click="operateNodeFun(scope.row)"
                             >{{$t('tronNodeModify')}}</el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="danger"
                                 @click="deleteNodeListFun(scope.row.id)"
                             >{{$t('tronNodeDelete')}}</el-button>
@@ -286,7 +286,7 @@ export default {
                 })
                 .then(res => {
                     if (res.length > 0) {
-                        this.allStepsBtnType = "success";
+                        this.allStepsBtnType = "primary";
                         this.allStepsBtnDisable = false;
                     } else {
                         this.allStepsBtnType = "info";

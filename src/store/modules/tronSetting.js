@@ -6,7 +6,8 @@ import {
 
 const state = {
   originSetting: {},
-  configSetting: {}
+  configSetting: {},
+  settingStep: 0,
 }
 
 const mutations = {
@@ -16,6 +17,9 @@ const mutations = {
   SET_CONFIGSETTING: (state, data) => {
     state.configSetting = data
   },
+  SET_CURRENTSTEP: (state, step) => {
+    state.settingStep = step
+  }
 
 }
 
@@ -62,6 +66,21 @@ const actions = {
       })
     })
   },
+
+  getCurrentStepConfig({
+    commit,
+    state
+  }, stepInfo) {
+    return new Promise((resolve, reject) => {
+      const {
+        step
+      } = stepInfo;
+      sessionStorage.setItem('currentstep', step)
+      commit('SET_CURRENTSTEP', step)
+
+    })
+  },
+
 
 
 }

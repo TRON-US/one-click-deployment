@@ -14,6 +14,7 @@ export default {
   'tronWitenessSetting': 'witeness setting',
   'tronSettingSave': 'save',
   'tronSettingNextStep': 'Next step',
+  'tronSettingPreviousStep': 'Previous',
   'tronSettingCancel': 'cancel',
   'tronSettingPlaceholder': 'Please fill out',
   'tronSettingPortPlaceholder': 'Please fill in the current port',

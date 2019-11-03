@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 15:33:38
+ * @Last Modified time: 2019-11-03 16:32:18
  * @setting genesis setting
  */
 
@@ -11,55 +11,51 @@
         <el-row :gutter="12">
             <el-col :span="24">
                 <el-card shadow="hover">
-                    <div>
-                        <div @click="genesisContentShow = !genesisContentShow">
-                            <i
-                                :class="genesisContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"
-                            ></i>
-                            {{$t('tronSettingGenesis')}}
-                        </div>
-                        <el-form
-                            v-if="genesisContentShow"
-                            ref="genesisSettingDialogForm"
-                            label-width="200px"
-                            class="tronbaseSettingForm"
-                            label-position="left"
-                        >
-                            <el-row>
-                                <el-col :span="12">
-                                    <div class="asset">
-                                        <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
-                                        <el-row
-                                            v-for="(item,index) in detailInfoData.genesis_block_assets"
-                                            :key="index"
-                                        >
-                                            <el-button
-                                                @click="currentAssetFun(item,index)"
-                                                style="width:100%"
-                                            >{{item.accountName}}</el-button>
-                                        </el-row>
-                                    </div>
-                                </el-col>
-                                <el-col :span="12">
-                                    <div class="witeness">
-                                        <el-button
-                                            class="newWiteness"
-                                            @click="newWitenessFun()"
-                                        >new witeness</el-button>
-                                        <el-row
-                                            v-for="(item,index) in detailInfoData.genesis_block_witnesses"
-                                            :key="index"
-                                        >
-                                            <el-button
-                                                @click="currenWitenessFun(item,index)"
-                                                style="width:100%"
-                                            >{{item.address}}</el-button>
-                                        </el-row>
-                                    </div>
-                                </el-col>
-                            </el-row>
-                        </el-form>
+                    <div @click="genesisContentShow = !genesisContentShow">
+                        <i :class="genesisContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"></i>
+                        {{$t('tronSettingGenesis')}}
                     </div>
+                    <el-form
+                        v-if="genesisContentShow"
+                        ref="genesisSettingDialogForm"
+                        label-width="200px"
+                        class="tronbaseSettingForm"
+                        label-position="left"
+                    >
+                        <el-row>
+                            <el-col :span="12">
+                                <div class="asset">
+                                    <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
+                                    <el-row
+                                        v-for="(item,index) in detailInfoData.genesis_block_assets"
+                                        :key="index"
+                                    >
+                                        <el-button
+                                            @click="currentAssetFun(item,index)"
+                                            style="width:100%"
+                                        >{{item.accountName}}</el-button>
+                                    </el-row>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="witeness">
+                                    <el-button
+                                        class="newWiteness"
+                                        @click="newWitenessFun()"
+                                    >new witeness</el-button>
+                                    <el-row
+                                        v-for="(item,index) in detailInfoData.genesis_block_witnesses"
+                                        :key="index"
+                                    >
+                                        <el-button
+                                            @click="currenWitenessFun(item,index)"
+                                            style="width:100%"
+                                        >{{item.address}}</el-button>
+                                    </el-row>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </el-form>
                 </el-card>
             </el-col>
         </el-row>
@@ -157,7 +153,6 @@
                         :placeholder="$t('tronSettingPlaceholder')"
                     ></el-input>
                 </el-form-item>
-
                 <el-form-item label-width="0" class="textCenter">
                     <el-button
                         type="primary"
@@ -175,7 +170,7 @@ import { isvalidateNum } from "@/utils/validate.js";
 import TronWeb from "tronweb";
 export default {
     name: "genesisSetting",
-    props: ["genesisDialogVisible", "detailInfoData"],
+    props: ["detailInfoData"],
     data() {
         const validNormalNum = (rule, value, callback) => {
             if (!isvalidateNum(value)) {
@@ -214,8 +209,6 @@ export default {
             currentAssetEditInd: "",
             currentWitenessEditInd: "",
             witenessEditStatus: 0,
-            dialogVisible: this.genesisDialogVisible,
-            dialogTitle: this.$t("tronSettingGenesis"),
             innerAssetVisible: false,
             innerWitenessVisible: false,
             genesisSetting: {
@@ -330,7 +323,6 @@ export default {
         };
     },
     methods: {
-        openDialogFun() {},
         newAssetFun() {
             this.assetForm = {
                 accountName: "",
@@ -356,19 +348,10 @@ export default {
             this.innerAssetVisible = true;
         },
         currenWitenessFun(item, ind) {
-            console.log(item, "item");
             this.witenessForm = item;
             this.witenessEditStatus = 1;
             this.currentWitenessEditInd = ind;
             this.innerWitenessVisible = true;
-        },
-        closeFun() {
-            // this.$refs.genesisSettingDialogForm.resetFields();
-            this.dialogVisible = false;
-        },
-        cancelFun() {
-            // this.$refs.genesisSettingDialogForm.resetFields();
-            this.dialogVisible = false;
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
@@ -476,7 +459,6 @@ export default {
                     this.$message.success(
                         this.$t("tronSettingGenesisSaveSuccess")
                     );
-                    this.dialogVisible = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -487,17 +469,14 @@ export default {
         detailInfoData(val) {
             this.baseSettingForm = this.detailInfoData;
             this.genesisSetting = this.detailInfoData;
-        },
-        genesisDialogVisible(val) {
-            this.dialogVisible = val;
-        },
-        dialogVisible(val) {
-            this.$emit("dialog", val);
         }
     }
 };
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
+.textCenter {
+    text-align: center;
+}
 .textRight {
     margin-top: 40px;
     text-align: right;

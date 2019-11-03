@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 15:29:10
+ * @Last Modified time: 2019-11-03 18:48:59
  * @tron setting default  
  */
 <template>
@@ -11,12 +11,12 @@
             <div class="tron-filter-section">
                 <div>
                     <el-steps :active="currentStep" align-center type="mini">
-                        <el-step :title="$t('tronSettingGenesis')"></el-step>
-                        <el-step :title="$t('tronSettingBase')"></el-step>
-                        <el-step :title="$t('tronSettingP2p')"></el-step>
-                        <el-step :title="$t('tronSettingDb')"></el-step>
-                        <el-step :title="$t('tronSettingHttp')"></el-step>
-                        <el-step :title="$t('tronCrossChain')"></el-step>
+                        <el-step @click="stepClickFun(1)" :title="$t('tronSettingGenesis')"></el-step>
+                        <el-step @click="stepClickFun(2)" :title="$t('tronSettingBase')"></el-step>
+                        <el-step @click="stepClickFun(3)" :title="$t('tronSettingP2p')"></el-step>
+                        <el-step @click="stepClickFun(4)" :title="$t('tronSettingDb')"></el-step>
+                        <el-step @click="stepClickFun(5)" :title="$t('tronSettingHttp')"></el-step>
+                        <el-step @click="stepClickFun(6)" :title="$t('tronCrossChain')"></el-step>
                     </el-steps>
                 </div>
             </div>
@@ -25,48 +25,45 @@
                 <genesis-setting
                     v-if="currentStep == 1"
                     :detailInfoData="genesisSetting.detail"
-                    @dialog="genesisSettingDetailFun"
+                    @addSettingSuccess="addSettingSuccessFun"
                 ></genesis-setting>
                 <base-setting
                     v-if="currentStep == 2"
-                    :branchDialogVisible="baseSetting.visible"
                     :detailInfoData="baseSetting.detail"
-                    @dialog="baseSettingDetailFun"
+                    @previousSettingStep="previousSettingStepFun"
                     @addSettingSuccess="addSettingSuccessFun"
                 ></base-setting>
                 <p2p-setting
                     v-if="currentStep == 3"
-                    :branchDialogVisible="p2pSetting.visible"
+                    :seedNodeIpList="seedNodeIpListData"
                     :detailInfoData="p2pSetting.detail"
+                    @previousSettingStep="previousSettingStepFun"
                     @addSettingSuccess="addSettingSuccessFun"
-                    @dialog="p2pSettingDetailFun"
                 ></p2p-setting>
                 <databaseSetting
                     v-if="currentStep == 4"
-                    :branchDialogVisible="databaseSettingForm.visible"
+                    @previousSettingStep="previousSettingStepFun"
                     :detailInfoData="databaseSettingForm.detail"
                     @addSettingSuccess="addSettingSuccessFun"
-                    @dialog="dbSettingDetailFun"
                 ></databaseSetting>
                 <network-setting
                     v-if="currentStep == 5"
-                    :branchDialogVisible="networkSetting.visible"
+                    @previousSettingStep="previousSettingStepFun"
                     :detailInfoData="networkSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
-                    @dialog="networkSettingDetailFun"
                 ></network-setting>
                 <cross-chain
                     v-if="currentStep == 6"
-                    :branchDialogVisible="crossChainSetting.visible"
+                    @previousSettingStep="previousSettingStepFun"
                     :detailInfoData="crossChainSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
-                    @dialog="crossChainSettingDetailFun"
                 ></cross-chain>
             </div>
         </div>
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import { originSettingApi, configSettingfdApi } from "@/api/settingApi.js";
 import genesisSetting from "./genesisSetting";
 import baseSetting from "./baseSetting";
@@ -84,43 +81,54 @@ export default {
         databaseSetting,
         networkSetting
     },
+    computed: {
+        ...mapGetters(["settingStep"])
+    },
     data() {
         return {
             currentStep: 1,
             genesisSetting: {
-                visible: false,
                 detail: {}
             },
             baseSetting: {
-                visible: false,
                 detail: {}
             },
             p2pSetting: {
-                visible: false,
                 detail: {}
             },
             crossChainSetting: {
-                visible: false,
                 detail: {}
             },
             databaseSettingForm: {
-                visible: false,
                 detail: {}
             },
             networkSetting: {
-                visible: false,
                 detail: {}
             },
             originSettingObj: {},
-            seedNodeIpList: []
+            seedNodeIpListData: []
         };
     },
     created() {
         this.getOriginSettingFun();
         this.getCurrentSettingFun();
+        this.getCurrentStepFun();
     },
-
     methods: {
+        stepClickFun(step) {
+            console.log(step);
+            this.currentStep = step;
+            this.$store.dispatch("tronSetting/getCurrentStepConfig", { step });
+        },
+        getCurrentStepFun() {
+            let step = sessionStorage.getItem("currentstep") || 1;
+            if (this.settingStep != 0) {
+                step = this.settingStep;
+            }
+            // console.log("current", step);
+            this.currentStep = Number(step);
+            this.$store.dispatch("tronSetting/getCurrentStepConfig", { step });
+        },
         getOriginSettingFun() {
             this.$store
                 .dispatch("tronSetting/getOriginConfig")
@@ -131,10 +139,10 @@ export default {
                         response.p2pConfig.seed_node_ip_list.forEach(item => {
                             newIpList.push({
                                 ip: item,
-                                port: ""
+                                port: "18889"
                             });
                         });
-                        this.seedNodeIpList = newIpList;
+                        this.seedNodeIpListData = newIpList;
                     }
                 })
                 .catch(error => {
@@ -147,10 +155,20 @@ export default {
                 .then(response => {
                     this.genesisSetting.detail = response.genesisSetting;
                     this.baseSetting.detail = response.baseSettingConfig;
+                    let newIpList = [];
+                    if (
+                        response.p2pConfig.seed_node_ip_list &&
+                        response.p2pConfig.seed_node_ip_list != null
+                    ) {
+                        response.p2pConfig.seed_node_ip_list.forEach(item => {
+                            newIpList.push(item.split(":")[0]);
+                        });
+                    }
                     this.p2pSetting.detail = {
                         ...response.p2pConfig,
-                        defalutSelectedIp: []
+                        defalutSelectedIp: newIpList || []
                     };
+
                     this.databaseSettingForm.detail = response.dbConfig;
                     this.networkSetting.detail = response.networkConfig;
                     this.crossChainSetting.detail = response.crossChainConfig;
@@ -160,30 +178,6 @@ export default {
                 });
         },
 
-        async modifySettingFun(type) {
-            await this.getCurrentSettingFun();
-            switch (type) {
-                case 1:
-                    this.genesisSetting.visible = true;
-                    break;
-                case 2:
-                    this.baseSetting.visible = true;
-                    break;
-                case 3:
-                    this.p2pSetting.visible = true;
-                    break;
-                case 4:
-                    this.databaseSettingForm.visible = true;
-                    break;
-                case 5:
-                    this.networkSetting.visible = true;
-                    break;
-                case 6:
-                    this.crossChainSetting.visible = true;
-                    break;
-                default:
-            }
-        },
         resetSettingFun() {
             // rest setting
             this.genesisSetting.detail = this.originSettingObj.genesisSetting;
@@ -193,34 +187,42 @@ export default {
             this.networkSetting.detail = this.originSettingObj.networkConfig;
         },
 
-        // genesis setting
-        genesisSettingDetailFun(val) {
-            this.genesisSetting.visible = val;
-        },
         // base setting
         baseSettingDetailFun(val) {
             this.baseSetting.visible = val;
         },
+
         addSettingSuccessFun(val) {
             if (val) {
+                this.currentStep = this.currentStep + 1;
+                if (this.currentStep > 6) {
+                    // TODO
+                    this.currentStep = 6;
+                    this.$store.dispatch("tronSetting/getCurrentStepConfig", {
+                        step: 6
+                    });
+                } else {
+                    this.$store.dispatch("tronSetting/getCurrentStepConfig", {
+                        step: this.currentStep
+                    });
+                }
                 this.getCurrentSettingFun();
             }
         },
-        // p2p setting
-        p2pSettingDetailFun(val) {
-            this.p2pSetting.visible = val;
-        },
-        // cross chain setting
-        crossChainSettingDetailFun(val) {
-            this.crossChainSetting.visible = val;
-        },
-        // db setting
-        dbSettingDetailFun(val) {
-            this.databaseSettingForm.visible = val;
-        },
-        // network setting
-        networkSettingDetailFun(val) {
-            this.networkSetting.visible = val;
+        previousSettingStepFun(val) {
+            if (val) {
+                this.currentStep = this.currentStep - 1;
+                this.$store.dispatch("tronSetting/getCurrentStepConfig", {
+                    step: this.currentStep
+                });
+                if (this.currentStep < 1) {
+                    // TODO
+                    this.$store.dispatch("tronSetting/getCurrentStepConfig", {
+                        step: 1
+                    });
+                }
+                this.getCurrentSettingFun();
+            }
         }
     }
 };

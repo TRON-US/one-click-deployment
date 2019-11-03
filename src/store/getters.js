@@ -5,6 +5,7 @@ const getters = {
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   originSetting: state => state.tronSetting.originSetting,
-  configSetting: state => state.tronSetting.configSetting
+  configSetting: state => state.tronSetting.configSetting,
+  settingStep: state => state.tronSetting.settingStep
 }
 export default getters

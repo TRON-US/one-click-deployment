@@ -2,83 +2,104 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-01 14:28:41
+ * @Last Modified time: 2019-11-03 17:53:19
  * @setting cross setting
  */
 
 <template>
     <div class="viewBranchDialog">
-        <el-dialog
-            :title="dialogTitle"
-            @open="openDialogFun"
-            @close="closeFun"
-            :visible.sync="dialogVisible"
-            :close-on-click-modal="false"
-            :close-on-press-escape="false"
-            v-loading="classLoading"
-            width="800px"
-            center
+        <el-form
+            ref="crossSettingDialogForm"
+            :rules="branchRules"
+            :model="baseSettingForm"
+            label-width="200px"
+            class="tronbaseSettingForm"
+            label-position="left"
         >
-            <el-form
-                ref="crossSettingDialogForm"
-                :rules="branchRules"
-                :model="baseSettingForm"
-                label-width="200px"
-                class="tronbaseSettingForm"
-                label-position="left"
-            >
-                <el-form-item label="maxHttpConnectNumber" prop="node_maxHttpConnectNumber">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_maxHttpConnectNumber"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="httpFullNodePort" prop="node_http_fullNodePort">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_http_fullNodePort"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="httpSolidityPort" prop="node_http_solidityPort">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_http_solidityPort"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
+            <el-row :gutter="12">
+                <el-col :span="24">
+                    <el-card shadow="hover">
+                        <div @click="baseContentShow = !baseContentShow">
+                            <i :class="baseContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"></i>
+                            {{$t('tronSettingHttp')}}
+                        </div>
+                        <div v-if="baseContentShow">
+                            <el-form-item
+                                label="maxHttpConnectNumber"
+                                prop="node_maxHttpConnectNumber"
+                                class="baseFormItem mgt20"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_maxHttpConnectNumber"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="httpFullNodePort"
+                                prop="node_http_fullNodePort"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_http_fullNodePort"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="httpSolidityPort"
+                                prop="node_http_solidityPort"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_http_solidityPort"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
 
-                <el-form-item label="rpcPort" prop="node_rpc_port">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_rpc_port"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="rpcSolidityPort" prop="node_rpc_solidityPort">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_rpc_solidityPort"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="listenPort" prop="node_listen_port">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_listen_port"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label-width="0" class="textCenter">
-                    <el-button
-                        type="primary"
-                        @click="saveData('crossSettingDialogForm')"
-                    >{{$t('tronSettingSave')}}</el-button>
-                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
+                            <el-form-item class="baseFormItem" label="rpcPort" prop="node_rpc_port">
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_rpc_port"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="rpcSolidityPort"
+                                prop="node_rpc_solidityPort"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_rpc_solidityPort"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="listenPort"
+                                prop="node_listen_port"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_listen_port"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+            <el-form-item label-width="0" class="textRight">
+                <el-button type="primary" @click="previousStepFun">{{$t('tronSettingPreviousStep')}}</el-button>
+
+                <el-button
+                    type="primary"
+                    @click="saveData('crossSettingDialogForm')"
+                >{{$t('tronSettingNextStep')}}</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 <script>
@@ -86,7 +107,7 @@ import { networkSettingApi } from "@/api/settingApi";
 import { isvalidateNum } from "@/utils/validate.js";
 export default {
     name: "networkSetting",
-    props: ["branchDialogVisible", "detailInfoData", "editStatus"],
+    props: ["detailInfoData"],
     data() {
         const validNum = (rule, value, callback) => {
             if (!isvalidateNum(value)) {
@@ -96,9 +117,7 @@ export default {
             }
         };
         return {
-            classLoading: false,
-            dialogVisible: this.branchDialogVisible,
-            dialogTitle: this.$t("tronSettingHttp"),
+            baseContentShow: true,
             baseSettingForm: {
                 node_maxHttpConnectNumber: "",
                 node_http_solidityPort: "",
@@ -184,14 +203,8 @@ export default {
         };
     },
     methods: {
-        openDialogFun() {},
-        closeFun() {
-            // this.$refs.crossSettingDialogForm.resetFields();
-            this.dialogVisible = false;
-        },
-        cancelFun() {
-            // this.$refs.crossSettingDialogForm.resetFields();
-            this.dialogVisible = false;
+        previousStepFun() {
+            this.$emit("previousSettingStep", true);
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
@@ -231,12 +244,6 @@ export default {
     watch: {
         detailInfoData(val) {
             this.baseSettingForm = this.detailInfoData;
-        },
-        branchDialogVisible(val) {
-            this.dialogVisible = val;
-        },
-        dialogVisible(val) {
-            this.$emit("dialog", val);
         }
     }
 };
@@ -245,8 +252,15 @@ export default {
 .textCenter {
     text-align: center;
 }
+.textRight {
+    margin-top: 40px;
+    text-align: right;
+}
 .tronbaseSettingForm {
     padding: 0 80px 0 0;
+}
+.baseFormItem {
+    width: 600px;
 }
 </style>
 

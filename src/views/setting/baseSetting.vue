@@ -2,85 +2,98 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 18:21:34
+ * @Last Modified time: 2019-11-03 17:17:51
  * @setting base setting 
  */
 
 <template>
     <div class="viewBranchDialog">
-        <el-dialog
-            :title="dialogTitle"
-            @open="openDialogFun"
-            @close="closeFun"
-            :visible.sync="dialogVisible"
-            :close-on-click-modal="false"
-            :close-on-press-escape="false"
-            v-loading="classLoading"
-            width="800px"
-            center
+        <el-form
+            ref="baseSettingDialogForm"
+            :rules="branchRules"
+            :model="baseSettingForm"
+            label-width="230px"
+            class="tronbaseSettingForm"
+            label-position="left"
         >
-            <el-form
-                ref="baseSettingDialogForm"
-                :rules="branchRules"
-                :model="baseSettingForm"
-                label-width="230px"
-                class="tronbaseSettingForm"
-                label-position="left"
-            >
-                <el-form-item label="chainId" prop="chainId">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.chainId"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="chainName" prop="chainName">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.chainName"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="blockProducedTimeOut" prop="block_proposalExpireTime">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.block_proposalExpireTime"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item
-                    label="blockMaintenanceTimeInterval"
-                    prop="block_maintenanceTimeInterval"
-                >
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.block_maintenanceTimeInterval"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="nodeBlockProducedTimeOut" prop="node_blockProducedTimeOut">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_blockProducedTimeOut"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="nodeMinParticipationRate" prop="node_minParticipationRate">
-                    <el-input
-                        :maxlength="50"
-                        v-model="baseSettingForm.node_minParticipationRate"
-                        :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label-width="0" class="textCenter">
-                    <el-button
-                        type="primary"
-                        @click="saveData('baseSettingDialogForm')"
-                    >{{$t('tronSettingSave')}}</el-button>
-                    <el-button @click="cancelFun">{{$t('tronSettingCancel')}}</el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
+            <el-row :gutter="12">
+                <el-col :span="24">
+                    <el-card shadow="hover">
+                        <div @click="baseContentShow = !baseContentShow">
+                            <i :class="baseContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"></i>
+                            {{$t('tronSettingBase')}}
+                        </div>
+                        <div v-if="baseContentShow">
+                            <el-form-item label="chainId" prop="chainId" class="baseFormItem mgt20">
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.chainId"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item label="chainName" prop="chainName" class="baseFormItem">
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.chainName"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                label="blockProducedTimeOut"
+                                prop="block_proposalExpireTime"
+                                class="baseFormItem"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.block_proposalExpireTime"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="blockMaintenanceTimeInterval"
+                                prop="block_maintenanceTimeInterval"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.block_maintenanceTimeInterval"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="nodeBlockProducedTimeOut"
+                                prop="node_blockProducedTimeOut"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_blockProducedTimeOut"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item
+                                class="baseFormItem"
+                                label="nodeMinParticipationRate"
+                                prop="node_minParticipationRate"
+                            >
+                                <el-input
+                                    :maxlength="50"
+                                    v-model="baseSettingForm.node_minParticipationRate"
+                                    :placeholder="$t('tronSettingPlaceholder')"
+                                ></el-input>
+                            </el-form-item>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+            <el-form-item label-width="0" class="textRight">
+                <el-button type="primary" @click="previousStepFun">{{$t('tronSettingPreviousStep')}}</el-button>
+                <el-button
+                    type="primary"
+                    @click="saveData('baseSettingDialogForm')"
+                >{{$t('tronSettingNextStep')}}</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 <script>
@@ -88,7 +101,7 @@ import { baseSettingApi } from "@/api/settingApi";
 import { isvalidateNum } from "@/utils/validate.js";
 export default {
     name: "baseSetting",
-    props: ["branchDialogVisible", "detailInfoData", "editStatus"],
+    props: ["detailInfoData", "editStatus"],
     data() {
         const validNum = (rule, value, callback) => {
             if (!isvalidateNum(value)) {
@@ -99,9 +112,8 @@ export default {
         };
         return {
             classLoading: false,
-            dialogVisible: this.branchDialogVisible,
-            dialogTitle: this.$t("tronSettingBase"),
             baseSettingForm: {},
+            baseContentShow: true,
             branchRules: {
                 chainId: [
                     {
@@ -174,14 +186,8 @@ export default {
         };
     },
     methods: {
-        openDialogFun() {},
-        closeFun() {
-            // this.$refs.baseSettingDialogForm.resetFields();
-            this.dialogVisible = false;
-        },
-        cancelFun() {
-            // this.$refs.baseSettingDialogForm.resetFields();
-            this.dialogVisible = false;
+        previousStepFun() {
+            this.$emit("previousSettingStep", true);
         },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
@@ -206,7 +212,6 @@ export default {
                             this.$message.success(
                                 this.$t("tronSettingBaseSaveSuccess")
                             );
-                            this.dialogVisible = false;
                         })
                         .catch(error => {
                             // this.listLoading = false;
@@ -222,12 +227,6 @@ export default {
     watch: {
         detailInfoData(val) {
             this.baseSettingForm = this.detailInfoData;
-        },
-        branchDialogVisible(val) {
-            this.dialogVisible = val;
-        },
-        dialogVisible(val) {
-            this.$emit("dialog", val);
         }
     }
 };
@@ -236,8 +235,15 @@ export default {
 .textCenter {
     text-align: center;
 }
+.textRight {
+    margin-top: 40px;
+    text-align: right;
+}
 .tronbaseSettingForm {
     padding: 0 80px 0 0;
+}
+.baseFormItem {
+    width: 500px;
 }
 </style>
 
