@@ -2,14 +2,14 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 18:03:50
+ * @Last Modified time: 2019-11-03 18:56:16
  * @tron node list 
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button size="small" @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
+                <el-button @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
                 <!-- <el-button
                     style="float:right"
                     size="mini"
@@ -43,7 +43,7 @@
                     <!-- <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
                         <template slot-scope="scope">
                             <el-button
-                                size="mini"
+                              
                                 type="info"
                                 @click="viewLogFun(scope.row.id)"
                             >{{$t('tronNodeLog')}}</el-button>
@@ -67,7 +67,6 @@
             </div>
             <div class="mgt20">
                 <el-button
-                    size="small"
                     style="float:right"
                     :type="allStepsBtnType"
                     :disabled="allStepsBtnDisable"
