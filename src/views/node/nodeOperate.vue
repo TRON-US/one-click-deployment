@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 11:36:00
+ * @Last Modified time: 2019-11-04 15:27:59
  * @operation node 
  */
 
@@ -121,6 +121,31 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="url" prop="url" v-if="nodeForm.isSR">
+                    <el-input
+                        :maxlength="100"
+                        v-model="nodeForm.url"
+                        :placeholder="$t('tronNodeUrlPlaceholder')"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item prop="voteNumber" v-if="nodeForm.isSR">
+                    <span slot="label">
+                        voteNumber
+                        <el-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="$t('tronNodeVoteNumberTips')"
+                            placement="top"
+                        >
+                            <i class="el-icon-question"></i>
+                        </el-tooltip>
+                    </span>
+                    <el-input
+                        :maxlength="100"
+                        v-model="nodeForm.voteNumber"
+                        :placeholder="$t('tronNodeVoteNumberPlaceholder')"
+                    ></el-input>
+                </el-form-item>
                 <el-form-item prop="privateKey" v-if="nodeForm.isSR">
                     <span slot="label">
                         privateKey
@@ -135,7 +160,7 @@
                     </span>
                     <el-input
                         type="textarea"
-                        :maxlength="100"
+                        :maxlength="1000"
                         v-model="nodeForm.privateKey"
                         :placeholder="$t('tronNodePrivateKeyPlaceholder')"
                     ></el-input>
@@ -236,6 +261,23 @@ export default {
                     message: this.$t("tronNodeSRPlaceholder"),
                     trigger: "blur"
                 },
+                url: {
+                    required: true,
+                    message: this.$t("tronNodeUrlPlaceholder"),
+                    trigger: "blur"
+                },
+                voteNumber: [
+                    {
+                        required: true,
+                        message: this.$t("tronNodeVoteNumberTips"),
+                        trigger: "blur"
+                    },
+                    {
+                        required: true,
+                        validator: validNum,
+                        trigger: "blur"
+                    }
+                ],
                 privateKey: [
                     {
                         required: true,

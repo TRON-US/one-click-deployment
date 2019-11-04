@@ -1,12 +1,21 @@
 import request from '@/utils/request'
 
+// get pluginConfig
+
+export function pluginConfigApi() {
+  return request({
+    url: '/pluginConfig',
+    method: 'get',
+  })
+}
+
 
 // dbEngine setting
 export function dbEngineApi(params) {
   return request({
     url: '/dbEngine',
     method: 'post',
-    data: params
+    params
   })
 }
 
@@ -24,6 +33,6 @@ export function consensusApi(params) {
   return request({
     url: '/consensus',
     method: 'post',
-    data: params
+    params
   })
 }

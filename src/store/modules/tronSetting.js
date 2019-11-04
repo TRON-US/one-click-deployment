@@ -8,6 +8,7 @@ const state = {
   originSetting: {},
   configSetting: {},
   settingStep: 0,
+  pluginStep: 0,
 }
 
 const mutations = {
@@ -19,7 +20,10 @@ const mutations = {
   },
   SET_CURRENTSTEP: (state, step) => {
     state.settingStep = step
-  }
+  },
+  SET_PLUGINSTEP: (state, step) => {
+    state.pluginStep = step
+  },
 
 }
 
@@ -28,7 +32,6 @@ const actions = {
   // get setting info
   getOriginConfig({
     commit,
-    state
   }) {
     return new Promise((resolve, reject) => {
       originSettingApi().then(response => {
@@ -48,7 +51,6 @@ const actions = {
   },
   getConfigSetting({
     commit,
-    state
   }) {
     return new Promise((resolve, reject) => {
       configSettingApi().then(response => {
@@ -69,7 +71,6 @@ const actions = {
 
   getCurrentStepConfig({
     commit,
-    state
   }, stepInfo) {
     return new Promise((resolve, reject) => {
       const {
@@ -77,6 +78,20 @@ const actions = {
       } = stepInfo;
       sessionStorage.setItem('currentstep', step)
       commit('SET_CURRENTSTEP', step)
+
+    })
+  },
+
+  getCurrentPluginStepConfig({
+    commit,
+  }, stepInfo) {
+    return new Promise((resolve, reject) => {
+      console.log(stepInfo, 'stepInfo')
+      const {
+        step
+      } = stepInfo;
+      sessionStorage.setItem('pluginstep', step)
+      commit('SET_PLUGINSTEP', step)
 
     })
   },

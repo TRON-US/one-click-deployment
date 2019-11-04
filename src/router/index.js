@@ -136,7 +136,7 @@ export const constantRoutes = [
       },
       {
         path: 'config',
-        name: 'settinglist',
+        name: 'settingconfig',
         hidden: true,
         component: () => import('@/views/setting/index'),
         meta: {

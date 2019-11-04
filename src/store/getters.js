@@ -6,6 +6,7 @@ const getters = {
   name: state => state.user.name,
   originSetting: state => state.tronSetting.originSetting,
   configSetting: state => state.tronSetting.configSetting,
-  settingStep: state => state.tronSetting.settingStep
+  settingStep: state => state.tronSetting.settingStep,
+  pluginStep: state => state.tronSetting.pluginStep
 }
 export default getters

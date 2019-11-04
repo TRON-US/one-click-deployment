@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-04 12:03:30
+ * @Last Modified time: 2019-11-04 16:05:35
  * @tron plugin list  
  */
 <template>
@@ -21,9 +21,9 @@
                 </div>
             </div>
             <el-form
-                ref="pluginFormDialogForm"
+                ref="pluginOnsensusDialogForm"
                 :model="pluginOnsensusForm"
-                label-width="200px"
+                :rules="pluginRules"
                 class="pluginSettingForm"
                 label-position="left"
                 v-if="currentStep == 1"
@@ -38,14 +38,10 @@
                                 {{$t('tronPluginConsensusModule')}}
                             </div>
                             <div v-if="baseContentShow">
-                                <el-form-item
-                                    label="enableCrossChain"
-                                    prop="enableCrossChain"
-                                    class="baseFormItem mgt20"
-                                >
-                                    <el-radio-group v-model="pluginOnsensusForm.onsensus">
+                                <el-form-item prop="consensus" class="baseFormItem mgt20">
+                                    <el-radio-group v-model="pluginOnsensusForm.consensus">
                                         <el-radio :label="'dpos'">DPOS</el-radio>
-                                        <el-radio :label="'PBFT'">PBFT</el-radio>
+                                        <el-radio :label="'pbft'">PBFT</el-radio>
                                         <br />
                                         <el-radio
                                             style="margin:15px 0"
@@ -54,26 +50,26 @@
                                     </el-radio-group>
                                     <el-input
                                         :maxlength="50"
-                                        v-model="pluginOnsensusForm.onsensusContent"
+                                        v-model="pluginOnsensusForm.consensusContent"
                                         :placeholder="$t('tronSettingPlaceholder')"
                                     ></el-input>
                                 </el-form-item>
                             </div>
                         </el-card>
                     </el-col>
-                    <el-form-item label-width="0" class="textRight">
-                        <el-button
-                            type="primary"
-                            @click="saveData('pluginsDialogForm')"
-                        >{{$t('tronSettingNextStep')}}</el-button>
-                    </el-form-item>
                 </el-row>
+                <el-form-item label-width="0" class="textRight">
+                    <el-button
+                        type="primary"
+                        @click="saveData('pluginOnsensusDialogForm')"
+                    >{{$t('tronSettingNextStep')}}</el-button>
+                </el-form-item>
             </el-form>
             <el-form
-                ref="transactionDialogForm"
+                ref="transcationDialogForm"
+                class="transcationDialogForm"
                 :model="pluginTransactionForm"
-                label-width="200px"
-                class="transactionSettingForm"
+                :rules="transcationRules"
                 label-position="left"
                 v-if="currentStep == 2"
             >
@@ -87,23 +83,16 @@
                                 {{$t('tronPluginTransactionModule')}}
                             </div>
                             <div v-if="transcationContentShow">
-                                <el-form-item
-                                    label="transaction"
-                                    prop="transaction"
-                                    class="baseFormItem mgt20"
-                                >
-                                    <el-checkbox-group v-model="pluginForm.transaction">
+                                <el-form-item prop="transaction" class="baseFormItem mgt20">
+                                    <el-checkbox-group v-model="pluginTransactionForm.transaction">
                                         <el-checkbox label="AccountUpdate"></el-checkbox>
-                                        <el-checkbox style="margin:0 66px" label="TransferaSSET"></el-checkbox>
+                                        <el-checkbox label="TransferaSSET"></el-checkbox>
                                         <el-checkbox label="VoteWitness"></el-checkbox>
-                                        <el-checkbox style="margin:10px 0" label="AccountCreate"></el-checkbox>
-                                        <el-checkbox
-                                            style="margin:10px 68px 10px 100px"
-                                            label="UnfreezeAsset"
-                                        ></el-checkbox>
+                                        <el-checkbox label="AccountCreate"></el-checkbox>
+                                        <el-checkbox label="UnfreezeAsset"></el-checkbox>
                                         <el-checkbox label="FreezeBalance"></el-checkbox>
                                         <el-checkbox label="UpdateAsset"></el-checkbox>
-                                        <el-checkbox style="margin:0 82px" label="SetAccountId"></el-checkbox>
+                                        <el-checkbox label="SetAccountId"></el-checkbox>
                                         <br />
                                         <el-checkbox
                                             style="margin:15px 0"
@@ -111,7 +100,7 @@
                                         >{{$t('tronPluginCustomTradingModule')}}</el-checkbox>
                                         <el-input
                                             :maxlength="50"
-                                            v-model="pluginForm.transactionContent"
+                                            v-model="pluginTransactionForm.transactionContent"
                                             :placeholder="$t('tronSettingPlaceholder')"
                                         ></el-input>
                                     </el-checkbox-group>
@@ -120,12 +109,23 @@
                         </el-card>
                     </el-col>
                 </el-row>
+                <el-form-item label-width="0" class="textRight">
+                    <el-button
+                        type="primary"
+                        @click="previousStepFun()"
+                    >{{$t('tronSettingPreviousStep')}}</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveTranstionData('transcationDialogForm')"
+                    >{{$t('tronSettingNextStep')}}</el-button>
+                </el-form-item>
             </el-form>
-            <!-- <el-form
-                ref="pluginFormDialogForm"
-                :model="pluginOnsensusForm"
+            <el-form
+                ref="dbFormDialogForm"
+                :model="plugindbForm"
+                :rules="plugindbRules"
                 label-width="200px"
-                class="pluginSettingForm"
+                class="dbSettingForm"
                 label-position="left"
                 v-if="currentStep == 3"
             >
@@ -144,7 +144,7 @@
                                     prop="dbsetting"
                                     class="baseFormItem mgt20"
                                 >
-                                    <el-radio-group v-model="pluginForm.dbsetting">
+                                    <el-radio-group v-model="plugindbForm.dbsetting">
                                         <el-radio :label="'leveldb'">leveldb</el-radio>
                                         <el-radio :label="'rockdb'">rockdb</el-radio>
                                         <br />
@@ -155,7 +155,7 @@
                                     </el-radio-group>
                                     <el-input
                                         :maxlength="50"
-                                        v-model="pluginForm.dbsettingContent"
+                                        v-model="plugindbForm.dbsettingContent"
                                         :placeholder="$t('tronSettingPlaceholder')"
                                     ></el-input>
                                 </el-form-item>
@@ -163,14 +163,29 @@
                         </el-card>
                     </el-col>
                 </el-row>
-            </el-form>-->
+                <el-form-item label-width="0" class="textRight">
+                    <el-button
+                        type="primary"
+                        @click="previousStepFun()"
+                    >{{$t('tronSettingPreviousStep')}}</el-button>
+                    <el-button
+                        type="primary"
+                        @click="saveDBData('dbFormDialogForm')"
+                    >{{$t('tronSettingNextStep')}}</el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
 </template>
 <script>
+import {
+    dbEngineApi,
+    transactionApi,
+    consensusApi,
+    pluginConfigApi
+} from "@/api/pluginApi";
 export default {
     name: "pluginlist",
-
     data() {
         return {
             currentStep: 1,
@@ -178,19 +193,37 @@ export default {
             transcationContentShow: true,
             dbsettingContentShow: true,
             pluginOnsensusForm: {
-                onsensus: "dpos",
-                onsensusContent: ""
+                consensus: "dpos",
+                consensusContent: ""
             },
-            pluginForm: {
-                onsensus: "dpos",
+            pluginTransactionForm: {
                 transaction: [],
+                transactionContent: ""
+            },
+            plugindbForm: {
                 dbsetting: "leveldb",
-                onsensusContent: "",
-                transactionContent: "",
                 dbsettingContent: ""
             },
-            pluginFormRules: {
+            pluginRules: {
+                consensus: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    }
+                ]
+            },
+            transcationRules: {
                 transaction: [
+                    {
+                        required: true,
+                        message: this.$t("tronSettingPlaceholder"),
+                        trigger: "blur"
+                    }
+                ]
+            },
+            plugindbRules: {
+                dbsetting: [
                     {
                         required: true,
                         message: this.$t("tronSettingPlaceholder"),
@@ -200,49 +233,148 @@ export default {
             }
         };
     },
-
+    created() {
+        this.pluginConfigFun();
+        this.getCurrentStepFun();
+    },
     methods: {
+        pluginConfigFun() {
+            pluginConfigApi()
+                .then(response => {
+                    return response.data;
+                })
+                .then(res => {
+                    if (res.consensus != "dpos" && res.consensus != "pbft") {
+                        this.pluginOnsensusForm = {
+                            consensus: 3,
+                            consensusContent: res.consensus
+                        };
+                    } else {
+                        this.pluginOnsensusForm = {
+                            consensus: res.consensus,
+                            consensusContent: ""
+                        };
+                    }
+                    this.pluginTransactionForm.transaction = res.transaction;
+                    if (res.dbEngine != "leveldb" && res.dbEngine != "rockdb") {
+                        this.plugindbForm = {
+                            dbsetting: 3,
+                            dbsettingContent: res.dbEngine
+                        };
+                    } else {
+                        this.plugindbForm = {
+                            dbsetting: res.dbEngine,
+                            dbsettingContent: ""
+                        };
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        getCurrentStepFun() {
+            let step = sessionStorage.getItem("pluginstep") || 1;
+            if (this.currentStep != 0) {
+                step = step || this.currentStep;
+            }
+            this.currentStep = Number(step);
+            this.$store.dispatch("tronSetting/getCurrentPluginStepConfig", {
+                step: this.currentStep
+            });
+        },
+        previousStepFun(val) {
+            this.currentStep = this.currentStep - 1;
+            this.$store.dispatch("tronSetting/getCurrentPluginStepConfig", {
+                step: this.currentStep
+            });
+            this.pluginConfigFun();
+        },
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    console.log(this.pluginForm);
-                    // if (this.pluginForm.onsensus == 3) {
-                    //     this.pluginForm.onsensus = this.pluginForm.onsensusContent;
-                    // }
-                    // if (this.pluginForm.transactionContent != "") {
-                    //     this.pluginForm.transaction.forEach((item, ind) => {
-                    //         if (item === 9) {
-                    //             this.pluginForm.transaction.splice(ind, 1);
-                    //         }
-                    //     });
-                    //     this.pluginForm.transaction.push(
-                    //         this.pluginForm.transactionContent
-                    //     );
-                    // }
-                    // if (this.pluginForm.dbsetting == 3) {
-                    //     this.pluginForm.dbsetting = this.pluginForm.dbsettingContent;
-                    // }
-                    // console.log(this.pluginForm);
-                    // await consensusApi({ onsensus: this.pluginForm.onsensus })
-                    //     .then(response => {})
-                    //     .catch(error => {
-                    //         console.log(error);
-                    //     });
-                    // await transactionApi(this.pluginForm.transaction)
-                    //     .then(response => {})
-                    //     .catch(error => {
-                    //         console.log(error);
-                    //     });
-                    // dbEngineApi({ dbEngine: this.pluginForm.dbsetting })
-                    //     .then(response => {
-                    //         this.$message.success(
-                    //             this.$t("tronPluginInputSaveSuccess")
-                    //         );
-                    //         this.dialogVisible = false;
-                    //     })
-                    //     .catch(error => {
-                    //         console.log(error);
-                    //     });
+                    console.log(this.pluginOnsensusForm);
+                    if (this.pluginOnsensusForm.consensus == 3) {
+                        this.pluginOnsensusForm.consensus = this.pluginOnsensusForm.consensusContent;
+                    }
+                    consensusApi({
+                        consensus: this.pluginOnsensusForm.consensus
+                    })
+                        .then(response => {
+                            this.$message.success(
+                                this.$t("tronPluginConsensusSaveSuccess")
+                            );
+                            this.currentStep = this.currentStep + 1;
+                            this.$store.dispatch(
+                                "tronSetting/getCurrentPluginStepConfig",
+                                {
+                                    step: this.currentStep
+                                }
+                            );
+                            this.pluginConfigFun();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                } else {
+                    console.log("error submit!!");
+                    return false;
+                }
+            });
+        },
+        saveTranstionData(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    if (this.pluginTransactionForm.transactionContent != "") {
+                        this.pluginTransactionForm.transaction.forEach(
+                            (item, ind) => {
+                                if (item === 9) {
+                                    this.pluginTransactionForm.transaction.splice(
+                                        ind,
+                                        1
+                                    );
+                                }
+                            }
+                        );
+                        this.pluginTransactionForm.transaction.push(
+                            this.pluginTransactionForm.transactionContent
+                        );
+                    }
+
+                    transactionApi(this.pluginTransactionForm.transaction)
+                        .then(response => {
+                            this.$message.success(
+                                this.$t("tronPluginInputSaveSuccess")
+                            );
+                            this.currentStep = this.currentStep + 1;
+                            this.$store.dispatch(
+                                "tronSetting/getCurrentPluginStepConfig",
+                                {
+                                    step: this.currentStep
+                                }
+                            );
+                            this.pluginConfigFun();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+            });
+        },
+        saveDBData(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    if (this.plugindbForm.dbsetting == 3) {
+                        this.plugindbForm.dbsetting = this.plugindbForm.dbsettingContent;
+                    }
+                    dbEngineApi({ dbEngine: this.plugindbForm.dbsetting })
+                        .then(response => {
+                            this.$message.success(
+                                this.$t("tronPluginInputSaveSuccess")
+                            );
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 } else {
                     console.log("error submit!!");
                     return false;
