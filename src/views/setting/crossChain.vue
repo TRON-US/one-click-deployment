@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 18:07:04
+ * @Last Modified time: 2019-11-04 11:27:39
  * @setting cross setting
  */
 
@@ -171,6 +171,7 @@ export default {
                             this.$message.success(
                                 this.$t("tronSettingCrossChainSaveSuccess")
                             );
+                            this.$router.push({ path: "/plugin/list" });
                         })
                         .catch(error => {
                             console.log(error);

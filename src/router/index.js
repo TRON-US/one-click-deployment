@@ -147,25 +147,26 @@ export const constantRoutes = [
     ]
   },
 
-  // {
-  //   path: '/plugin',
-  //   component: Layout,
-  //   redirect: '/plugin/list',
-  //   name: 'pluginMenu',
-  //   meta: {
-  //     title: '插件管理',
-  //     icon: 'example'
-  //   },
-  //   children: [{
-  //     path: 'list',
-  //     name: 'pluginlist',
-  //     component: () => import('@/views/pluginList/index'),
-  //     meta: {
-  //       title: 'tronSettingMenuPlugin',
-  //       icon: 'plugins'
-  //     }
-  //   }]
-  // },
+  {
+    path: '/plugin',
+    component: Layout,
+    hidden: true,
+    redirect: '/plugin/list',
+    name: 'pluginMenu',
+    meta: {
+      title: '插件管理',
+      icon: 'example'
+    },
+    children: [{
+      path: 'list',
+      name: 'pluginlist',
+      component: () => import('@/views/pluginList/index'),
+      meta: {
+        title: 'tronSettingMenuPlugin',
+        icon: 'plugins'
+      }
+    }]
+  },
 
   {
     path: '/tronscan',
