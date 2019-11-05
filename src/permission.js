@@ -28,31 +28,31 @@ router.beforeEach(async (to, from, next) => {
   // const hasGetUserInfo = store.getters.name
   const hasToken = getToken()
 
-  if (hasToken) {
-    try {
-      const newRoleAry = [];
-      const roleAry = ["node", "setting", "super", ]; // 权限控制
-      newRoleAry.push(hasToken)
-      // get user info
-      const accessRoutes = await store.dispatch(
-        "permission/generateRoutes",
-        newRoleAry
-      );
-      console.log(accessRoutes)
-      router.addRoutes(accessRoutes);
-      next({
-        ...to,
-        replace: true
-      });
-    } catch (error) {
-      // remove token and go to login page to re-login
-      Message.error(error || 'Has Error')
-      NProgress.done()
-    }
-  } else {
-    next();
-    NProgress.done()
-  }
+  // if (hasToken) {
+  //   try {
+  //     const newRoleAry = [];
+  //     const roleAry = ["node", "setting", "super", ]; // 权限控制
+  //     newRoleAry.push(hasToken)
+  //     // get user info
+  //     // const accessRoutes = await store.dispatch(
+  //     //   "permission/generateRoutes",
+  //     //   newRoleAry
+  //     // );
+  //     // console.log(accessRoutes)
+  //     // router.addRoutes(accessRoutes);
+  //     next({
+  //       ...to,
+  //       replace: true
+  //     });
+  //   } catch (error) {
+  //     // remove token and go to login page to re-login
+  //     Message.error(error || 'Has Error')
+  //     NProgress.done()
+  //   }
+  // } else {
+  next();
+  NProgress.done()
+  // }
 
 })
 

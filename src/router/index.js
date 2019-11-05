@@ -84,6 +84,7 @@ export const constantRoutes = [
         path: 'plugin',
         name: 'plugin',
         component: () => import('@/views/pluginList/index'),
+
         meta: {
           title: 'tronSettingMenuPlugin',
           icon: 'plugins'
