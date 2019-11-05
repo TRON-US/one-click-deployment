@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-04 16:51:14
+ * @Last Modified time: 2019-11-05 15:42:02
  * @operation node 
  */
 
@@ -146,6 +146,7 @@
                         :placeholder="$t('tronNodeVoteNumberPlaceholder')"
                     ></el-input>
                 </el-form-item>
+
                 <el-form-item prop="privateKey" v-if="nodeForm.isSR">
                     <span slot="label">
                         privateKey
@@ -165,6 +166,7 @@
                         :placeholder="$t('tronNodePrivateKeyPlaceholder')"
                     ></el-input>
                 </el-form-item>
+
                 <el-form-item label-width="0" class="textCenter">
                     <el-button
                         type="primary"
@@ -311,6 +313,8 @@ export default {
                     let newForm = this.nodeForm;
                     newForm.url = `"${newForm.url}"`;
                     if (this.editStatus == 1) {
+                        delete newForm.privateKey;
+                        delete newForm.publicKey;
                         editNote(newForm)
                             .then(response => {
                                 this.$emit("addNodeSuccess", true);

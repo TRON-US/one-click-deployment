@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 12:18:34
+ * @Last Modified time: 2019-11-05 15:42:47
  * @tron node list 
  */
 <template>
@@ -45,10 +45,12 @@
                     <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
                         <template slot-scope="scope">
                             <el-button
+                                size="small"
                                 v-if="scope.row.logLoading"
                                 type="info"
-                                @click="viewLogFun(scope.row.id)"
+                                @click="viewCurrentLogFun(scope.row.id)"
                             >{{$t('tronNodeLog')}}</el-button>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column :label="$t('tronNodeOperate')" align="center" width="200">
@@ -98,6 +100,7 @@
         <el-dialog
             :title="$t('tronNodeStatus')"
             :visible.sync="currentLogDialog"
+            @close="currentNodeLogEnd"
             width="600px"
             center
         >
@@ -134,6 +137,8 @@ import {
     nodeInfoApi
 } from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
+import { setTimeout } from "timers";
+let nodeTimer = null;
 export default {
     name: "nodelist",
     components: {
@@ -166,7 +171,8 @@ export default {
                 status: 0
             },
             logInfoData: [],
-            multipleSelection: []
+            multipleSelection: [],
+            deployedAry: []
         };
     },
     computed: {
@@ -178,6 +184,7 @@ export default {
                     path: this.currentPath
                 });
             });
+            sessionStorage.setItem("selectednode", arr);
             return arr;
         }
     },
@@ -201,11 +208,28 @@ export default {
             this.nodeObj.visible = true;
         },
         operateNodeFun(val) {
-            this.nodeObj.detail = val;
+            this.nodeObj.detail = {
+                ...val,
+                privateKey: "",
+                url: JSON.stringify(val.url)
+                    .slice(3)
+                    .slice(0, -3),
+                voteNumber: val.voteCount
+            };
             this.nodeObj.status = 1;
             this.nodeObj.visible = true;
         },
-        viewLogFun(_id) {
+        viewCurrentLogFun(_id) {
+            this.currentLogDialog = true;
+            this.viewLogFun(_id);
+            nodeTimer = setInterval(() => {
+                this.viewLogFun(_id);
+            }, 10000);
+        },
+        currentNodeLogEnd() {
+            clearInterval(nodeTimer);
+        },
+        viewLogFun(_id, _type) {
             this.deploymentLoadingText = this.$t("deploymentSearchLoading");
             deployLogInfoApi({ id: _id })
                 .then(response => {
@@ -214,10 +238,9 @@ export default {
                 .then(res => {
                     this.currentlogInfoData = res.logInfo;
                     this.deplogUploadLoading = true;
-                    this.currentLogDialog = true;
                     this.deploymentLoadingTips = true;
                     this.currentlogInfoData.forEach(async item => {
-                        if (item == "Finish") {
+                        if (item == "deploy finish") {
                             this.deplogUploadLoading = false;
                             this.deploymentDialogVisible = false;
                             this.deploymentLoadingText = this.$t(
@@ -280,6 +303,7 @@ export default {
                 });
             }
         },
+        getSelectedDeploymentFun() {},
         getDataListFun(log) {
             // defalut data list
             allNodeInfo()
@@ -297,13 +321,13 @@ export default {
                     let resData = res;
                     if (log == 1) {
                         resData.forEach(item => {
-                            console.log(this.multipleSelectionIds);
                             this.multipleSelectionIds.forEach(selectedVal => {
                                 if (selectedVal.id == item.id) {
                                     item.logLoading = true;
                                 }
                             });
                         });
+                        this.getSelectedDeploymentFun();
                     }
                     this.list = resData.sort(this.sortIdFun);
                 })
