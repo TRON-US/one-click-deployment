@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-04 16:14:45
+ * @Last Modified time: 2019-11-05 12:18:34
  * @tron node list 
  */
 <template>
@@ -12,6 +12,7 @@
                 <el-button @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
                 <el-button
                     v-if="isDeploy ==1"
+                    :loading="allNodeDeployLoading"
                     style="float:right"
                     size="mini"
                     :type="checkType"
@@ -41,15 +42,15 @@
                             <el-tag type="danger" v-else>no</el-tag>
                         </template>
                     </el-table-column>
-                    <!-- <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
+                    <el-table-column prop="status" :label="$t('tronNodeStatus')" align="center">
                         <template slot-scope="scope">
                             <el-button
-                              
+                                v-if="scope.row.logLoading"
                                 type="info"
                                 @click="viewLogFun(scope.row.id)"
                             >{{$t('tronNodeLog')}}</el-button>
                         </template>
-                    </el-table-column>-->
+                    </el-table-column>
                     <el-table-column :label="$t('tronNodeOperate')" align="center" width="200">
                         <template slot-scope="scope">
                             <el-button
@@ -79,7 +80,7 @@
         <el-dialog
             :title="$t('tronNodeBulkDeployment')"
             :visible.sync="deploymentDialogVisible"
-            width="900px"
+            width="600px"
             center
         >
             <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="currentPath"></el-input>
@@ -144,6 +145,7 @@ export default {
             isDeploy: this.$route.query.deploy,
             currentlogInfoData: [],
             deplogUploadLoading: false,
+            allNodeDeployLoading: false,
             deploymentDialogVisible: false,
             currentLogDialog: false,
             deploymentLoadingTips: true,
@@ -235,16 +237,16 @@ export default {
         deployMentFun() {
             // deploy
             this.deplogUploadLoading = true;
+            this.allNodeDeployLoading = true;
             if (this.currentPath != "") {
                 this.multipleSelectionIds.forEach(async item => {
-                    // console.log(item);
                     await this.deployNodeApiFun(item);
                 });
                 this.$message({
                     type: "success",
                     message: this.$t("deploymentLoading")
                 });
-                this.getDataListFun();
+                this.getDataListFun(1);
             } else {
                 this.deplogUploadLoading = false;
                 this.$message({
@@ -254,7 +256,6 @@ export default {
             }
         },
         deployNodeApiFun(item) {
-            // console.log(item);
             deployNodeApi(item)
                 .then(res => {
                     this.deplogUploadLoading = false;
@@ -279,7 +280,7 @@ export default {
                 });
             }
         },
-        getDataListFun() {
+        getDataListFun(log) {
             // defalut data list
             allNodeInfo()
                 .then(response => {
@@ -294,6 +295,16 @@ export default {
                         this.allStepsBtnDisable = true;
                     }
                     let resData = res;
+                    if (log == 1) {
+                        resData.forEach(item => {
+                            console.log(this.multipleSelectionIds);
+                            this.multipleSelectionIds.forEach(selectedVal => {
+                                if (selectedVal.id == item.id) {
+                                    item.logLoading = true;
+                                }
+                            });
+                        });
+                    }
                     this.list = resData.sort(this.sortIdFun);
                 })
                 .catch(error => {
