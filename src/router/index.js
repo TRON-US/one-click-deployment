@@ -87,6 +87,7 @@ export const constantRoutes = [
       {
         path: 'setting',
         name: 'setting',
+        hidden: true,
         component: () => import('@/views/setting/setting'),
         meta: {
           title: 'tronSettingMenuSetting',
@@ -96,8 +97,8 @@ export const constantRoutes = [
       {
         path: 'plugin',
         name: 'plugin',
+        hidden: true,
         component: () => import('@/views/pluginList/index'),
-
         meta: {
           title: 'tronSettingMenuPlugin',
           icon: 'plugins'
