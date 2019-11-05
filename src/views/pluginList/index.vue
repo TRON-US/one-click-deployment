@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-04 16:05:35
+ * @Last Modified time: 2019-11-04 16:39:14
  * @tron plugin list  
  */
 <template>
@@ -59,6 +59,10 @@
                     </el-col>
                 </el-row>
                 <el-form-item label-width="0" class="textRight">
+                    <router-link :to="{path:'/setting/list'}">
+                        <el-button type="primary">{{$t('tronSettingPreviousStep')}}</el-button>
+                    </router-link>
+
                     <el-button
                         type="primary"
                         @click="saveData('pluginOnsensusDialogForm')"
@@ -255,7 +259,18 @@ export default {
                             consensusContent: ""
                         };
                     }
-                    this.pluginTransactionForm.transaction = res.transaction;
+
+                    if (res.customTransaction != "") {
+                        this.pluginTransactionForm.transactionContent =
+                            res.customTransaction;
+                        this.pluginTransactionForm.transaction = [
+                            ...res.transaction,
+                            9
+                        ];
+                    } else {
+                        this.pluginTransactionForm.transaction =
+                            res.transaction;
+                    }
                     if (res.dbEngine != "leveldb" && res.dbEngine != "rockdb") {
                         this.plugindbForm = {
                             dbsetting: 3,
@@ -335,12 +350,13 @@ export default {
                                 }
                             }
                         );
-                        this.pluginTransactionForm.transaction.push(
-                            this.pluginTransactionForm.transactionContent
-                        );
                     }
-
-                    transactionApi(this.pluginTransactionForm.transaction)
+                    console.log(this.pluginTransactionForm);
+                    transactionApi({
+                        transaction: this.pluginTransactionForm.transaction,
+                        customTransaction: this.pluginTransactionForm
+                            .transactionContent
+                    })
                         .then(response => {
                             this.$message.success(
                                 this.$t("tronPluginInputSaveSuccess")
@@ -371,6 +387,10 @@ export default {
                             this.$message.success(
                                 this.$t("tronPluginInputSaveSuccess")
                             );
+                            this.$router.push({
+                                path: "/node/list",
+                                query: { deploy: 1 }
+                            });
                         })
                         .catch(error => {
                             console.log(error);

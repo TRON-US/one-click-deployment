@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 18:56:16
+ * @Last Modified time: 2019-11-04 16:14:45
  * @tron node list 
  */
 <template>
@@ -10,12 +10,13 @@
         <div class="tron-content">
             <div class="tron-filter-section">
                 <el-button @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
-                <!-- <el-button
+                <el-button
+                    v-if="isDeploy ==1"
                     style="float:right"
                     size="mini"
                     :type="checkType"
                     @click="bulkDeploymentFun"
-                >{{$t('tronNodeBulkDeployment')}}</el-button>-->
+                >{{$t('tronNodeBulkDeployment')}}</el-button>
             </div>
             <div class="filter-container tron-table">
                 <!--tron table-->
@@ -29,7 +30,7 @@
                     border
                     @selection-change="handleSelectionChange"
                 >
-                    <!-- <el-table-column type="selection" width="55"></el-table-column> -->
+                    <el-table-column v-if="isDeploy ==1" type="selection" width="55"></el-table-column>
                     <el-table-column prop="id" label="ID" align="center"></el-table-column>
                     <el-table-column prop="userName" :label="$t('tronNodeName')" align="center"></el-table-column>
                     <el-table-column prop="ip" label="IP/HOST" align="center"></el-table-column>
@@ -65,7 +66,7 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <div class="mgt20">
+            <div class="mgt20" v-if="isDeploy != 1">
                 <el-button
                     style="float:right"
                     :type="allStepsBtnType"
@@ -140,6 +141,7 @@ export default {
     data() {
         return {
             list: [],
+            isDeploy: this.$route.query.deploy,
             currentlogInfoData: [],
             deplogUploadLoading: false,
             deploymentDialogVisible: false,

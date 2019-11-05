@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 16:32:18
+ * @Last Modified time: 2019-11-05 11:38:48
  * @setting genesis setting
  */
 
@@ -39,10 +39,7 @@
                             </el-col>
                             <el-col :span="12">
                                 <div class="witeness">
-                                    <el-button
-                                        class="newWiteness"
-                                        @click="newWitenessFun()"
-                                    >new witeness</el-button>
+                                    <el-button class="newWiteness">witeness</el-button>
                                     <el-row
                                         v-for="(item,index) in detailInfoData.genesis_block_witnesses"
                                         :key="index"
@@ -133,33 +130,39 @@
                 label-position="left"
             >
                 <el-form-item label="address" prop="address">
-                    <el-input
+                    {{witenessForm.address}}
+                    <!-- <el-input
+                        disabled
                         :maxlength="50"
                         v-model="witenessForm.address"
                         :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
+                    ></el-input>-->
                 </el-form-item>
                 <el-form-item label="url" prop="url">
-                    <el-input
+                    {{witenessForm.url}}
+                    <!-- <el-input
+                        disabled
                         :maxlength="50"
                         v-model="witenessForm.url"
                         :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
+                    ></el-input>-->
                 </el-form-item>
                 <el-form-item label="voteCount" prop="voteCount">
-                    <el-input
+                    {{witenessForm.voteCount}}
+                    <!-- <el-input
+                        disabled
                         :maxlength="50"
-                        v-model="witenessForm.voteCount"
+                        v-model=""
                         :placeholder="$t('tronSettingPlaceholder')"
-                    ></el-input>
+                    ></el-input>-->
                 </el-form-item>
-                <el-form-item label-width="0" class="textCenter">
+                <!-- <el-form-item label-width="0" class="textCenter">
                     <el-button
                         type="primary"
                         @click="saveWitenessData('witenessDialogForm')"
                     >{{$t('tronSettingSave')}}</el-button>
                     <el-button @click="innerWitenessVisible = false">{{$t('tronSettingCancel')}}</el-button>
-                </el-form-item>
+                </el-form-item>-->
             </el-form>
         </el-dialog>
     </div>
@@ -368,14 +371,13 @@ export default {
                     }
 
                     const newSettingForm = {
-                        assets: this.genesisSetting.genesis_block_assets,
-                        witness: this.genesisSetting.genesis_block_witnesses
+                        assets: this.genesisSetting.genesis_block_assets
                     };
 
-                    newSettingForm.witness.forEach(item => {
-                        console.log(`"${item.url}"`);
-                        item.url = `"${item.url}"`;
-                    });
+                    // newSettingForm.witness.forEach(item => {
+                    //     console.log(`"${item.url}"`);
+                    //     item.url = `"${item.url}"`;
+                    // });
                     console.log(newSettingForm);
                     genesisSettingApi(newSettingForm)
                         .then(response => {
@@ -446,13 +448,13 @@ export default {
         saveAllData() {
             // save current data
             const newSettingForm = {
-                assets: this.genesisSetting.genesis_block_assets,
-                witness: this.genesisSetting.genesis_block_witnesses
+                assets: this.genesisSetting.genesis_block_assets
+                // witness: this.genesisSetting.genesis_block_witnesses
             };
-            newSettingForm.witness.forEach(item => {
-                console.log(`"${item.url}"`);
-                item.url = `"${item.url}"`;
-            });
+            // newSettingForm.witness.forEach(item => {
+            //     console.log(`"${item.url}"`);
+            //     item.url = `"${item.url}"`;
+            // });
             genesisSettingApi(newSettingForm)
                 .then(response => {
                     this.$emit("addSettingSuccess", true);
@@ -490,7 +492,7 @@ export default {
 .witeness {
     position: relative;
     margin: 0 auto;
-    width: 600px;
+    // max-width: 600px;
     min-height: 200px;
     padding: 20px 15px;
     border: 1px solid #ccc;

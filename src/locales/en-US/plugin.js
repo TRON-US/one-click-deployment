@@ -10,7 +10,8 @@ export default {
   'tronPluginInputPlaceholder': 'Please fill out',
   'tronPluginInputSave': 'save',
   'tronPluginInputCancel': 'cancel',
-  'tronPluginInputSaveSuccess': 'Successfully saved'
+  'tronPluginInputSaveSuccess': 'Successfully saved',
+  'tronPluginConsensusSaveSuccess': ''
 
 
 }

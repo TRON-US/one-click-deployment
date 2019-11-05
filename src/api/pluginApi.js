@@ -23,6 +23,13 @@ export function dbEngineApi(params) {
 export function transactionApi(params) {
   return request({
     url: '/transaction',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    transformRequest: [function (data) {
+      data = JSON.stringify(data)
+      return data
+    }],
     method: 'post',
     data: params
   })

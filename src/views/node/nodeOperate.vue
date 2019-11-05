@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-04 15:27:59
+ * @Last Modified time: 2019-11-04 16:51:14
  * @operation node 
  */
 
@@ -259,7 +259,7 @@ export default {
                 isSR: {
                     required: true,
                     message: this.$t("tronNodeSRPlaceholder"),
-                    trigger: "blur"
+                    trigger: "change"
                 },
                 url: {
                     required: true,
@@ -308,8 +308,10 @@ export default {
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
+                    let newForm = this.nodeForm;
+                    newForm.url = `"${newForm.url}"`;
                     if (this.editStatus == 1) {
-                        editNote(this.nodeForm)
+                        editNote(newForm)
                             .then(response => {
                                 this.$emit("addNodeSuccess", true);
                                 this.$refs.nodeDialogForm.resetFields();
@@ -319,12 +321,11 @@ export default {
                                 this.dialogVisible = false;
                             })
                             .catch(error => {
-                                // this.listLoading = false;
                                 console.log(error);
                             });
                         return;
                     }
-                    addNote(this.nodeForm)
+                    addNote(newForm)
                         .then(response => {
                             this.$emit("addNodeSuccess", true);
                             this.$refs.nodeDialogForm.resetFields();
@@ -334,7 +335,6 @@ export default {
                             this.dialogVisible = false;
                         })
                         .catch(error => {
-                            // this.listLoading = false;
                             console.log(error);
                         });
                 } else {

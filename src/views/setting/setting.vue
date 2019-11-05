@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-04 14:44:52
+ * @Last Modified time: 2019-11-05 11:27:21
  * @tron setting default  
  */
 <template>
@@ -153,7 +153,15 @@ export default {
             this.$store
                 .dispatch("tronSetting/getConfigSetting")
                 .then(response => {
-                    this.genesisSetting.detail = response.genesisSetting;
+                    console.log(response);
+                    this.genesisSetting.detail = {
+                        genesis_block_assets:
+                            response.genesisAssetConfig.genesis_block_assets,
+                        genesis_block_witnesses:
+                            response.genesisWitnessConfig
+                                .genesis_block_witnesses
+                    };
+                    // response.genesisSetting;
                     this.baseSetting.detail = response.baseSettingConfig;
                     let newIpList = [];
                     if (

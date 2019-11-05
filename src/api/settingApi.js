@@ -32,7 +32,7 @@ export function genesisSettingApi(params) {
       data = JSON.stringify(data)
       return data
     }],
-    url: '/genesisSetting',
+    url: '/genesisAssetConfig',
     method: 'post',
     data: params
   })

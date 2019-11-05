@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 14:22:15
+ * @Last Modified time: 2019-11-05 11:23:34
  * @tron setting list  
  */
 <template>
@@ -233,15 +233,16 @@ export default {
             this.$store
                 .dispatch("tronSetting/getConfigSetting")
                 .then(response => {
-                    this.genesisSetting.detail = response.genesisSetting;
-                    this.baseSetting.detail = response.baseSettingConfig;
-                    this.p2pSetting.detail = {
-                        ...response.p2pConfig,
-                        defalutSelectedIp: []
-                    };
-                    this.databaseSettingForm.detail = response.dbConfig;
-                    this.networkSetting.detail = response.networkConfig;
-                    this.crossChainSetting.detail = response.crossChainConfig;
+                    console.log(response);
+                    // this.genesisSetting.detail = response.genesisSetting;
+                    // this.baseSetting.detail = response.baseSettingConfig;
+                    // this.p2pSetting.detail = {
+                    //     ...response.p2pConfig,
+                    //     defalutSelectedIp: []
+                    // };
+                    // this.databaseSettingForm.detail = response.dbConfig;
+                    // this.networkSetting.detail = response.networkConfig;
+                    // this.crossChainSetting.detail = response.crossChainConfig;
                 })
                 .catch(error => {
                     console.log(error);
