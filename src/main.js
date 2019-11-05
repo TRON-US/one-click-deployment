@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // set ElementUI lang to EN
 Vue.use(ElementUI)
-
+// import '@/permission' // permission control
 
 
 // Vue.config.lang = 'zh-cn'

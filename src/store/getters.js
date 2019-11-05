@@ -4,6 +4,7 @@ const getters = {
   token: state => state.user.token,
   avatar: state => state.user.avatar,
   name: state => state.user.name,
+  permission_routes: state => state.permission.routes,
   originSetting: state => state.tronSetting.originSetting,
   configSetting: state => state.tronSetting.configSetting,
   settingStep: state => state.tronSetting.settingStep,

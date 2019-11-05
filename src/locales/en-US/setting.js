@@ -29,6 +29,7 @@ export default {
   'tronSelectCustomDatebaseSetting': 'Custom database configuration',
   'tronSettingMenuBranch': 'Branch management',
   'tronSettingMenuNode': 'Node management',
+  'tronSettingMenuNodeList': 'Node List',
   'tronSettingMenuSetting': 'Deploy management',
   'tronSettingMenuPlugin': 'Import plugin',
   'tronscanMenu': 'tronscan',

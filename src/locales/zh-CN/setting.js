@@ -30,6 +30,7 @@ export default {
   'tronSelectCustomDatebaseSetting': '自定义数据库配置',
   'tronSettingMenuBranch': '分支管理',
   'tronSettingMenuNode': '节点管理',
+  'tronSettingMenuNodeList': '节点列表',
   'tronSettingMenuSetting': '配置管理',
   'tronSettingMenuPlugin': '导入插件',
   'tronscanMenu': 'tronscan',
