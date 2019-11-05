@@ -31,9 +31,9 @@ export function editNote(params) {
 // node status
 export function nodeInfoApi(params) {
   return request({
-    url: '/nodeInfo',
-    method: 'get',
-    params
+    url: '/checkNode',
+    method: 'post',
+    data: params
   })
 }
 

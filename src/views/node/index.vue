@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 15:42:47
+ * @Last Modified time: 2019-11-05 18:09:25
  * @tron node list 
  */
 <template>
@@ -137,8 +137,9 @@ import {
     nodeInfoApi
 } from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
-import { setTimeout } from "timers";
+import { setTimeout, setInterval } from "timers";
 let nodeTimer = null;
+let deploymentNode = null;
 export default {
     name: "nodelist",
     components: {
@@ -269,7 +270,15 @@ export default {
                     type: "success",
                     message: this.$t("deploymentLoading")
                 });
-                this.getDataListFun(1);
+                console.log(
+                    this.multipleSelectionIds,
+                    "this.multipleSelectionIds"
+                );
+                let idAry = [];
+                this.multipleSelectionIds.forEach(item => {
+                    idAry.push(item.id);
+                });
+                this.getDataListFun(1, idAry);
             } else {
                 this.deplogUploadLoading = false;
                 this.$message({
@@ -303,8 +312,30 @@ export default {
                 });
             }
         },
-        getSelectedDeploymentFun() {},
-        getDataListFun(log) {
+        getSelectedDeploymentFun(ids) {
+            this.deploymentNode = setInterval(() => {
+                nodeInfoApi(ids)
+                    .then(response => {
+                        return response.data;
+                    })
+                    .then(res => {
+                        let newRes = Object.values(res);
+                        console.log(newRes);
+                        newRes.forEach(item => {
+                            if (item != "deploy finish") {
+                                return false;
+                            } else {
+                                this.allNodeDeployLoading = false;
+                                clearInterval(deploymentNode);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }, 1000 * 10);
+        },
+        getDataListFun(log, ids) {
             // defalut data list
             allNodeInfo()
                 .then(response => {
@@ -327,7 +358,8 @@ export default {
                                 }
                             });
                         });
-                        this.getSelectedDeploymentFun();
+
+                        this.getSelectedDeploymentFun(ids);
                     }
                     this.list = resData.sort(this.sortIdFun);
                 })
