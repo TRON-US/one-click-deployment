@@ -32,12 +32,6 @@ import Layout from '@/newLayout';
  */
 export const constantRoutes = [
 
-  // {
-  //   path: '/login',
-  //   component: () => import('@/views/login/index'),
-  //   hidden: true
-  // },
-
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -48,6 +42,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
@@ -58,115 +53,99 @@ export const constantRoutes = [
       }
     }]
   },
-
-  // {
-  //   path: '/branch',
-  //   component: Layout,
-  //   redirect: '/branch/list',
-  //   name: 'branch',
-  //   children: [{
-  //     path: 'list',
-  //     name: 'list',
-  //     component: () => import('@/views/branch/index'),
-  //     meta: {
-  //       title: 'tronSettingMenuBranch',
-  //       icon: 'branch'
-  //     }
-  //   }]
-  // },
-
-
-
   {
     path: '/node',
     component: Layout,
     redirect: '/node/list',
     name: 'node',
+    meta: {
+      title: 'tronSettingMenuNode',
+      icon: 'tree'
+    },
     children: [{
         path: 'list',
         name: 'nodeMenu',
         component: () => import('@/views/node/index'),
         meta: {
-          title: 'tronSettingMenuNode',
+          title: 'tronSettingMenuNodeList',
           icon: 'tree'
         }
       },
-      // {
-      //   path: 'status',
-      //   name: 'status',
-      //   component: () => import('@/views/node/status'),
-      //   meta: {
-      //     title: '节点状态',
-      //     icon: 'tree'
-      //   }
-      // },
       {
-        path: 'detail',
-        name: 'detail',
-        component: () => import('@/views/node/nodeDetail'),
-        hidden: true,
-        meta: {
-          title: '节点详情',
-          icon: 'detail'
-        }
-      }
-    ]
-  },
-  {
-    path: '/setting',
-    component: Layout,
-    redirect: '/setting/list',
-    name: 'setting',
-    hidden: true,
-    meta: {
-      title: '配置',
-      icon: 'example'
-    },
-    children: [
-
-      {
-        path: 'list',
-        name: 'settinglist',
+        path: 'setting',
+        name: 'setting',
         component: () => import('@/views/setting/setting'),
         meta: {
           title: 'tronSettingMenuSetting',
           icon: 'setting'
-        },
-
+        }
       },
       {
-        path: 'config',
-        name: 'settinglist',
-        hidden: true,
-        component: () => import('@/views/setting/index'),
+        path: 'plugin',
+        name: 'plugin',
+        component: () => import('@/views/pluginList/index'),
         meta: {
-          title: 'tronSettingMenuSetting',
-          icon: 'setting'
+          title: 'tronSettingMenuPlugin',
+          icon: 'plugins'
         }
       }
     ]
   },
+  // {
+  //   path: '/setting',
+  //   component: Layout,
+  //   redirect: '/setting/list',
+  //   name: 'setting',
+  //   hidden: true,
+  //   meta: {
+  //     title: '配置',
+  //     icon: 'example'
+  //   },
+  //   children: [
 
-  {
-    path: '/plugin',
-    component: Layout,
-    hidden: true,
-    redirect: '/plugin/list',
-    name: 'pluginMenu',
-    meta: {
-      title: '插件管理',
-      icon: 'example'
-    },
-    children: [{
-      path: 'list',
-      name: 'pluginlist',
-      component: () => import('@/views/pluginList/index'),
-      meta: {
-        title: 'tronSettingMenuPlugin',
-        icon: 'plugins'
-      }
-    }]
-  },
+  //     {
+  //       path: 'list',
+  //       name: 'settinglist',
+  //       component: () => import('@/views/setting/setting'),
+  //       meta: {
+  //         title: 'tronSettingMenuSetting',
+  //         icon: 'setting'
+  //       },
+
+  //     },
+  //     {
+  //       path: 'config',
+  //       name: 'settinglist',
+  //       hidden: true,
+  //       component: () => import('@/views/setting/index'),
+  //       meta: {
+  //         title: 'tronSettingMenuSetting',
+  //         icon: 'setting'
+  //       }
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   path: '/plugin',
+  //   component: Layout,
+  //   hidden: true,
+  //   redirect: '/plugin/list',
+  //   name: 'pluginMenu',
+  //   meta: {
+  //     title: '插件管理',
+  //     icon: 'example'
+  //   },
+  //   children: [{
+  //     path: 'list',
+  //     name: 'pluginlist',
+  //     component: () => import('@/views/pluginList/index'),
+  //     meta: {
+  //       title: 'tronSettingMenuPlugin',
+  //       icon: 'plugins'
+  //     }
+  //   }]
+  // },
 
   {
     path: '/tronscan',

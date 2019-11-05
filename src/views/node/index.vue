@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 19:56:13
+ * @Last Modified time: 2019-11-05 19:59:46
  * @tron node list 
  */
 <template>
@@ -419,7 +419,7 @@ export default {
             }
         },
         nextStepFun() {
-            this.$router.push({ path: "/setting/list" });
+            this.$router.push({ path: "/node/setting" });
         }
     }
 };
