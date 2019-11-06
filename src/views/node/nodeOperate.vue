@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 15:42:02
+ * @Last Modified time: 2019-11-06 14:55:25
  * @operation node 
  */
 
@@ -36,7 +36,7 @@
                             :content="$t('deploymentNodeIdTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-input
@@ -55,7 +55,7 @@
                             :content="$t('deploymentNodeUsernameTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-input
@@ -73,7 +73,7 @@
                             :content="$t('deploymentNodeIpTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-input
@@ -91,7 +91,7 @@
                             :content="$t('deploymentNodePortTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-input
@@ -109,7 +109,7 @@
                             :content="$t('deploymentNodeSrTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-select v-model="nodeForm.isSR" :placeholder="$t('tronNodeSRPlaceholder')">
@@ -137,7 +137,7 @@
                             :content="$t('tronNodeVoteNumberTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-input
@@ -156,7 +156,7 @@
                             :content="$t('deploymentNodePrivateKeyTips')"
                             placement="top"
                         >
-                            <i class="el-icon-question"></i>
+                            <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
                     <el-input
@@ -171,6 +171,7 @@
                     <el-button
                         type="primary"
                         @click="saveData('nodeDialogForm')"
+                        :loading="saveLoading"
                     >{{$t('tronNodeSave')}}</el-button>
                     <el-button @click="cancelFun">{{$t('tronNodeCancel')}}</el-button>
                 </el-form-item>
@@ -205,6 +206,7 @@ export default {
         };
         return {
             classLoading: false,
+            saveLoading: false,
             dialogVisible: this.nodeDialogVisible,
             dialogTitle:
                 this.editStatus == 1
@@ -308,10 +310,22 @@ export default {
             this.$emit("addNodeSuccess", true);
         },
         saveData(formName) {
+            this.saveLoading = true;
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    let newForm = this.nodeForm;
-                    newForm.url = `"${newForm.url}"`;
+                    let newForm;
+                    console.log(this.nodeForm.url);
+                    if (this.nodeForm.url != undefined) {
+                        newForm = {
+                            url: `"${this.nodeForm.url}"`,
+                            ...this.nodeForm
+                        };
+                    } else {
+                        newForm = {
+                            ...this.nodeForm
+                        };
+                    }
+
                     if (this.editStatus == 1) {
                         delete newForm.privateKey;
                         delete newForm.publicKey;
@@ -323,9 +337,11 @@ export default {
                                     this.$t("tronNodeAddSuccess")
                                 );
                                 this.dialogVisible = false;
+                                this.saveLoading = false;
                             })
                             .catch(error => {
                                 console.log(error);
+                                this.saveLoading = false;
                             });
                         return;
                     }
@@ -337,9 +353,11 @@ export default {
                                 this.$t("tronNodeAddSuccess")
                             );
                             this.dialogVisible = false;
+                            this.saveLoading = false;
                         })
                         .catch(error => {
                             console.log(error);
+                            this.saveLoading = false;
                         });
                 } else {
                     console.log("error submit!!");

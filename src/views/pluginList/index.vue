@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 11:28:51
+ * @Last Modified time: 2019-11-06 14:11:33
  * @tron plugin list  
  */
 <template>
@@ -95,14 +95,12 @@
                             <div v-if="transcationContentShow">
                                 <el-form-item prop="transaction" class="baseFormItem mgt20">
                                     <el-checkbox-group v-model="pluginTransactionForm.transaction">
-                                        <el-checkbox label="AccountUpdate"></el-checkbox>
-                                        <el-checkbox label="TransferaSSET"></el-checkbox>
-                                        <el-checkbox label="VoteWitness"></el-checkbox>
-                                        <el-checkbox label="AccountCreate"></el-checkbox>
-                                        <el-checkbox label="UnfreezeAsset"></el-checkbox>
-                                        <el-checkbox label="FreezeBalance"></el-checkbox>
-                                        <el-checkbox label="UpdateAsset"></el-checkbox>
-                                        <el-checkbox label="SetAccountId"></el-checkbox>
+                                        <el-checkbox
+                                            :label="item.value"
+                                            :key="ind"
+                                            v-for="(item,ind) in transactionCheckNodeAry"
+                                        >{{item.label}}</el-checkbox>
+
                                         <br />
                                         <el-checkbox
                                             style="margin:15px 0"
@@ -207,9 +205,149 @@ export default {
                 consensusContent: ""
             },
             pluginTransactionForm: {
-                transaction: [],
+                transaction: [
+                    // "AccountPermissionUpdateActuator",
+                    // "AssetIssueActuator",
+                    // "ClearABIContractActuator",
+                    // "CreateAccountActuator",
+                    // "ExchangeCreateActuator",
+                    // "ExchangeInjectActuator",
+                    // "ExchangeTransactionActuator",
+                    // "ExchangeWithdrawActuator",
+                    // "FreezeBalanceActuator",
+                    // "ParticipateAssetIssueActuator",
+                    // "ProposalApproveActuator",
+                    // "ProposalCreateActuator",
+                    // "ProposalDeleteActuator",
+                    // "SetAccountIdActuator",
+                    // "ShieldedTransferActuator",
+                    // "TransferActuator",
+                    // "TransferAssetActuator",
+                    // "UnfreezeAssetActuator",
+                    // "UnfreezeBalanceActuator",
+                    // "UpdateAccountActuator",
+                    // "UpdateAssetActuator",
+                    // "UpdateBrokerageActuator",
+                    // "UpdateEnergyLimitContractActuator",
+                    // "UpdateSettingContractActuator",
+                    // "VoteWitnessActuator",
+                    // "WithdrawBalanceActuator",
+                    // "WitnessCreateActuator",
+                    // "WitnessUpdateActuator"
+                ],
                 transactionContent: ""
             },
+            transactionCheckNodeAry: [
+                {
+                    label: "AccountPermissionUpdate",
+                    value: "AccountPermissionUpdateActuator"
+                },
+                { label: "AssetIssue", value: "AssetIssueActuator" },
+                {
+                    label: "ClearABIContract",
+                    value: "ClearABIContractActuator"
+                },
+                {
+                    label: "CreateAccount",
+                    value: "CreateAccountActuator"
+                },
+                {
+                    label: "ExchangeCreate",
+                    value: "ExchangeCreateActuator"
+                },
+                {
+                    label: "ExchangeInject",
+                    value: "ExchangeInjectActuator"
+                },
+                {
+                    label: "ExchangeTransaction",
+                    value: "ExchangeTransactionActuator"
+                },
+                {
+                    label: "ExchangeWithdraw",
+                    value: "ExchangeWithdrawActuator"
+                },
+                {
+                    label: "FreezeBalance",
+                    value: "FreezeBalanceActuator"
+                },
+                {
+                    label: "ParticipateAssetIssue",
+                    value: "ParticipateAssetIssueActuator"
+                },
+                {
+                    label: "ProposalApprove",
+                    value: "ProposalApproveActuator"
+                },
+                {
+                    label: "ProposalCreate",
+                    value: "ProposalCreateActuator"
+                },
+                {
+                    label: "ProposalDelete",
+                    value: "ProposalDeleteActuator"
+                },
+                {
+                    label: "SetAccountId",
+                    value: "SetAccountIdActuator"
+                },
+                {
+                    label: "ShieldedTransfer",
+                    value: "ShieldedTransferActuator"
+                },
+                {
+                    label: "Transfer",
+                    value: "TransferActuator"
+                },
+                {
+                    label: "TransferAsset",
+                    value: "TransferAssetActuator"
+                },
+                {
+                    label: "UnfreezeAsset",
+                    value: "UnfreezeAssetActuator"
+                },
+                {
+                    label: "UnfreezeBalance",
+                    value: "UnfreezeBalanceActuator"
+                },
+                {
+                    label: "UpdateAccount",
+                    value: "UpdateAccountActuator"
+                },
+                {
+                    label: "UpdateAsset",
+                    value: "UpdateAssetActuator"
+                },
+                {
+                    label: "UpdateBrokerage",
+                    value: "UpdateBrokerageActuator"
+                },
+                {
+                    label: "UpdateEnergyLimit",
+                    value: "UpdateEnergyLimitContractActuator"
+                },
+                {
+                    label: "UpdateSettingContract",
+                    value: "UpdateSettingContractActuator"
+                },
+                {
+                    label: "VoteWitness",
+                    value: "VoteWitnessActuator"
+                },
+                {
+                    label: "WithdrawBalance",
+                    value: "WithdrawBalanceActuator"
+                },
+                {
+                    label: "WitnessCreate",
+                    value: "WitnessCreateActuator"
+                },
+                {
+                    label: "WitnessUpdate",
+                    value: "WitnessUpdateActuator"
+                }
+            ],
             plugindbForm: {
                 dbsetting: "leveldb",
                 dbsettingContent: ""
