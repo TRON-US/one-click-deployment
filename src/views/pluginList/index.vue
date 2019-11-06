@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 20:55:32
+ * @Last Modified time: 2019-11-06 11:08:27
  * @tron plugin list  
  */
 <template>
@@ -11,12 +11,18 @@
             <div class="tron-filter-section">
                 <div>
                     <el-steps :active="currentStep" align-center type="mini">
-                        <el-step @click="stepClickFun(1)" :title="$t('tronPluginConsensusModule')"></el-step>
                         <el-step
-                            @click="stepClickFun(2)"
+                            @click.native="stepClickFun(1)"
+                            :title="$t('tronPluginConsensusModule')"
+                        ></el-step>
+                        <el-step
+                            @click.native="stepClickFun(2)"
                             :title="$t('tronPluginTransactionModule')"
                         ></el-step>
-                        <el-step @click="stepClickFun(3)" :title="$t('tronPluginDatabaseModule')"></el-step>
+                        <el-step
+                            @click.native="stepClickFun(3)"
+                            :title="$t('tronPluginDatabaseModule')"
+                        ></el-step>
                     </el-steps>
                 </div>
             </div>
@@ -242,6 +248,12 @@ export default {
         this.getCurrentStepFun();
     },
     methods: {
+        stepClickFun(step) {
+            this.currentStep = step;
+            this.$store.dispatch("tronSetting/getCurrentPluginStepConfig", {
+                step
+            });
+        },
         pluginConfigFun() {
             pluginConfigApi()
                 .then(response => {
