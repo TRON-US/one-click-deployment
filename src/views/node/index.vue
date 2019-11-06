@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 15:39:25
+ * @Last Modified time: 2019-11-06 16:59:07
  * @tron node list 
  */
 <template>
@@ -191,6 +191,12 @@ export default {
     created() {
         this.getDataListFun();
     },
+    beforeDestroy() {
+        window.clearInterval(nodeTimer);
+        window.clearInterval(deploymentNode);
+        nodeTimer = null;
+        deploymentNode = null;
+    },
     methods: {
         sortIdFun(a, b) {
             return a.id - b.id;
@@ -225,10 +231,12 @@ export default {
             this.viewLogFun(_id);
             // nodeTimer = setInterval(() => {
             this.viewLogFun(_id);
-            // }, 10000);
+            // }, 1000 * 5);
         },
         currentNodeLogEnd() {
-            clearInterval(nodeTimer);
+            console.log(123);
+            window.clearInterval(nodeTimer);
+            nodeTimer = null;
         },
         viewLogFun(_id, _type) {
             this.deploymentLoadingText = this.$t("deploymentSearchLoading");
@@ -270,10 +278,10 @@ export default {
                     type: "success",
                     message: this.$t("deploymentLoading")
                 });
-                console.log(
-                    this.multipleSelectionIds,
-                    "this.multipleSelectionIds"
-                );
+                // console.log(
+                //     this.multipleSelectionIds,
+                //     "this.multipleSelectionIds"
+                // );
                 let idAry = [];
                 this.multipleSelectionIds.forEach(item => {
                     idAry.push(item.id);
@@ -320,7 +328,6 @@ export default {
                     })
                     .then(res => {
                         let newRes = Object.values(res);
-                        console.log(newRes);
                         newRes.forEach(item => {
                             if (item != "deploy finish") {
                                 return false;

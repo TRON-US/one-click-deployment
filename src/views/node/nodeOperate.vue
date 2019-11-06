@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 15:20:28
+ * @Last Modified time: 2019-11-06 15:52:12
  * @operation node 
  */
 
@@ -329,7 +329,7 @@ export default {
                     console.log(newForm);
 
                     if (this.editStatus == 1) {
-                        delete newForm.privateKey;
+                        // delete newForm.privateKey;
                         delete newForm.publicKey;
                         editNote(newForm)
                             .then(response => {
