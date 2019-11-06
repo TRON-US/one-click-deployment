@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 11:08:05
+ * @Last Modified time: 2019-11-06 11:27:16
  * @tron setting default  
  */
 <template>
@@ -116,9 +116,11 @@ export default {
     },
     methods: {
         stepClickFun(step) {
-            // console.log(step);
             this.currentStep = step;
-            this.$store.dispatch("tronSetting/getCurrentStepConfig", { step });
+            this.$store.dispatch("tronSetting/getCurrentStepConfig", {
+                step
+            });
+            this.getCurrentSettingFun();
         },
         getCurrentStepFun() {
             let step = sessionStorage.getItem("currentstep") || 1;
@@ -153,7 +155,6 @@ export default {
             this.$store
                 .dispatch("tronSetting/getConfigSetting")
                 .then(response => {
-                    console.log(response);
                     this.genesisSetting.detail = {
                         genesis_block_assets:
                             response.genesisAssetConfig.genesis_block_assets,
@@ -176,7 +177,6 @@ export default {
                         ...response.p2pConfig,
                         defalutSelectedIp: newIpList || []
                     };
-
                     this.databaseSettingForm.detail = response.dbConfig;
                     this.networkSetting.detail = response.networkConfig;
                     this.crossChainSetting.detail = response.crossChainConfig;

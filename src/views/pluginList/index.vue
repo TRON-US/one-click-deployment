@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 11:08:27
+ * @Last Modified time: 2019-11-06 11:28:51
  * @tron plugin list  
  */
 <template>
@@ -253,6 +253,7 @@ export default {
             this.$store.dispatch("tronSetting/getCurrentPluginStepConfig", {
                 step
             });
+            this.pluginConfigFun();
         },
         pluginConfigFun() {
             pluginConfigApi()
