@@ -47,6 +47,7 @@ export default {
   'tronSettingGenesisSaveSuccess': '保存创世信息配置成功',
   'tronSettingp2pSaveSuccess': '保存p2p配置成功',
   'tronSettingDBSaveSuccess': '保存数据库配置成功',
+  'startTronOneClickDeploy': '开始一键部署',
 
 
 

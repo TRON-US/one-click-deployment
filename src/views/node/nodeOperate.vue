@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 15:52:12
+ * @Last Modified time: 2019-11-06 17:15:24
  * @operation node 
  */
 
@@ -16,14 +16,14 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             v-loading="classLoading"
-            width="650px"
+            width="680px"
             center
         >
             <el-form
                 ref="nodeDialogForm"
                 :rules="nodeRules"
                 :model="nodeForm"
-                label-width="130px"
+                label-width="155px"
                 label-position="left"
                 class="nodeDialogForm"
             >
@@ -220,8 +220,8 @@ export default {
                 isSR: ""
             },
             srAry: [
-                { id: 0, label: "是", value: true },
-                { id: 1, label: "否", value: false }
+                { id: 0, label: this.$t("tronNodeSrIs"), value: true },
+                { id: 1, label: this.$t("tronNodeSrNo"), value: false }
             ],
             nodeRules: {
                 id: [

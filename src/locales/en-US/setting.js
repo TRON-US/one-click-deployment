@@ -45,6 +45,8 @@ export default {
   'tronSettingGenesisSaveSuccess': 'Save the creation information configuration successfully',
   'tronSettingp2pSaveSuccess': 'Save p2p configuration successfully',
   'tronSettingDBSaveSuccess': 'Save the database configuration successfully',
+  'startTronOneClickDeploy': 'Start one-click deployment',
+
 
 
 

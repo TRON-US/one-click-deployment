@@ -44,6 +44,8 @@ export default {
   'deploymentNodeSrTips': 'Yes on behalf of witeness No on behalf of fullNode',
   'deploymentNodePrivateKeyTips': 'Please enter a 64-bit private key (saved locally, will not upload the server)',
   'tronNodeNextStep': 'Next step',
+  'tronNodeSrIs': "yes",
+  'tronNodeSrNo': "no",
 
 
 

@@ -44,6 +44,9 @@ export default {
   'deploymentNodeSrTips': '是代表witeness 否代表fullNode',
   'deploymentNodePrivateKeyTips': '请输入64位私钥(保存于本地，不会上传服务器)',
   'tronNodeNextStep': '下一步',
+  'tronNodeSrIs': "是",
+  'tronNodeSrNo': "否",
+
 
 
 
