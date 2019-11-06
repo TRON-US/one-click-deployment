@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 20:52:57
+ * @Last Modified time: 2019-11-06 15:30:52
  * @tron node list 
  */
 <template>
@@ -222,9 +222,9 @@ export default {
         viewCurrentLogFun(_id) {
             this.currentLogDialog = true;
             this.viewLogFun(_id);
-            nodeTimer = setInterval(() => {
-                this.viewLogFun(_id);
-            }, 10000);
+            // nodeTimer = setInterval(() => {
+            this.viewLogFun(_id);
+            // }, 10000);
         },
         currentNodeLogEnd() {
             clearInterval(nodeTimer);

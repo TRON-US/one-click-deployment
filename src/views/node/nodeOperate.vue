@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 14:55:25
+ * @Last Modified time: 2019-11-06 15:20:28
  * @operation node 
  */
 
@@ -320,11 +320,13 @@ export default {
                             url: `"${this.nodeForm.url}"`,
                             ...this.nodeForm
                         };
+                        newForm.url = `"${newForm.url}"`;
                     } else {
                         newForm = {
                             ...this.nodeForm
                         };
                     }
+                    console.log(newForm);
 
                     if (this.editStatus == 1) {
                         delete newForm.privateKey;
