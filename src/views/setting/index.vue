@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 14:24:53
+ * @Last Modified time: 2019-11-07 12:20:18
  * @tron setting list  
  */
 <template>
@@ -107,7 +107,7 @@
                         <th>{{$t('tronCrossChain')}}</th>
                         <th>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="warning"
                                 @click="modifySettingFun(6)"
                             >{{$t('tronModifySetting')}}</el-button>

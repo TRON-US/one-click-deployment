@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 17:17:51
+ * @Last Modified time: 2019-11-07 12:19:41
  * @setting base setting 
  */
 
@@ -87,9 +87,14 @@
                 </el-col>
             </el-row>
             <el-form-item label-width="0" class="textRight">
-                <el-button type="primary" @click="previousStepFun">{{$t('tronSettingPreviousStep')}}</el-button>
                 <el-button
                     type="primary"
+                    size="small"
+                    @click="previousStepFun"
+                >{{$t('tronSettingPreviousStep')}}</el-button>
+                <el-button
+                    type="primary"
+                    size="small"
                     @click="saveData('baseSettingDialogForm')"
                 >{{$t('tronSettingNextStep')}}</el-button>
             </el-form-item>

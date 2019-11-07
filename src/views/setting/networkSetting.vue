@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-03 17:53:19
+ * @Last Modified time: 2019-11-07 12:20:32
  * @setting cross setting
  */
 
@@ -92,9 +92,14 @@
                 </el-col>
             </el-row>
             <el-form-item label-width="0" class="textRight">
-                <el-button type="primary" @click="previousStepFun">{{$t('tronSettingPreviousStep')}}</el-button>
+                <el-button
+                    size="small"
+                    type="primary"
+                    @click="previousStepFun"
+                >{{$t('tronSettingPreviousStep')}}</el-button>
 
                 <el-button
+                    size="small"
                     type="primary"
                     @click="saveData('crossSettingDialogForm')"
                 >{{$t('tronSettingNextStep')}}</el-button>

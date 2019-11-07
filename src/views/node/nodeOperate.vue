@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 17:15:24
+ * @Last Modified time: 2019-11-07 12:17:48
  * @operation node 
  */
 
@@ -310,9 +310,9 @@ export default {
             this.$emit("addNodeSuccess", true);
         },
         saveData(formName) {
-            this.saveLoading = true;
             this.$refs[formName].validate(valid => {
                 if (valid) {
+                    this.saveLoading = true;
                     let newForm;
                     console.log(this.nodeForm.url);
                     if (this.nodeForm.url != undefined) {

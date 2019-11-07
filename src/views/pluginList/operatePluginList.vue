@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-10-28 20:54:52
+ * @Last Modified time: 2019-11-07 12:20:57
  * @setting genesis setting
  */
 
@@ -86,10 +86,11 @@
                 </div>
                 <el-form-item label-width="0" class="textCenter">
                     <el-button
+                        size="small"
                         type="primary"
                         @click="saveData('pluginsDialogForm')"
                     >{{$t('tronPluginInputSave')}}</el-button>
-                    <el-button @click="cancelFun">{{$t('tronPluginInputCancel')}}</el-button>
+                    <el-button size="small" @click="cancelFun">{{$t('tronPluginInputCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>

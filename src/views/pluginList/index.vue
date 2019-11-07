@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 14:11:33
+ * @Last Modified time: 2019-11-07 12:21:38
  * @tron plugin list  
  */
 <template>
@@ -66,10 +66,11 @@
                 </el-row>
                 <el-form-item label-width="0" class="textRight">
                     <router-link :to="{path:'/setting/list'}">
-                        <el-button type="primary">{{$t('tronSettingPreviousStep')}}</el-button>
+                        <el-button size="small" type="primary">{{$t('tronSettingPreviousStep')}}</el-button>
                     </router-link>
 
                     <el-button
+                        size="small"
                         type="primary"
                         @click="saveData('pluginOnsensusDialogForm')"
                     >{{$t('tronSettingNextStep')}}</el-button>
@@ -119,10 +120,12 @@
                 </el-row>
                 <el-form-item label-width="0" class="textRight">
                     <el-button
+                        size="small"
                         type="primary"
                         @click="previousStepFun()"
                     >{{$t('tronSettingPreviousStep')}}</el-button>
                     <el-button
+                        size="small"
                         type="primary"
                         @click="saveTranstionData('transcationDialogForm')"
                     >{{$t('tronSettingNextStep')}}</el-button>
@@ -173,10 +176,12 @@
                 </el-row>
                 <el-form-item label-width="0" class="textRight">
                     <el-button
+                        size="small"
                         type="primary"
                         @click="previousStepFun()"
                     >{{$t('tronSettingPreviousStep')}}</el-button>
                     <el-button
+                        size="small"
                         type="primary"
                         @click="saveDBData('dbFormDialogForm')"
                     >{{$t('tronSettingNextStep')}}</el-button>

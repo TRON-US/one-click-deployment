@@ -48,6 +48,20 @@
   border-color: #00c1de;
 }
 
+.el-button:focus,
+.el-button:hover {
+  color: #00c1de;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff
+}
+
+.el-button--info:focus,
+.el-button--info:hover {
+  background: #a6a9ad;
+  border-color: #a6a9ad;
+  color: #fff;
+}
+
 .el-button--primary:focus,
 .el-button--primary:hover {
   background: #33cde5;
@@ -55,9 +69,13 @@
   color: #FFF;
 }
 
-// .el-button:focus,
-// .el-button:hover {
-//   color: #00c1de;
-//   border-color: #c6e2ff;
-//   background-color: #ecf5ff
-// }
+.el-button--success:focus,
+.el-button--success:hover {
+  background: #85ce61;
+  border-color: #85ce61;
+  color: #fff;
+}
+
+.el-step__title {
+  font-size: 14px;
+}
