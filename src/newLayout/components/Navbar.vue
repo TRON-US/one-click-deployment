@@ -78,8 +78,8 @@ export default {
     position: relative;
     //   background: #001529;
     // color: #fff;
-    background: #f5f6f6;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    background: #fff;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
 
     .hamburger-container {
         line-height: 46px;
@@ -136,7 +136,7 @@ export default {
             display: inline-block;
             padding: 0 8px;
             height: 100%;
-            font-size: 18px;
+            font-size: 14px;
             color: #5a5e66;
             vertical-align: text-bottom;
 
@@ -161,6 +161,7 @@ export default {
                 height: 40px;
                 padding: 0 15px;
                 cursor: pointer;
+                font-size: 14px;
                 .el-icon-caret-bottom {
                     cursor: pointer;
                     position: absolute;

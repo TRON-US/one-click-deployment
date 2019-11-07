@@ -2,19 +2,24 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 16:59:07
+ * @Last Modified time: 2019-11-07 11:55:48
  * @tron node list 
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <el-button @click="addNodeFun()" type="primary">{{$t('tronNodeAdd')}}</el-button>
                 <el-button
+                    icon="el-icon-plus"
+                    size="small"
+                    @click="addNodeFun()"
+                    type="primary"
+                >{{$t('tronNodeAdd')}}</el-button>
+                <el-button
+                    size="small"
                     v-if="isDeploy ==1"
                     :loading="allNodeDeployLoading"
                     style="float:right"
-                    size="mini"
                     :type="checkType"
                     @click="bulkDeploymentFun"
                 >{{$t('tronNodeBulkDeployment')}}</el-button>
@@ -57,12 +62,13 @@
                         <template slot-scope="scope">
                             <el-button
                                 size="small"
-                                type="warning"
+                                type="text"
                                 @click="operateNodeFun(scope.row)"
                             >{{$t('tronNodeModify')}}</el-button>
+                            <el-divider direction="vertical"></el-divider>
                             <el-button
                                 size="small"
-                                type="danger"
+                                type="text"
                                 @click="deleteNodeListFun(scope.row.id)"
                             >{{$t('tronNodeDelete')}}</el-button>
                         </template>
@@ -71,6 +77,7 @@
             </div>
             <div class="mgt20" v-if="isDeploy != 1">
                 <el-button
+                    size="small"
                     style="float:right"
                     :type="allStepsBtnType"
                     :disabled="allStepsBtnDisable"
