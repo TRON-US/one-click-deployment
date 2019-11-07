@@ -76,6 +76,30 @@
   color: #fff;
 }
 
+.el-button--text {
+  border-color: transparent;
+  color: #06c;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.el-button--text:focus,
+.el-button--text:hover {
+  color: #409eff;
+  border-color: transparent;
+  background-color: transparent;
+}
+
 .el-step__title {
   font-size: 14px;
+}
+
+.el-table .el-table__header-wrapper table thead {
+  background: #f3f3f3;
+}
+
+.el-table th>.cell {
+
+  font-size: 12px;
 }
