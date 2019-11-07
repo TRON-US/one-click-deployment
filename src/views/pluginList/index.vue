@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 12:21:38
+ * @Last Modified time: 2019-11-07 18:18:30
  * @tron plugin list  
  */
 <template>
@@ -44,7 +44,7 @@
                                 {{$t('tronPluginConsensusModule')}}
                             </div>
                             <div v-if="baseContentShow">
-                                <el-form-item prop="consensus" class="baseFormItem mgt20">
+                                <el-form-item prop="consensus" class="baseFormItem mgt30">
                                     <el-radio-group v-model="pluginOnsensusForm.consensus">
                                         <el-radio :label="'dpos'">DPOS</el-radio>
                                         <el-radio :label="'pbft'">PBFT</el-radio>
@@ -57,7 +57,7 @@
                                     <el-input
                                         :maxlength="50"
                                         v-model="pluginOnsensusForm.consensusContent"
-                                        :placeholder="$t('tronSettingPlaceholder')"
+                                        :placeholder="$t('tronPluginCustomConsensusModulePlaceholder')"
                                     ></el-input>
                                 </el-form-item>
                             </div>
@@ -104,13 +104,13 @@
 
                                         <br />
                                         <el-checkbox
-                                            style="margin:15px 0"
+                                            style="margin:0"
                                             :label="9"
                                         >{{$t('tronPluginCustomTradingModule')}}</el-checkbox>
                                         <el-input
                                             :maxlength="50"
                                             v-model="pluginTransactionForm.transactionContent"
-                                            :placeholder="$t('tronSettingPlaceholder')"
+                                            :placeholder="$t('tronPluginCustomTradingModulePlaceholder')"
                                         ></el-input>
                                     </el-checkbox-group>
                                 </el-form-item>
@@ -135,7 +135,6 @@
                 ref="dbFormDialogForm"
                 :model="plugindbForm"
                 :rules="plugindbRules"
-                label-width="200px"
                 class="dbSettingForm"
                 label-position="left"
                 v-if="currentStep == 3"
@@ -150,11 +149,7 @@
                                 {{$t('tronPluginTransactionModule')}}
                             </div>
                             <div v-if="dbsettingContentShow">
-                                <el-form-item
-                                    label="dbsetting"
-                                    prop="dbsetting"
-                                    class="baseFormItem mgt20"
-                                >
+                                <el-form-item prop="dbsetting" class="baseFormItem mgt30">
                                     <el-radio-group v-model="plugindbForm.dbsetting">
                                         <el-radio :label="'leveldb'">leveldb</el-radio>
                                         <el-radio :label="'rockdb'">rockdb</el-radio>
@@ -167,7 +162,7 @@
                                     <el-input
                                         :maxlength="50"
                                         v-model="plugindbForm.dbsettingContent"
-                                        :placeholder="$t('tronSettingPlaceholder')"
+                                        :placeholder="$t('tronPluginCustomDatabaseModulePlaceholder')"
                                     ></el-input>
                                 </el-form-item>
                             </div>
@@ -210,36 +205,7 @@ export default {
                 consensusContent: ""
             },
             pluginTransactionForm: {
-                transaction: [
-                    // "AccountPermissionUpdateActuator",
-                    // "AssetIssueActuator",
-                    // "ClearABIContractActuator",
-                    // "CreateAccountActuator",
-                    // "ExchangeCreateActuator",
-                    // "ExchangeInjectActuator",
-                    // "ExchangeTransactionActuator",
-                    // "ExchangeWithdrawActuator",
-                    // "FreezeBalanceActuator",
-                    // "ParticipateAssetIssueActuator",
-                    // "ProposalApproveActuator",
-                    // "ProposalCreateActuator",
-                    // "ProposalDeleteActuator",
-                    // "SetAccountIdActuator",
-                    // "ShieldedTransferActuator",
-                    // "TransferActuator",
-                    // "TransferAssetActuator",
-                    // "UnfreezeAssetActuator",
-                    // "UnfreezeBalanceActuator",
-                    // "UpdateAccountActuator",
-                    // "UpdateAssetActuator",
-                    // "UpdateBrokerageActuator",
-                    // "UpdateEnergyLimitContractActuator",
-                    // "UpdateSettingContractActuator",
-                    // "VoteWitnessActuator",
-                    // "WithdrawBalanceActuator",
-                    // "WitnessCreateActuator",
-                    // "WitnessUpdateActuator"
-                ],
+                transaction: [],
                 transactionContent: ""
             },
             transactionCheckNodeAry: [
@@ -463,8 +429,15 @@ export default {
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    console.log(this.pluginOnsensusForm);
                     if (this.pluginOnsensusForm.consensus == 3) {
+                        if (this.pluginOnsensusForm.consensusContent == "") {
+                            this.$message.success(
+                                this.$t(
+                                    "tronPluginCustomConsensusModulePlaceholder"
+                                )
+                            );
+                            return;
+                        }
                         this.pluginOnsensusForm.consensus = this.pluginOnsensusForm.consensusContent;
                     }
                     consensusApi({
@@ -506,8 +479,20 @@ export default {
                                 }
                             }
                         );
+                    } else {
+                        console.log(this.pluginTransactionForm.transaction);
+                        if (
+                            this.pluginTransactionForm.transaction.indexOf(9) >
+                            0
+                        ) {
+                            this.$message.success(
+                                this.$t(
+                                    "tronPluginCustomTradingModulePlaceholder"
+                                )
+                            );
+                            return;
+                        }
                     }
-                    console.log(this.pluginTransactionForm);
                     transactionApi({
                         transaction: this.pluginTransactionForm.transaction,
                         customTransaction: this.pluginTransactionForm
@@ -536,6 +521,14 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     if (this.plugindbForm.dbsetting == 3) {
+                        if (this.plugindbForm.dbsettingContent == "") {
+                            this.$message.success(
+                                this.$t(
+                                    "tronPluginCustomDatabaseModulePlaceholder"
+                                )
+                            );
+                            return;
+                        }
                         this.plugindbForm.dbsetting = this.plugindbForm.dbsettingContent;
                     }
                     dbEngineApi({ dbEngine: this.plugindbForm.dbsetting })

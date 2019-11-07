@@ -17,8 +17,27 @@ export default {
   'tronSettingPreviousStep': 'Previous',
   'tronSettingCancel': 'cancel',
   'tronSettingPlaceholder': 'Please fill out',
+  'tronMoreSetting': 'Advanced configuration',
+  'tronAccountNamePlaceholder': 'Please fill out accountName',
+  'tronAccountTypePlaceholder': 'please choose accountType',
+  'tronAddressPlaceholder': 'Please fill in the address',
+  'tronBalancePlaceholder': 'Please fill in the balance',
+  'tronChainIdPlaceholder': 'Please fill in the chain Id',
+  'tronChainNamePlaceholder': 'Please fill in the name of the chain',
+  'tronblockProducedTimeOutePlaceholder': 'Please fill in the block to generate timeout',
+  'tronblockNodeBlockProducedTimeOutPlaceholder': 'Please fill in the node block to generate timeout',
+  'tronblockBlockMaintenanceTimeIntervalPlaceholder': 'Please fill in the block maintenance time interval',
+  'tronblockNodeMinParticipationRatePlaceholder': 'Please fill in the minimum participation rate of the node',
+  'tronP2pVersionPlaceholder': 'Please fill in the p2p version',
+  'tronMaxActionNodesPlaceholder': 'Please fill in the maximum number of active nodes',
+  'tronMaxActiveNodesWithSameIpPlaceholder': 'Please fill in the same IP number of the largest active node',
+
+
+
+
   'tronSettingPortPlaceholder': 'Please fill in the current port',
   'tronSettingSelectPlaceholder': 'please choose',
+
   'tronSettingwriteSynchronously': 'Whether to write synchronously?',
   'tronSettingIndexDirectory': 'Whether to open the index switch?',
   'tronSettingNeedToUpdateAsset': 'Do you need to update assets?',
@@ -32,7 +51,7 @@ export default {
   'tronSettingMenuNodeList': 'Node List',
   'tronSettingMenuSetting': 'Deploy management',
   'tronSettingMenuPlugin': 'Import plugin',
-  'tronscanMenu': 'tronscan',
+  'tronscanMenu': 'Tronscan application',
   'tronSettingMenuDashboard': 'deployment system',
   'tronSettingChooseLanguage': 'Languages',
   'tronSettingNormalNode': 'Normal node',

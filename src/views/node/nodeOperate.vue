@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 12:17:48
+ * @Last Modified time: 2019-11-07 18:31:38
  * @operation node 
  */
 
@@ -23,7 +23,7 @@
                 ref="nodeDialogForm"
                 :rules="nodeRules"
                 :model="nodeForm"
-                label-width="155px"
+                label-width="150px"
                 label-position="left"
                 class="nodeDialogForm"
             >
@@ -40,6 +40,7 @@
                         </el-tooltip>
                     </span>
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="nodeForm.id"
                         :placeholder="$t('tronNodeIDPlaceholder')"
@@ -50,6 +51,7 @@
                     <span slot="label">
                         {{$t('tronNodeName')}}
                         <el-tooltip
+                            size="small"
                             class="item"
                             effect="dark"
                             :content="$t('deploymentNodeUsernameTips')"
@@ -59,6 +61,7 @@
                         </el-tooltip>
                     </span>
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="nodeForm.userName"
                         :placeholder="$t('tronNodeNamePlaceholder')"
@@ -77,6 +80,7 @@
                         </el-tooltip>
                     </span>
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="nodeForm.ip"
                         :placeholder="$t('tronNodeIpPlaceholder')"
@@ -95,6 +99,7 @@
                         </el-tooltip>
                     </span>
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="nodeForm.port"
                         :placeholder="$t('tronNodePortPlaceholder')"
@@ -112,7 +117,11 @@
                             <i class="iconfont icon-iconset0143"></i>
                         </el-tooltip>
                     </span>
-                    <el-select v-model="nodeForm.isSR" :placeholder="$t('tronNodeSRPlaceholder')">
+                    <el-select
+                        size="small"
+                        v-model="nodeForm.isSR"
+                        :placeholder="$t('tronNodeSRPlaceholder')"
+                    >
                         <el-option
                             v-for="item in srAry"
                             :key="item.value"
@@ -121,8 +130,21 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="url" prop="url" v-if="nodeForm.isSR">
+                <el-form-item prop="url" v-if="nodeForm.isSR">
+                    <span slot="label">
+                        URL
+                        <el-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="$t('deploymentNodeUrlTips')"
+                            placement="top"
+                        >
+                            <i class="iconfont icon-iconset0143"></i>
+                        </el-tooltip>
+                    </span>
+
                     <el-input
+                        size="small"
                         :maxlength="100"
                         v-model="nodeForm.url"
                         :placeholder="$t('tronNodeUrlPlaceholder')"
@@ -141,6 +163,7 @@
                         </el-tooltip>
                     </span>
                     <el-input
+                        size="small"
                         :maxlength="100"
                         v-model="nodeForm.voteNumber"
                         :placeholder="$t('tronNodeVoteNumberPlaceholder')"
@@ -160,11 +183,26 @@
                         </el-tooltip>
                     </span>
                     <el-input
+                        size="small"
                         type="textarea"
                         :maxlength="1000"
                         v-model="nodeForm.privateKey"
                         :placeholder="$t('tronNodePrivateKeyPlaceholder')"
                     ></el-input>
+                </el-form-item>
+                <el-form-item v-if="editStatus ==1">
+                    <span slot="label">
+                        publicKey
+                        <el-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="$t('deploymentNodePublickKeyTips')"
+                            placement="top"
+                        >
+                            <i class="iconfont icon-iconset0143"></i>
+                        </el-tooltip>
+                    </span>
+                    {{nodeForm.publicKey}}
                 </el-form-item>
 
                 <el-form-item label-width="0" class="textCenter">
@@ -330,7 +368,7 @@ export default {
 
                     if (this.editStatus == 1) {
                         // delete newForm.privateKey;
-                        delete newForm.publicKey;
+                        // delete newForm.publicKey;
                         editNote(newForm)
                             .then(response => {
                                 this.$emit("addNodeSuccess", true);
@@ -387,6 +425,11 @@ export default {
 }
 .nodeDialogForm {
     padding: 0 20px;
+}
+.item {
+    i {
+        font-size: 12px;
+    }
 }
 </style>
 

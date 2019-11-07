@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-05 11:38:48
+ * @Last Modified time: 2019-11-07 16:37:24
  * @setting genesis setting
  */
 
@@ -66,6 +66,7 @@
             :visible.sync="innerAssetVisible"
         >
             <el-form
+                class="assetDialogForm"
                 ref="assetDialogForm"
                 :rules="assetRules"
                 :model="assetForm"
@@ -74,15 +75,17 @@
             >
                 <el-form-item label="accountName" prop="accountName">
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="assetForm.accountName"
-                        :placeholder="$t('tronSettingPlaceholder')"
+                        :placeholder="$t('tronAccountNamePlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="accountType" prop="accountType">
                     <el-select
+                        size="small"
                         v-model="assetForm.accountType"
-                        :placeholder="$t('tronSettingSelectPlaceholder')"
+                        :placeholder="$t('tronAccountTypePlaceholder')"
                     >
                         <el-option
                             v-for="item in accountTypeOptions"
@@ -94,16 +97,18 @@
                 </el-form-item>
                 <el-form-item label="address" prop="address">
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="assetForm.address"
-                        :placeholder="$t('tronSettingPlaceholder')"
+                        :placeholder="$t('tronAddressPlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="balance" prop="balance">
                     <el-input
+                        size="small"
                         :maxlength="50"
                         v-model="assetForm.balance"
-                        :placeholder="$t('tronSettingPlaceholder')"
+                        :placeholder="$t('tronBalancePlaceholder')"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0" class="textCenter">
@@ -518,6 +523,9 @@ export default {
         margin: auto;
         top: -20px;
     }
+}
+.assetDialogForm {
+    padding: 0 30px 0 20px;
 }
 </style>
 

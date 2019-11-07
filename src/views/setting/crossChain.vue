@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 12:19:46
+ * @Last Modified time: 2019-11-07 16:12:55
  * @setting cross setting
  */
 
@@ -21,7 +21,7 @@
                     <el-card shadow="hover">
                         <div @click="baseContentShow = !baseContentShow">
                             <i :class="baseContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"></i>
-                            {{$t('tronSettingP2p')}}
+                            {{$t('tronCrossChain')}}
                         </div>
                         <div v-if="baseContentShow">
                             <el-form-item
@@ -30,6 +30,7 @@
                                 class="baseFormItem mgt20"
                             >
                                 <el-switch
+                                    size="small"
                                     v-model="baseSettingForm.enableCrossChain"
                                     active-color="#13ce66"
                                     inactive-color="#ff4949"
@@ -41,6 +42,7 @@
                                 class="baseFormItem"
                             >
                                 <el-input
+                                    size="small"
                                     :maxlength="50"
                                     v-model="baseSettingForm.maxValidatorNumber"
                                     :placeholder="$t('tronSettingPlaceholder')"
@@ -52,6 +54,7 @@
                                 class="baseFormItem"
                             >
                                 <el-input
+                                    size="small"
                                     :maxlength="50"
                                     v-model="baseSettingForm.minValidatorNumber"
                                     :placeholder="$t('tronSettingPlaceholder')"
@@ -64,6 +67,7 @@
                                 class="baseFormItem"
                             >
                                 <el-input-number
+                                    size="small"
                                     controls-position="right"
                                     :min="0"
                                     :step="0.01"

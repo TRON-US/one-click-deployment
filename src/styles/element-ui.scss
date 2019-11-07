@@ -91,15 +91,34 @@
   background-color: transparent;
 }
 
+.el-button--warning:focus,
+.el-button--warning:hover {
+  background: #ebb563;
+  border-color: #ebb563;
+  color: #fff;
+}
+
 .el-step__title {
   font-size: 14px;
 }
 
-.el-table .el-table__header-wrapper table thead {
-  background: #f3f3f3;
+
+.el-table th {
+  background: #f3f3f3
 }
 
 .el-table th>.cell {
-
   font-size: 12px;
+}
+
+.el-form-item__label {
+  font-size: 12px;
+}
+
+.el-dialog__title {
+  font-size: 16px;
+}
+
+.el-step__title.is-process {
+  font-weight: normal;
 }

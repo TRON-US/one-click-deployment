@@ -17,8 +17,26 @@ export default {
   'tronSettingSave': '保存',
   'tronSettingCancel': '取消',
   'tronSettingPlaceholder': '请填写',
-  'tronSettingPortPlaceholder': '请填写当前端口',
+  'tronMoreSetting': '高级配置',
+  'tronAccountNamePlaceholder': '请填写accountName',
+  'tronAccountTypePlaceholder': '请选择accountType',
+  'tronAddressPlaceholder': '请填写地址',
+  'tronBalancePlaceholder': '请填写balance',
 
+  'tronChainIdPlaceholder': '请填写该链Id',
+  'tronChainNamePlaceholder': '请填写该链名称',
+  'tronblockProducedTimeOutePlaceholder': '请填写区块产生超时时间',
+  'tronblockNodeBlockProducedTimeOutPlaceholder': '请填写节点区块产生超时时间',
+  'tronblockBlockMaintenanceTimeIntervalPlaceholder': '请填写块维护时间间隔',
+  'tronblockNodeMinParticipationRatePlaceholder': '请填写节点最小参与率',
+
+  'tronP2pVersionPlaceholder': '请填写p2p版本',
+  'tronMaxActionNodesPlaceholder': '请填写最大链接数',
+  'tronMaxActiveNodesWithSameIpPlaceholder': '请填写同一ip最大连接数',
+
+
+
+  'tronSettingPortPlaceholder': '请填写当前端口',
   'tronSettingSelectPlaceholder': '请选择',
   'tronSettingwriteSynchronously': '是否同步写入',
   'tronSettingOpenTransaction': '是否打开transaction',
@@ -33,7 +51,7 @@ export default {
   'tronSettingMenuNodeList': '节点列表',
   'tronSettingMenuSetting': '配置管理',
   'tronSettingMenuPlugin': '导入插件',
-  'tronscanMenu': 'tronscan',
+  'tronscanMenu': 'Tronscan应用',
   'tronSettingMenuDashboard': '一键部署系统',
   'tronSettingChooseLanguage': '选择语言',
   'tronSettingNormalNode': '正常节点',

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 11:55:48
+ * @Last Modified time: 2019-11-07 15:28:40
  * @tron node list 
  */
 <template>
@@ -24,7 +24,7 @@
                     @click="bulkDeploymentFun"
                 >{{$t('tronNodeBulkDeployment')}}</el-button>
             </div>
-            <div class="filter-container tron-table">
+            <div class="filter-container tron-table" id="tronTable">
                 <!--tron table-->
                 <el-table
                     v-loading="listLoading"

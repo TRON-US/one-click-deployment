@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 12:20:41
+ * @Last Modified time: 2019-11-07 17:42:18
  * @setting p2p setting 
  */
 
@@ -30,63 +30,16 @@
                                 class="baseFormItem mgt20"
                             >
                                 <el-input
+                                    size="small"
                                     :maxlength="50"
                                     v-model="p2pSettingForm.node_p2p_version"
-                                    :placeholder="$t('tronSettingPlaceholder')"
+                                    :placeholder="$t('tronP2pVersionPlaceholder')"
                                 ></el-input>
                             </el-form-item>
-                            <el-form-item
-                                label="maxActionNodes"
-                                prop="node_maxActiveNodes"
-                                class="baseFormItem"
-                            >
-                                <el-input
-                                    :maxlength="50"
-                                    v-model="p2pSettingForm.node_maxActiveNodes"
-                                    :placeholder="$t('tronSettingPlaceholder')"
-                                ></el-input>
-                            </el-form-item>
-                            <el-form-item
-                                class="baseFormItem"
-                                label="node_maxActiveNodesWithSameIp"
-                                prop="node_maxActiveNodesWithSameIp"
-                            >
-                                <el-input
-                                    :maxlength="50"
-                                    v-model="p2pSettingForm.node_maxActiveNodesWithSameIp"
-                                    :placeholder="$t('tronSettingPlaceholder')"
-                                ></el-input>
-                            </el-form-item>
-                            <el-form-item
-                                class="baseFormItem"
-                                label="activeConnectFactor"
-                                prop="node_activeConnectFactor"
-                            >
-                                <el-input-number
-                                    controls-position="right"
-                                    :min="0"
-                                    :step="0.1"
-                                    :maxlength="50"
-                                    v-model="p2pSettingForm.node_activeConnectFactor"
-                                    :placeholder="$t('tronSettingPlaceholder')"
-                                ></el-input-number>
-                            </el-form-item>
-                            <el-form-item
-                                class="baseFormItem"
-                                label="connectFactor"
-                                prop="connectFactor"
-                            >
-                                <el-input-number
-                                    controls-position="right"
-                                    :min="0"
-                                    :step="0.1"
-                                    :maxlength="50"
-                                    v-model="p2pSettingForm.connectFactor"
-                                    :placeholder="$t('tronSettingPlaceholder')"
-                                ></el-input-number>
-                            </el-form-item>
+
                             <el-form-item class="baseFormItem" label="seedNode" prop="seedNode">
                                 <el-checkbox-group
+                                    size="small"
                                     v-model="p2pSettingForm.defalutSelectedIp"
                                     @change="checkBoxChangeFun"
                                 >
@@ -107,6 +60,67 @@
                                     </el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
+                            <el-button
+                                type="text"
+                                size="small"
+                                @click="moreSetting = !moreSetting"
+                            >{{$t("tronMoreSetting")}}</el-button>
+                            <div v-if="moreSetting">
+                                <el-form-item
+                                    label="maxActionNodes"
+                                    prop="node_maxActiveNodes"
+                                    class="baseFormItem"
+                                >
+                                    <el-input
+                                        size="small"
+                                        :maxlength="50"
+                                        v-model="p2pSettingForm.node_maxActiveNodes"
+                                        :placeholder="$t('tronMaxActionNodesPlaceholder')"
+                                    ></el-input>
+                                </el-form-item>
+                                <el-form-item
+                                    class="baseFormItem"
+                                    label="maxActiveNodesWithSameIp"
+                                    prop="node_maxActiveNodesWithSameIp"
+                                >
+                                    <el-input
+                                        size="small"
+                                        :maxlength="50"
+                                        v-model="p2pSettingForm.node_maxActiveNodesWithSameIp"
+                                        :placeholder="$t('tronMaxActiveNodesWithSameIpPlaceholder')"
+                                    ></el-input>
+                                </el-form-item>
+                                <el-form-item
+                                    class="baseFormItem"
+                                    label="activeConnectFactor"
+                                    prop="node_activeConnectFactor"
+                                >
+                                    <el-input-number
+                                        size="small"
+                                        controls-position="right"
+                                        :min="0"
+                                        :step="0.1"
+                                        :maxlength="50"
+                                        v-model="p2pSettingForm.node_activeConnectFactor"
+                                        :placeholder="$t('tronSettingPlaceholder')"
+                                    ></el-input-number>
+                                </el-form-item>
+                                <el-form-item
+                                    class="baseFormItem"
+                                    label="connectFactor"
+                                    prop="connectFactor"
+                                >
+                                    <el-input-number
+                                        size="small"
+                                        controls-position="right"
+                                        :min="0"
+                                        :step="0.1"
+                                        :maxlength="50"
+                                        v-model="p2pSettingForm.connectFactor"
+                                        :placeholder="$t('tronSettingPlaceholder')"
+                                    ></el-input-number>
+                                </el-form-item>
+                            </div>
                         </div>
                     </el-card>
                 </el-col>
@@ -146,6 +160,7 @@ export default {
         };
         return {
             baseContentShow: true,
+            moreSetting: false,
             p2pSettingForm: {
                 node_p2p_version: "",
                 node_maxActiveNodes: "",
