@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 17:42:18
+ * @Last Modified time: 2019-11-08 12:00:49
  * @setting p2p setting 
  */
 
@@ -24,11 +24,18 @@
                             {{$t('tronSettingP2p')}}
                         </div>
                         <div v-if="baseContentShow">
-                            <el-form-item
-                                label="p2pVersion"
-                                prop="node_p2p_version"
-                                class="baseFormItem mgt20"
-                            >
+                            <el-form-item prop="node_p2p_version" class="baseFormItem mgt20">
+                                <span slot="label">
+                                    p2pVersion
+                                    <el-tooltip
+                                        class="item"
+                                        effect="dark"
+                                        :content="$t('tronp2pVersionPlaceholder')"
+                                        placement="top"
+                                    >
+                                        <i class="iconfont icon-iconset0143"></i>
+                                    </el-tooltip>
+                                </span>
                                 <el-input
                                     size="small"
                                     :maxlength="50"
@@ -37,7 +44,11 @@
                                 ></el-input>
                             </el-form-item>
 
-                            <el-form-item class="baseFormItem" label="seedNode" prop="seedNode">
+                            <el-form-item
+                                class="baseFormItem"
+                                label="seedNode"
+                                prop="defalutSelectedIp"
+                            >
                                 <el-checkbox-group
                                     size="small"
                                     v-model="p2pSettingForm.defalutSelectedIp"
@@ -146,7 +157,7 @@ import { p2pSettingApi } from "@/api/settingApi";
 import { isvalidateNum } from "@/utils/validate.js";
 export default {
     name: "p2pSettingDialog",
-    props: ["detailInfoData", "seedNodeIpList"],
+    props: ["detailInfoData"],
     computed: {
         ...mapGetters(["tronSetting"])
     },
@@ -154,6 +165,33 @@ export default {
         const validNum = (rule, value, callback) => {
             if (!isvalidateNum(value)) {
                 callback(new Error(this.$t("tronSettingNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
+        const validMainnet = (rule, value, callback) => {
+            if (value == 11111) {
+                callback(
+                    new Error(this.$t("tronp2pVersionMainnetPlaceholder"))
+                );
+            } else {
+                callback();
+            }
+        };
+        const validTestNet = (rule, value, callback) => {
+            if (value == 20180622) {
+                callback(
+                    new Error(this.$t("tronp2pVersionTestnetPlaceholder"))
+                );
+            } else {
+                callback();
+            }
+        };
+        const validSpecialNet = (rule, value, callback) => {
+            if (value == 1) {
+                callback(
+                    new Error(this.$t("tronp2pVersionSpecialPlaceholder"))
+                );
             } else {
                 callback();
             }
@@ -168,7 +206,7 @@ export default {
                 connectFactor: "",
                 node_activeConnectFactor: ""
             },
-
+            seedNodeIpList: [],
             checkedSeedNodeList: [],
             p2pSettingRules: {
                 node_p2p_version: [
@@ -180,6 +218,28 @@ export default {
                     {
                         message: this.$t("tronSettingNumberPlaceholder"),
                         validator: validNum,
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronp2pVersionMainnetPlaceholder"),
+                        validator: validMainnet,
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronp2pVersionTestnetPlaceholder"),
+                        validator: validTestNet,
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronp2pVersionSpecialPlaceholder"),
+                        validator: validSpecialNet,
+                        trigger: "blur"
+                    }
+                ],
+                defalutSelectedIp: [
+                    {
+                        required: true,
+                        message: this.$t("tronP2pSeedNodeSelectPlaceholder"),
                         trigger: "blur"
                     }
                 ],
@@ -224,9 +284,9 @@ export default {
             }
         };
     },
-    // created() {
-    //     // this.getOriginSettingFun();
-    // },
+    created() {
+        this.getOriginSettingFun();
+    },
     methods: {
         previousStepFun() {
             this.$emit("previousSettingStep", true);
@@ -235,6 +295,27 @@ export default {
         checkBoxChangeFun(val) {
             console.log(val);
             this.checkedSeedNodeList = val;
+        },
+        getOriginSettingFun() {
+            this.$store
+                .dispatch("tronSetting/getOriginConfig")
+                .then(response => {
+                    if (response.p2pConfig.seed_node_ip_list != null) {
+                        let newIpList = [];
+                        response.p2pConfig.seed_node_ip_list.forEach(item => {
+                            newIpList.push({
+                                ip: item,
+                                port: "18889"
+                            });
+                        });
+                        this.seedNodeIpList = newIpList || [];
+                    } else {
+                        this.seedNodeIpList = [];
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
 
         saveData(formName) {

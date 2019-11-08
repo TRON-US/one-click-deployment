@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-06 14:34:12
+ * @Last Modified time: 2019-11-08 12:00:42
  * @tron setting default  
  */
 <template>
@@ -13,9 +13,9 @@
                     <el-steps :active="currentStep" align-center type="mini">
                         <el-step @click.native="stepClickFun(1)" :title="$t('tronSettingGenesis')"></el-step>
                         <el-step @click.native="stepClickFun(2)" :title="$t('tronSettingBase')"></el-step>
-                        <el-step @click.native="stepClickFun(3)" :title="$t('tronSettingP2p')"></el-step>
+                        <el-step @click.native="stepClickFun(3)" :title="$t('tronSettingHttp')"></el-step>
                         <el-step @click.native="stepClickFun(4)" :title="$t('tronSettingDb')"></el-step>
-                        <el-step @click.native="stepClickFun(5)" :title="$t('tronSettingHttp')"></el-step>
+                        <el-step @click.native="stepClickFun(5)" :title="$t('tronSettingP2p')"></el-step>
                         <el-step @click.native="stepClickFun(6)" :title="$t('tronCrossChain')"></el-step>
                     </el-steps>
                 </div>
@@ -33,25 +33,26 @@
                     @previousSettingStep="previousSettingStepFun"
                     @addSettingSuccess="addSettingSuccessFun"
                 ></base-setting>
-                <p2p-setting
+                <network-setting
                     v-if="currentStep == 3"
-                    :seedNodeIpList="seedNodeIpListData"
-                    :detailInfoData="p2pSetting.detail"
                     @previousSettingStep="previousSettingStepFun"
+                    :detailInfoData="networkSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
-                ></p2p-setting>
+                ></network-setting>
+
                 <databaseSetting
                     v-if="currentStep == 4"
                     @previousSettingStep="previousSettingStepFun"
                     :detailInfoData="databaseSettingForm.detail"
                     @addSettingSuccess="addSettingSuccessFun"
                 ></databaseSetting>
-                <network-setting
+                <p2p-setting
                     v-if="currentStep == 5"
+                    :seedNodeIpList="seedNodeIpListData"
+                    :detailInfoData="p2pSetting.detail"
                     @previousSettingStep="previousSettingStepFun"
-                    :detailInfoData="networkSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
-                ></network-setting>
+                ></p2p-setting>
                 <cross-chain
                     v-if="currentStep == 6"
                     @previousSettingStep="previousSettingStepFun"

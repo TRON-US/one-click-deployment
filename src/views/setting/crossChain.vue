@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 16:12:55
+ * @Last Modified time: 2019-11-08 11:07:50
  * @setting cross setting
  */
 
@@ -45,7 +45,7 @@
                                     size="small"
                                     :maxlength="50"
                                     v-model="baseSettingForm.maxValidatorNumber"
-                                    :placeholder="$t('tronSettingPlaceholder')"
+                                    :placeholder="$t('tronMaxValidatorNumberPlaceholder')"
                                 ></el-input>
                             </el-form-item>
                             <el-form-item
@@ -57,7 +57,7 @@
                                     size="small"
                                     :maxlength="50"
                                     v-model="baseSettingForm.minValidatorNumber"
-                                    :placeholder="$t('tronSettingPlaceholder')"
+                                    :placeholder="$t('tronMinValidatorNumberPlaceholder')"
                                 ></el-input>
                             </el-form-item>
 
@@ -130,7 +130,7 @@ export default {
                 maxValidatorNumber: [
                     {
                         required: true,
-                        message: this.$t("tronSettingPlaceholder"),
+                        message: this.$t("tronMaxValidatorNumberPlaceholder"),
                         trigger: "change"
                     },
                     {
@@ -142,7 +142,7 @@ export default {
                 minValidatorNumber: [
                     {
                         required: true,
-                        message: this.$t("tronSettingPlaceholder"),
+                        message: this.$t("tronMinValidatorNumberPlaceholder"),
                         trigger: "change"
                     },
                     {

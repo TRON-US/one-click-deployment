@@ -36,6 +36,7 @@ export default {
   'deploymentLoading': 'Deploying, please wait,Click on the list to view details to view deployment status',
   'deploymentFail': 'Deployment failed',
   'deploymentSelectTips': 'Please select at least one node',
+  'deploymentSRSelectTips': 'Select at least one SR for batch deployment',
   'deploymentPath': 'Please fill in the path',
   'deploymentNodeIdTips': 'ID as the node unique identifier',
   'deploymentNodeUsernameTips': 'ssh username',

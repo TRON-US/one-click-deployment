@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 15:28:40
+ * @Last Modified time: 2019-11-08 12:17:37
  * @tron node list 
  */
 <template>
@@ -189,7 +189,8 @@ export default {
             this.multipleSelection.map(item => {
                 arr.push({
                     id: item.id,
-                    path: this.currentPath
+                    path: this.currentPath,
+                    isSR: item.isSR
                 });
             });
             return arr;
@@ -317,7 +318,19 @@ export default {
                 });
         },
         bulkDeploymentFun() {
+            console.log(this.multipleSelectionIds.length);
             if (this.multipleSelectionIds.length > 0) {
+                let count = 0;
+                this.multipleSelectionIds.find(item => {
+                    item.isSR ? count++ : "";
+                });
+                if (count == 0) {
+                    this.$message({
+                        type: "warning",
+                        message: this.$t("deploymentSRSelectTips")
+                    });
+                    return;
+                }
                 this.logInfoData = [];
                 this.deploymentDialogVisible = true;
             } else {

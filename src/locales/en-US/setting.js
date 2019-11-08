@@ -31,9 +31,22 @@ export default {
   'tronP2pVersionPlaceholder': 'Please fill in the p2p version',
   'tronMaxActionNodesPlaceholder': 'Please fill in the maximum number of active nodes',
   'tronMaxActiveNodesWithSameIpPlaceholder': 'Please fill in the same IP number of the largest active node',
+  'tronP2pSeedNodeSelectPlaceholder': 'Please select SeedNode',
+  'tronp2pVersionPlaceholder': 'P2p version',
+  'tronp2pVersionMainnetPlaceholder': 'The main network p2pversion is not available',
+  'tronp2pVersionTestnetPlaceholder': 'Test network p2pversion is not available',
+  'tronp2pVersionSpecialPlaceholder': 'Specific network p2pversion is not available',
+
+  'tronmaxHttpConnectNumberPlaceholder': 'Please fill in the maximum number of http connections',
+  'tronhttpFullNodePortPlaceholder': 'Please fill in the httpFullNode port',
+  'tronhttpHttpSolidityPortPlaceholder': 'Please fill in the httpSolidity port',
+  'tronhttpRpcPortPlaceholder': 'Please fill in the rpc port',
+  'tronhttpRpcSolidityPortPlaceholder': 'Please fill in the RpcSolidity port',
+  'tronhttpRpcListenPortPlaceholder': 'Please fill in the listen port',
 
 
-
+  'tronMaxValidatorNumberPlaceholder': 'Please fill in the maximum number of verifications',
+  'tronMinValidatorNumberPlaceholder': 'Please fill in the minimum verification number',
 
   'tronSettingPortPlaceholder': 'Please fill in the current port',
   'tronSettingSelectPlaceholder': 'please choose',

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 12:20:18
+ * @Last Modified time: 2019-11-08 11:49:39
  * @tron setting list  
  */
 <template>
@@ -215,7 +215,7 @@ export default {
                 .dispatch("tronSetting/getOriginConfig")
                 .then(response => {
                     this.originSettingObj = response;
-                    if (response.p2pConfig.seed_node_ip_list) {
+                    if (response.p2pConfig.seed_node_ip_list != null) {
                         let newIpList = [];
                         response.p2pConfig.seed_node_ip_list.forEach(item => {
                             newIpList.push({
@@ -223,7 +223,9 @@ export default {
                                 port: ""
                             });
                         });
-                        this.seedNodeIpList = newIpList;
+                        this.seedNodeIpList = newIpList || [];
+                    } else {
+                        this.seedNodeIpList = [];
                     }
                 })
                 .catch(error => {
