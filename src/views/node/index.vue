@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 12:17:37
+ * @Last Modified time: 2019-11-08 15:45:16
  * @tron node list 
  */
 <template>
@@ -238,13 +238,13 @@ export default {
             this.currentLogDialog = true;
             this.viewLogFun(_id);
             // nodeTimer = setInterval(() => {
-            this.viewLogFun(_id);
+            // this.viewLogFun(_id);
             // }, 1000 * 5);
         },
         currentNodeLogEnd() {
-            console.log(123);
             window.clearInterval(nodeTimer);
             nodeTimer = null;
+            console.log(nodeTimer);
         },
         viewLogFun(_id, _type) {
             this.deploymentLoadingText = this.$t("deploymentSearchLoading");
@@ -257,11 +257,11 @@ export default {
                     this.deplogUploadLoading = true;
                     this.deploymentLoadingTips = true;
                     this.currentlogInfoData.forEach(async item => {
-                        if (item == "deploy finish") {
+                        if (item.indexOf("deploy finish") > -1) {
                             this.deplogUploadLoading = false;
                             this.deploymentDialogVisible = false;
                             this.deploymentLoadingText = this.$t(
-                                "deploymentSuccess"
+                                "deploymentDone"
                             );
                         } else if (item == "ssh connect failed") {
                             this.deplogUploadLoading = false;
@@ -318,19 +318,19 @@ export default {
                 });
         },
         bulkDeploymentFun() {
-            console.log(this.multipleSelectionIds.length);
+            // console.log(this.multipleSelectionIds.length);
             if (this.multipleSelectionIds.length > 0) {
-                let count = 0;
-                this.multipleSelectionIds.find(item => {
-                    item.isSR ? count++ : "";
-                });
-                if (count == 0) {
-                    this.$message({
-                        type: "warning",
-                        message: this.$t("deploymentSRSelectTips")
-                    });
-                    return;
-                }
+                // let count = 0;
+                // this.multipleSelectionIds.find(item => {
+                //     item.isSR ? count++ : "";
+                // });
+                // if (count == 0) {
+                //     this.$message({
+                //         type: "warning",
+                //         message: this.$t("deploymentSRSelectTips")
+                //     });
+                //     return;
+                // }
                 this.logInfoData = [];
                 this.deploymentDialogVisible = true;
             } else {
@@ -348,14 +348,16 @@ export default {
                     })
                     .then(res => {
                         let newRes = Object.values(res);
+                        let newInd = 0;
                         newRes.forEach(item => {
                             if (item != "deploy finish") {
-                                return false;
-                            } else {
-                                this.allNodeDeployLoading = false;
-                                clearInterval(this.deploymentNode);
+                                newInd++;
                             }
                         });
+                        if (newInd == 0) {
+                            this.allNodeDeployLoading = false;
+                            clearInterval(this.deploymentNode);
+                        }
                     })
                     .catch(error => {
                         console.log(error);

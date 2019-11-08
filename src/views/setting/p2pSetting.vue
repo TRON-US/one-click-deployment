@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 12:00:49
+ * @Last Modified time: 2019-11-08 14:29:16
  * @setting p2p setting 
  */
 
@@ -300,12 +300,13 @@ export default {
             this.$store
                 .dispatch("tronSetting/getOriginConfig")
                 .then(response => {
+                    let listenPort = response.networkConfig.node_listen_port;
                     if (response.p2pConfig.seed_node_ip_list != null) {
                         let newIpList = [];
                         response.p2pConfig.seed_node_ip_list.forEach(item => {
                             newIpList.push({
                                 ip: item,
-                                port: "18889"
+                                port: listenPort
                             });
                         });
                         this.seedNodeIpList = newIpList || [];

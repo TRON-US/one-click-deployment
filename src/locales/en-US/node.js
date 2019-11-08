@@ -33,6 +33,7 @@ export default {
   'deploymentUpload': 'First, you need to fill in the local jar package file path before batch deployment. ex:/Users/xxx/xxx/FullNode.jar',
   'deploymentSearchLoading': 'Querying node records, please wait',
   'deploymentSuccess': 'Successful deployment',
+  'deploymentDone': 'Deployment completed',
   'deploymentLoading': 'Deploying, please wait,Click on the list to view details to view deployment status',
   'deploymentFail': 'Deployment failed',
   'deploymentSelectTips': 'Please select at least one node',

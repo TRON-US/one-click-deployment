@@ -33,6 +33,7 @@ export default {
   'deploymentUpload': '批量部署前首先需要填写本地jar包文件路径 如：/Users/xxx/xxx/FullNode.jar',
   'deploymentSearchLoading': '正在查询节点记录，请稍等',
   'deploymentSuccess': '部署成功',
+  'deploymentDone': '部署完成',
   'deploymentLoading': '正在部署,请稍候,点击列表查看详情查看部署状态',
   'deploymentFail': '部署失败',
   'deploymentSelectTips': '请选择至少一个节点',
