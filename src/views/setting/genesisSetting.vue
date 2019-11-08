@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 16:37:24
+ * @Last Modified time: 2019-11-08 20:30:36
  * @setting genesis setting
  */
 
@@ -57,7 +57,11 @@
             </el-col>
         </el-row>
         <div label-width="0" class="textRight">
-            <el-button type="primary" @click="saveAllData()">{{$t('tronSettingNextStep')}}</el-button>
+            <el-button
+                size="small"
+                type="primary"
+                @click="saveAllData()"
+            >{{$t('tronSettingNextStep')}}</el-button>
         </div>
         <el-dialog
             center
@@ -111,12 +115,16 @@
                         :placeholder="$t('tronBalancePlaceholder')"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label-width="0" class="textCenter">
+                <el-form-item label-width="0" class="textRight">
                     <el-button
+                        size="small"
                         type="primary"
                         @click="saveData('assetDialogForm')"
                     >{{$t('tronSettingSave')}}</el-button>
-                    <el-button @click="innerAssetVisible = false">{{$t('tronSettingCancel')}}</el-button>
+                    <el-button
+                        size="small"
+                        @click="innerAssetVisible = false"
+                    >{{$t('tronSettingCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 20:13:28
+ * @Last Modified time: 2019-11-08 20:29:12
  * @operation node 
  */
 
@@ -204,13 +204,14 @@
                     ></el-input>
                 </el-form-item>
 
-                <el-form-item label-width="0" class="textCenter">
+                <el-form-item label-width="0" class="textRight">
                     <el-button
+                        size="small"
                         type="primary"
                         @click="saveData('nodeDialogForm')"
                         :loading="saveLoading"
                     >{{$t('tronNodeSave')}}</el-button>
-                    <el-button @click="cancelFun">{{$t('tronNodeCancel')}}</el-button>
+                    <el-button size="small" @click="cancelFun">{{$t('tronNodeCancel')}}</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -421,6 +422,10 @@ export default {
 <style lang="scss" rel="stylesheet/scss" scoped>
 .textCenter {
     text-align: center;
+}
+.textRight {
+    text-align: right;
+    margin-top: 30px;
 }
 .nodeDialogForm {
     padding: 0 20px;

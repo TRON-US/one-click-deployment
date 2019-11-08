@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 20:22:38
+ * @Last Modified time: 2019-11-08 20:31:31
  * @tron plugin list  
  */
 <template>
@@ -167,6 +167,7 @@
                                     </el-radio-group>
                                     <br />
                                     <el-input
+                                        size="small"
                                         class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="plugindbForm.dbsettingContent"
