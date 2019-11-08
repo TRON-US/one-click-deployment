@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 18:44:06
+ * @Last Modified time: 2019-11-08 20:51:40
  * @tron node list 
  */
 <template>
@@ -144,8 +144,8 @@ import {
     nodeInfoApi
 } from "@/api/nodeApi.js";
 import operateNode from "./nodeOperate";
-import { setTimeout, setInterval } from "timers";
-let nodeTimer = null;
+
+//let nodeTimer = null;
 let deploymentNode = null;
 export default {
     name: "nodelist",
@@ -198,11 +198,12 @@ export default {
     },
     created() {
         this.getDataListFun();
+        this.timer = null;
     },
     beforeDestroy() {
-        window.clearInterval(nodeTimer);
+        window.clearInterval(this.timer);
         window.clearInterval(deploymentNode);
-        nodeTimer = null;
+        this.timer = null;
         deploymentNode = null;
     },
     methods: {
@@ -234,17 +235,20 @@ export default {
             this.nodeObj.visible = true;
         },
         viewCurrentLogFun(_id) {
+            console.log(this.timer);
+            clearInterval(this.timer);
             this.logInfoData = [];
             this.currentLogDialog = true;
             this.viewLogFun(_id);
-            // nodeTimer = setInterval(() => {
-            // this.viewLogFun(_id);
-            // }, 1000 * 5);
+            this.timer = setInterval(() => {
+                this.viewLogFun(_id);
+            }, 1000 * 5);
         },
         currentNodeLogEnd() {
-            window.clearInterval(nodeTimer);
-            nodeTimer = null;
-            console.log(nodeTimer);
+            console.log("this.timer", this.timer);
+            clearInterval(this.timer);
+            this.timer = null;
+            console.log(this.timer);
         },
         viewLogFun(_id, _type) {
             this.deploymentLoadingText = this.$t("deploymentSearchLoading");
