@@ -20,11 +20,8 @@ import { setToken } from "@/utils/auth"; // get token from cookie
 import PanelGroup from "./components/PanelGroup";
 export default {
     name: "Dashboard",
-    data() {
-        return {};
-    },
     created() {
-        setToken("node");
+        setToken("admin");
     },
     components: {
         PanelGroup

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 15:45:16
+ * @Last Modified time: 2019-11-08 18:44:06
  * @tron node list 
  */
 <template>
@@ -448,7 +448,12 @@ export default {
                 this.getDataListFun();
             }
         },
-        nextStepFun() {
+        async nextStepFun() {
+            // await this.$store
+            //     .dispatch("user/changeRoles", "setting")
+            //     .then(res => {
+            //         console.log(res);
+            //     });
             this.$router.push({ path: "/setting/list" });
         }
     }

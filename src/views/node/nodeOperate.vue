@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 18:31:38
+ * @Last Modified time: 2019-11-08 20:13:28
  * @operation node 
  */
 
@@ -169,7 +169,20 @@
                         :placeholder="$t('tronNodeVoteNumberPlaceholder')"
                     ></el-input>
                 </el-form-item>
-
+                <el-form-item v-if="editStatus ==1" class="publickey">
+                    <span slot="label" style="padding-left:10px">
+                        publicKey
+                        <el-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="$t('deploymentNodePublickKeyTips')"
+                            placement="top"
+                        >
+                            <i class="iconfont icon-iconset0143"></i>
+                        </el-tooltip>
+                    </span>
+                    {{nodeForm.publicKey}}
+                </el-form-item>
                 <el-form-item prop="privateKey" v-if="nodeForm.isSR">
                     <span slot="label">
                         privateKey
@@ -189,20 +202,6 @@
                         v-model="nodeForm.privateKey"
                         :placeholder="$t('tronNodePrivateKeyPlaceholder')"
                     ></el-input>
-                </el-form-item>
-                <el-form-item v-if="editStatus ==1">
-                    <span slot="label">
-                        publicKey
-                        <el-tooltip
-                            class="item"
-                            effect="dark"
-                            :content="$t('deploymentNodePublickKeyTips')"
-                            placement="top"
-                        >
-                            <i class="iconfont icon-iconset0143"></i>
-                        </el-tooltip>
-                    </span>
-                    {{nodeForm.publicKey}}
                 </el-form-item>
 
                 <el-form-item label-width="0" class="textCenter">

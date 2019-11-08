@@ -89,6 +89,17 @@ div:focus {
   width: 100px;
 }
 
-.transcationDialogForm .el-checkbox {
-  min-width: 195px;
+.pluginSettingFormContent {
+  padding-left: 20px;
+}
+
+.transcationDialogForm {
+
+  .transcationDialogFormContent {
+    padding-left: 20px;
+  }
+
+  .el-checkbox {
+    min-width: 199px;
+  }
 }

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-07 18:18:30
+ * @Last Modified time: 2019-11-08 20:22:38
  * @tron plugin list  
  */
 <template>
@@ -43,7 +43,7 @@
                                 ></i>
                                 {{$t('tronPluginConsensusModule')}}
                             </div>
-                            <div v-if="baseContentShow">
+                            <div v-if="baseContentShow" class="pluginSettingFormContent">
                                 <el-form-item prop="consensus" class="baseFormItem mgt30">
                                     <el-radio-group v-model="pluginOnsensusForm.consensus">
                                         <el-radio :label="'dpos'">DPOS</el-radio>
@@ -54,7 +54,10 @@
                                             :label="3"
                                         >{{$t('tronPluginCustomConsensusModule')}}：</el-radio>
                                     </el-radio-group>
+                                    <br />
                                     <el-input
+                                        size="small"
+                                        class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="pluginOnsensusForm.consensusContent"
                                         :placeholder="$t('tronPluginCustomConsensusModulePlaceholder')"
@@ -93,7 +96,7 @@
                                 ></i>
                                 {{$t('tronPluginTransactionModule')}}
                             </div>
-                            <div v-if="transcationContentShow">
+                            <div v-if="transcationContentShow" class="transcationDialogFormContent">
                                 <el-form-item prop="transaction" class="baseFormItem mgt20">
                                     <el-checkbox-group v-model="pluginTransactionForm.transaction">
                                         <el-checkbox
@@ -107,7 +110,10 @@
                                             style="margin:0"
                                             :label="9"
                                         >{{$t('tronPluginCustomTradingModule')}}</el-checkbox>
+                                        <br />
                                         <el-input
+                                            class="pluginSettingFormInput"
+                                            size="small"
                                             :maxlength="50"
                                             v-model="pluginTransactionForm.transactionContent"
                                             :placeholder="$t('tronPluginCustomTradingModulePlaceholder')"
@@ -148,7 +154,7 @@
                                 ></i>
                                 {{$t('tronPluginTransactionModule')}}
                             </div>
-                            <div v-if="dbsettingContentShow">
+                            <div v-if="dbsettingContentShow" style="padding-left:20px">
                                 <el-form-item prop="dbsetting" class="baseFormItem mgt30">
                                     <el-radio-group v-model="plugindbForm.dbsetting">
                                         <el-radio :label="'leveldb'">leveldb</el-radio>
@@ -159,7 +165,9 @@
                                             :label="3"
                                         >{{$t('tronPluginCustomDatabaseModule')}}</el-radio>
                                     </el-radio-group>
+                                    <br />
                                     <el-input
+                                        class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="plugindbForm.dbsettingContent"
                                         :placeholder="$t('tronPluginCustomDatabaseModulePlaceholder')"
@@ -557,5 +565,8 @@ export default {
 .textRight {
     margin-top: 40px;
     text-align: right;
+}
+.pluginSettingFormInput {
+    width: 400px;
 }
 </style>

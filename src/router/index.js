@@ -30,32 +30,12 @@ import Layout from '@/newLayout';
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-// export const constantRoutes = [
-//   {
-//     path: '/redirect',
-//     component: Layout,
-//     hidden: true,
-//     children: [
-//       {
-//         path: '/redirect/:path*',
-//         component: () => import('@/views/redirect/index')
-//       }
-//     ]
-//   },
-// ]
 export const constantRoutes = [
-
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
 
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
@@ -67,43 +47,37 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  },
+
+]
+export const asyncRoutes = [
+
+  {
     path: '/node',
     component: Layout,
     redirect: '/node/list',
     name: 'node',
     meta: {
       title: 'tronSettingMenuNode',
-      icon: 'tree'
+      icon: 'tree',
+      roles: ['admin', 'editor', 'plugin']
     },
-    children: [{
+    children: [
+
+      {
         path: 'list',
         name: 'nodeMenu',
         component: () => import('@/views/node/index'),
         meta: {
           title: 'tronSettingMenuNodeList',
-          icon: 'tree'
+          icon: 'tree',
+          roles: ['admin', 'editor', 'plugin']
         }
       },
-      // {
-      //   path: 'setting',
-      //   name: 'setting',
-      //   hidden: true,
-      //   component: () => import('@/views/setting/setting'),
-      //   meta: {
-      //     title: 'tronSettingMenuSetting',
-      //     icon: 'setting'
-      //   }
-      // },
-      // {
-      //   path: 'plugin',
-      //   name: 'plugin',
-      //   hidden: true,
-      //   component: () => import('@/views/pluginList/index'),
-      //   meta: {
-      //     title: 'tronSettingMenuPlugin',
-      //     icon: 'plugins'
-      //   }
-      // }
+
     ]
   },
   {
@@ -114,7 +88,8 @@ export const constantRoutes = [
     // hidden: true,
     meta: {
       title: '配置',
-      icon: 'example'
+      icon: 'example',
+      roles: ['editor', 'plugin']
     },
     children: [
 
@@ -124,18 +99,20 @@ export const constantRoutes = [
         component: () => import('@/views/setting/setting'),
         meta: {
           title: 'tronSettingMenuSetting',
-          icon: 'setting'
+          icon: 'setting',
+          roles: ['editor', 'plugin']
         },
 
       },
       {
         path: 'config',
-        name: 'settinglist',
+        name: 'settingconfig',
         hidden: true,
         component: () => import('@/views/setting/index'),
         meta: {
           title: 'tronSettingMenuSetting',
-          icon: 'setting'
+          icon: 'setting',
+          roles: ['editor', 'plugin', ]
         }
       }
     ]
@@ -149,7 +126,8 @@ export const constantRoutes = [
     name: 'pluginMenu',
     meta: {
       title: '插件管理',
-      icon: 'example'
+      icon: 'example',
+      roles: ['plugin']
     },
     children: [{
       path: 'list',
@@ -157,7 +135,8 @@ export const constantRoutes = [
       component: () => import('@/views/pluginList/index'),
       meta: {
         title: 'tronSettingMenuPlugin',
-        icon: 'plugins'
+        icon: 'plugins',
+        roles: ['plugin']
       }
     }]
   },
@@ -169,13 +148,15 @@ export const constantRoutes = [
     name: 'tronscanMenu',
     meta: {
       title: 'tronscan浏览器',
-      icon: 'example'
+      icon: 'example',
+      roles: ['admin']
     },
     children: [{
       path: 'https://tronscan.org/#/',
       meta: {
         title: 'tronscanMenu',
-        icon: 'link'
+        icon: 'link',
+        roles: ['admin']
       }
     }]
 
