@@ -11,6 +11,9 @@ import {
 import router, {
   resetRouter
 } from '@/router'
+import {
+  AST_Atom
+} from 'terser'
 
 const state = {
   token: getToken(),
@@ -70,7 +73,10 @@ const actions = {
       const data = {
         name: 'tron',
         avatar: '',
-        roles: 'admin'
+        roles: []
+      }
+      if (data.roles[0] != 'node') {
+        data.roles = [getToken()]
       }
 
       if (!data) {
@@ -133,12 +139,10 @@ const actions = {
   }, role) {
     return new Promise(async resolve => {
       const token = role + '-token'
-      console.log(token)
-      commit('SET_TOKEN', token)
-      setToken(token)
+      commit('SET_TOKEN', role)
+      setToken(role)
 
-      const roles = getToken()
-      console.log(roles, 'roles')
+      const roles = [role]
       resetRouter()
 
       // generate accessible routes map based on roles

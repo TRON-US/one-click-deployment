@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 11:07:50
+ * @Last Modified time: 2019-11-10 11:51:38
  * @setting cross setting
  */
 
@@ -174,12 +174,17 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     crossChainSettingApi(this.baseSettingForm)
-                        .then(response => {
+                        .then(async response => {
                             this.$emit("addSettingSuccess", true);
 
                             this.$message.success(
                                 this.$t("tronSettingCrossChainSaveSuccess")
                             );
+                            await this.$store
+                                .dispatch("user/changeRoles", "plugin")
+                                .then(res => {
+                                    console.log(res);
+                                });
                             this.$router.push({ path: "/plugin/list" });
                         })
                         .catch(error => {

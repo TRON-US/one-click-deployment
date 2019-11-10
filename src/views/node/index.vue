@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 20:51:40
+ * @Last Modified time: 2019-11-10 11:47:07
  * @tron node list 
  */
 <template>
@@ -290,10 +290,6 @@ export default {
                     type: "success",
                     message: this.$t("deploymentLoading")
                 });
-                // console.log(
-                //     this.multipleSelectionIds,
-                //     "this.multipleSelectionIds"
-                // );
                 let idAry = [];
                 this.multipleSelectionIds.forEach(item => {
                     idAry.push(item.id);
@@ -453,11 +449,11 @@ export default {
             }
         },
         async nextStepFun() {
-            // await this.$store
-            //     .dispatch("user/changeRoles", "setting")
-            //     .then(res => {
-            //         console.log(res);
-            //     });
+            await this.$store
+                .dispatch("user/changeRoles", "setting")
+                .then(res => {
+                    console.log(res);
+                });
             this.$router.push({ path: "/setting/list" });
         }
     }

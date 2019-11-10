@@ -21,14 +21,18 @@ import PanelGroup from "./components/PanelGroup";
 export default {
     name: "Dashboard",
     created() {
-        setToken("admin");
+        if (this.token == "plugin") {
+            setToken("plugin");
+        } else {
+            setToken("node");
+        }
     },
     components: {
         PanelGroup
     },
     methods: {},
     computed: {
-        ...mapGetters(["name"])
+        ...mapGetters(["name", "token"])
     }
 };
 </script>

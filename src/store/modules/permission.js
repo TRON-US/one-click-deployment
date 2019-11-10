@@ -9,7 +9,7 @@ import {
  * @param route
  */
 function hasPermission(roles, route) {
-  console.log(route)
+
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
@@ -29,7 +29,7 @@ export function filterAsyncRoutes(routes, roles) {
     const tmp = {
       ...route
     }
-    console.log(hasPermission(roles, tmp))
+    console.log(hasPermission(roles, tmp), 'hasPermission')
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
         tmp.children = filterAsyncRoutes(tmp.children, roles)
@@ -59,13 +59,13 @@ const actions = {
   }, roles) {
     return new Promise(resolve => {
       let accessedRoutes = []
-      console.log(roles.includes('admin'), asyncRoutes, '123123')
+      console.log(roles.includes('admin'), asyncRoutes, roles, '123123')
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
-      console.log(accessedRoutes, 'accessedRoutes')
+      // console.log(accessedRoutes, 'accessedRoutes')
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

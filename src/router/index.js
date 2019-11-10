@@ -63,7 +63,7 @@ export const asyncRoutes = [
     meta: {
       title: 'tronSettingMenuNode',
       icon: 'tree',
-      roles: ['admin', 'editor', 'plugin']
+      roles: ['admin', 'node', 'setting', 'plugin']
     },
     children: [
 
@@ -74,7 +74,7 @@ export const asyncRoutes = [
         meta: {
           title: 'tronSettingMenuNodeList',
           icon: 'tree',
-          roles: ['admin', 'editor', 'plugin']
+          roles: ['admin', 'node', 'setting', 'plugin']
         }
       },
 
@@ -89,7 +89,7 @@ export const asyncRoutes = [
     meta: {
       title: '配置',
       icon: 'example',
-      roles: ['editor', 'plugin']
+      roles: ['admin', 'setting', 'plugin']
     },
     children: [
 
@@ -100,7 +100,7 @@ export const asyncRoutes = [
         meta: {
           title: 'tronSettingMenuSetting',
           icon: 'setting',
-          roles: ['editor', 'plugin']
+          roles: ['admin', 'setting', 'plugin']
         },
 
       },
@@ -112,7 +112,7 @@ export const asyncRoutes = [
         meta: {
           title: 'tronSettingMenuSetting',
           icon: 'setting',
-          roles: ['editor', 'plugin', ]
+          roles: ['admin', 'setting', 'plugin']
         }
       }
     ]
@@ -127,7 +127,7 @@ export const asyncRoutes = [
     meta: {
       title: '插件管理',
       icon: 'example',
-      roles: ['plugin']
+      roles: ['admin', 'plugin']
     },
     children: [{
       path: 'list',
@@ -136,7 +136,7 @@ export const asyncRoutes = [
       meta: {
         title: 'tronSettingMenuPlugin',
         icon: 'plugins',
-        roles: ['plugin']
+        roles: ['admin', 'plugin']
       }
     }]
   },
@@ -149,19 +149,18 @@ export const asyncRoutes = [
     meta: {
       title: 'tronscan浏览器',
       icon: 'example',
-      roles: ['admin']
+      roles: ['admin', 'plugin']
     },
     children: [{
       path: 'https://tronscan.org/#/',
       meta: {
         title: 'tronscanMenu',
         icon: 'link',
-        roles: ['admin']
+        roles: ['admin', 'plugin']
       }
     }]
 
   },
-
   // 404 page must be placed at the end !!!
   {
     path: '*',
