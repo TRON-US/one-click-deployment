@@ -76,14 +76,18 @@ const actions = {
         roles: []
       }
 
-      if (data.roles[0] != 'node') {
-        if (data.roles[0] == undefined) {
-          data.roles = ['node']
-        } else {
+      if (state.roles[0] != 'node') {
+        console.log(state.roles, 'state.role')
+        if (state.roles[0] == undefined) {
+          // data.roles = ['node']
+          // } else {
           data.roles = [getToken()]
+        } else if (state.roles.length === 0) {
+          data.roles = ['node']
         }
       }
-      console.log(data.roles, 'dataroles') //,
+
+
 
       if (!data) {
         reject('Verification failed, please Login again.')

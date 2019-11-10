@@ -2,9 +2,9 @@
     <div class="dashboard-container">
         <el-row>
             <!-- <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">使用引导</el-button> -->
-            <router-link :to="{path:'/node/list'}">
-                <el-button type="warning">{{$t('startTronOneClickDeploy')}}</el-button>
-            </router-link>
+            <!-- <router-link :to="{path:'/node/list'}"> -->
+            <el-button type="warning" @click="startOneClickFun">{{$t('startTronOneClickDeploy')}}</el-button>
+            <!-- </router-link> -->
         </el-row>
 
         <div id="first-element-introduction">
@@ -21,6 +21,7 @@ import PanelGroup from "./components/PanelGroup";
 export default {
     name: "Dashboard",
     created() {
+        setToken("node");
         if (this.token == "plugin") {
             setToken("plugin");
         } else {
@@ -30,7 +31,14 @@ export default {
     components: {
         PanelGroup
     },
-    methods: {},
+    methods: {
+        async startOneClickFun() {
+            await this.$store.dispatch("user/changeRoles", "node").then(res => {
+                console.log(res);
+            });
+            this.$router.push("/node/list");
+        }
+    },
     computed: {
         ...mapGetters(["name", "token"])
     }
