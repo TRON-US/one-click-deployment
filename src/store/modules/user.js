@@ -75,9 +75,15 @@ const actions = {
         avatar: '',
         roles: []
       }
+
       if (data.roles[0] != 'node') {
-        data.roles = [getToken()]
+        if (data.roles[0] == undefined) {
+          data.roles = ['node']
+        } else {
+          data.roles = [getToken()]
+        }
       }
+      console.log(data.roles, 'dataroles') //,
 
       if (!data) {
         reject('Verification failed, please Login again.')
