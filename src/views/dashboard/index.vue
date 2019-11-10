@@ -20,19 +20,17 @@ import { setToken } from "@/utils/auth"; // get token from cookie
 import PanelGroup from "./components/PanelGroup";
 export default {
     name: "Dashboard",
-    created() {
-        setToken("node");
-        if (this.token == "plugin") {
-            setToken("plugin");
-        } else {
-            setToken("node");
-        }
-    },
+    created() {},
     components: {
         PanelGroup
     },
     methods: {
         async startOneClickFun() {
+            if (this.token == "plugin") {
+                setToken("plugin");
+            } else {
+                setToken("node");
+            }
             await this.$store.dispatch("user/changeRoles", "node").then(res => {
                 console.log(res);
             });
