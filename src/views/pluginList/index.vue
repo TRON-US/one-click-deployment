@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 12:05:13
+ * @Last Modified time: 2019-11-11 12:08:34
  * @tron plugin list  
  */
 <template>
@@ -104,7 +104,7 @@
                                             :key="ind"
                                             v-for="(item,ind) in transactionCheckNodeAry"
                                         >{{item.label}}</el-checkbox>
-
+                                        <br />
                                         <el-button
                                             type="text"
                                             size="small"
