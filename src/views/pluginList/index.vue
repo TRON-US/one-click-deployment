@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 14:47:04
+ * @Last Modified time: 2019-11-11 17:30:16
  * @tron plugin list  
  */
 <template>
@@ -48,20 +48,20 @@
                                     <el-radio-group v-model="pluginOnsensusForm.consensus">
                                         <el-radio :label="'dpos'">DPOS</el-radio>
                                         <el-radio :label="'pbft'">PBFT</el-radio>
-                                        <!-- <br /> -->
-                                        <!-- <el-radio
+                                        <br />
+                                        <el-radio
                                             style="margin:15px 0"
                                             :label="3"
-                                        >{{$t('tronPluginCustomConsensusModule')}}：</el-radio>-->
+                                        >{{$t('tronPluginCustomConsensusModule')}}：</el-radio>
                                     </el-radio-group>
-                                    <!-- <br /> -->
-                                    <!-- <el-input
+                                    <br />
+                                    <el-input
                                         size="small"
                                         class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="pluginOnsensusForm.consensusContent"
                                         :placeholder="$t('tronPluginCustomConsensusModulePlaceholder')"
-                                    ></el-input>-->
+                                    ></el-input>
                                 </el-form-item>
                             </div>
                         </el-card>
@@ -167,20 +167,20 @@
                                     <el-radio-group v-model="plugindbForm.dbsetting">
                                         <el-radio :label="'leveldb'">leveldb</el-radio>
                                         <el-radio :label="'rockdb'">rockdb</el-radio>
-                                        <!-- <br />
+                                        <br />
                                         <el-radio
                                             style="margin:15px 0"
                                             :label="3"
-                                        >{{$t('tronPluginCustomDatabaseModule')}}</el-radio>-->
+                                        >{{$t('tronPluginCustomDatabaseModule')}}</el-radio>
                                     </el-radio-group>
-                                    <!-- <br />
+                                    <br />
                                     <el-input
                                         size="small"
                                         class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="plugindbForm.dbsettingContent"
                                         :placeholder="$t('tronPluginCustomDatabaseModulePlaceholder')"
-                                    ></el-input>-->
+                                    ></el-input>
                                 </el-form-item>
                             </div>
                         </el-card>
