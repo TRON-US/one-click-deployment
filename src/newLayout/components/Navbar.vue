@@ -136,7 +136,7 @@ export default {
             display: inline-block;
             padding: 0 8px;
             height: 100%;
-            font-size: 14px;
+            font-size: 18px;
             color: #5a5e66;
             vertical-align: text-bottom;
 
@@ -156,18 +156,20 @@ export default {
             .avatar-wrapper {
                 margin-top: 5px;
                 position: relative;
-                line-height: 40px;
-                font-size: 0.9rem;
-                height: 40px;
-                padding: 0 15px;
-                cursor: pointer;
-                font-size: 14px;
+
+                .user-avatar {
+                    cursor: pointer;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 10px;
+                }
+
                 .el-icon-caret-bottom {
                     cursor: pointer;
                     position: absolute;
-                    right: 0px;
+                    right: -20px;
                     top: 25px;
-                    color: #aaa;
+                    color: #fff;
                     font-size: 12px;
                 }
             }

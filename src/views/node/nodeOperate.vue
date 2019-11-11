@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 12:34:05
+ * @Last Modified time: 2019-11-11 14:36:24
  * @operation node 
  */
 
@@ -17,6 +17,7 @@
             :close-on-press-escape="false"
             v-loading="classLoading"
             width="680px"
+            top="8vh"
             center
         >
             <el-form
@@ -236,13 +237,15 @@ export default {
             // console.log(value, "value");
             if (value.length != 64) {
                 callback(new Error(this.$t("tronSettingAddressPlaceholder")));
-            }
-            const address = TronWeb.address.fromPrivateKey(value);
-            if (!TronWeb.isAddress(address)) {
-                callback(new Error(this.$t("tronSettingAddressPlaceholder")));
             } else {
                 callback();
             }
+            const address = TronWeb.address.fromPrivateKey(value);
+            // if (!TronWeb.isAddress(address)) {
+            //     callback(new Error(this.$t("tronSettingAddressPlaceholder")));
+            // } else {
+            //     callback();
+            // }
         };
         return {
             classLoading: false,
@@ -352,7 +355,6 @@ export default {
                 if (valid) {
                     this.saveLoading = true;
                     let newForm;
-                    console.log(this.nodeForm.url);
                     if (this.nodeForm.url != undefined) {
                         newForm = {
                             url: `"${this.nodeForm.url}"`,
@@ -364,7 +366,13 @@ export default {
                             ...this.nodeForm
                         };
                     }
-                    console.log(newForm);
+                    if (
+                        newForm.privateKey ==
+                        "****************************************************************"
+                    ) {
+                        delete newForm.privateKey;
+                    }
+                    // console.log(newForm);
 
                     if (this.editStatus == 1) {
                         // delete newForm.publicKey;

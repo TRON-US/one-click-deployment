@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 12:23:25
+ * @Last Modified time: 2019-11-11 14:47:04
  * @tron plugin list  
  */
 <template>
@@ -494,11 +494,13 @@ export default {
                                         ind,
                                         1
                                     );
+                                } else {
+                                    this.pluginTransactionForm.transactionContent =
+                                        "";
                                 }
                             }
                         );
                     } else {
-                        console.log(this.pluginTransactionForm.transaction);
                         if (
                             this.pluginTransactionForm.transaction.indexOf(9) >
                             0
@@ -511,6 +513,7 @@ export default {
                             return;
                         }
                     }
+
                     transactionApi({
                         transaction: this.pluginTransactionForm.transaction,
                         customTransaction: this.pluginTransactionForm

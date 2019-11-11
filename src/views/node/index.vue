@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-10 11:47:07
+ * @Last Modified time: 2019-11-11 14:27:33
  * @tron node list 
  */
 <template>
@@ -229,7 +229,9 @@ export default {
                 url: JSON.stringify(val.url)
                     .slice(3)
                     .slice(0, -3),
-                voteNumber: val.voteCount
+                voteNumber: val.voteCount,
+                privateKey:
+                    "****************************************************************"
             };
             this.nodeObj.status = 1;
             this.nodeObj.visible = true;

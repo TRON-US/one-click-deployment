@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 14:29:16
+ * @Last Modified time: 2019-11-11 15:30:14
  * @setting p2p setting 
  */
 
@@ -338,36 +338,43 @@ export default {
                         nodeList.forEach(item => {
                             currentCheckAry.push(item.split(":")[0]);
                         });
+                        let newSetCheckedSeedNode = new Set(
+                            this.checkedSeedNodeList
+                        );
+                        let newCurrentCheckAry = new Set(currentCheckAry);
                         this.checkedSeedNodeList = Array.from(
                             new Set(
-                                this.checkedSeedNodeList.concat(currentCheckAry)
+                                [...newSetCheckedSeedNode].filter(x =>
+                                    newCurrentCheckAry.has(x)
+                                )
                             )
                         );
                     }
+                    console.log(this.checkedSeedNodeList);
 
-                    this.seedNodeIpList.forEach(item => {
-                        this.checkedSeedNodeList.forEach(checkedItem => {
-                            if (checkedItem == item.ip) {
-                                passNodeData.push(item);
-                            }
-                        });
-                    });
+                    // this.seedNodeIpList.forEach(item => {
+                    //     this.checkedSeedNodeList.forEach(checkedItem => {
+                    //         if (checkedItem == item.ip) {
+                    //             passNodeData.push(item);
+                    //         }
+                    //     });
+                    // });
 
-                    let newPassNodeData = [];
-                    passNodeData.forEach(item => {
-                        newPassNodeData.push(`${item.ip}":"${item.port}`);
-                    });
-                    p2pSettingApi(newp2pForm, newPassNodeData)
-                        .then(response => {
-                            this.$emit("addSettingSuccess", true);
-                            this.$message.success(
-                                this.$t("tronSettingp2pSaveSuccess")
-                            );
-                        })
-                        .catch(error => {
-                            // this.listLoading = false;
-                            console.log(error);
-                        });
+                    // let newPassNodeData = [];
+                    // passNodeData.forEach(item => {
+                    //     newPassNodeData.push(`${item.ip}":"${item.port}`);
+                    // });
+                    // p2pSettingApi(newp2pForm, newPassNodeData)
+                    //     .then(response => {
+                    //         this.$emit("addSettingSuccess", true);
+                    //         this.$message.success(
+                    //             this.$t("tronSettingp2pSaveSuccess")
+                    //         );
+                    //     })
+                    //     .catch(error => {
+                    //         // this.listLoading = false;
+                    //         console.log(error);
+                    //     });
                 } else {
                     console.log("error submit!!");
                     return false;
