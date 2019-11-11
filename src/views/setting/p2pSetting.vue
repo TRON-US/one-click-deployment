@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 17:02:52
+ * @Last Modified time: 2019-11-11 19:20:08
  * @setting p2p setting 
  */
 
@@ -157,7 +157,7 @@ import { p2pSettingApi } from "@/api/settingApi";
 import { isvalidateNum } from "@/utils/validate.js";
 export default {
     name: "p2pSettingDialog",
-    props: ["detailInfoData", "listenPort"],
+    props: ["detailInfoData", "listenPort", "seedNodeIpList"],
     computed: {
         ...mapGetters(["tronSetting"])
     },
@@ -206,7 +206,6 @@ export default {
                 connectFactor: "",
                 node_activeConnectFactor: ""
             },
-            seedNodeIpList: [],
             checkedSeedNodeList: [],
             p2pSettingRules: {
                 node_p2p_version: [
@@ -284,9 +283,6 @@ export default {
             }
         };
     },
-    created() {
-        this.getOriginSettingFun();
-    },
     methods: {
         previousStepFun() {
             this.$emit("previousSettingStep", true);
@@ -296,28 +292,6 @@ export default {
             console.log(val);
             this.checkedSeedNodeList = val;
         },
-        getOriginSettingFun() {
-            this.$store
-                .dispatch("tronSetting/getOriginConfig")
-                .then(response => {
-                    if (response.p2pConfig.seed_node_ip_list != null) {
-                        let newIpList = [];
-                        response.p2pConfig.seed_node_ip_list.forEach(item => {
-                            newIpList.push({
-                                ip: item,
-                                port: this.listenPort
-                            });
-                        });
-                        this.seedNodeIpList = newIpList || [];
-                    } else {
-                        this.seedNodeIpList = [];
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-
         saveData(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {

@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 17:52:17
+ * @Last Modified time: 2019-11-11 19:19:40
  * @tron setting default  
  */
 <template>
@@ -113,7 +113,6 @@ export default {
         };
     },
     created() {
-        this.getOriginSettingFun();
         this.getCurrentSettingFun();
         this.getCurrentStepFun();
     },
@@ -142,26 +141,7 @@ export default {
             this.currentStep = Number(step);
             this.$store.dispatch("tronSetting/getCurrentStepConfig", { step });
         },
-        getOriginSettingFun() {
-            this.$store
-                .dispatch("tronSetting/getOriginConfig")
-                .then(response => {
-                    this.originSettingObj = response;
-                    if (response.p2pConfig.seed_node_ip_list) {
-                        let newIpList = [];
-                        response.p2pConfig.seed_node_ip_list.forEach(item => {
-                            newIpList.push({
-                                ip: item,
-                                port: "18889"
-                            });
-                        });
-                        this.seedNodeIpListData = newIpList;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
+
         getCurrentSettingFun() {
             this.$store
                 .dispatch("tronSetting/getConfigSetting")
@@ -193,6 +173,18 @@ export default {
                     this.crossChainSetting.detail = response.crossChainConfig;
                     this.currentListenPort =
                         response.networkConfig.node_listen_port;
+                    if (response.p2pConfig.allNodes != null) {
+                        let newIpList = [];
+                        response.p2pConfig.allNodes.forEach(item => {
+                            newIpList.push({
+                                ip: item,
+                                port: this.currentListenPort
+                            });
+                        });
+                        this.seedNodeIpListData = newIpList || [];
+                    } else {
+                        this.seedNodeIpListData = [];
+                    }
                 })
                 .catch(error => {
                     console.log(error);

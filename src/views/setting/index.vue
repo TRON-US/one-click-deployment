@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 17:44:47
+ * @Last Modified time: 2019-11-11 19:17:04
  * @tron setting list  
  */
 <template>
@@ -199,33 +199,10 @@ export default {
         };
     },
     created() {
-        this.getOriginSettingFun();
         this.getCurrentSettingFun();
     },
 
     methods: {
-        getOriginSettingFun() {
-            this.$store
-                .dispatch("tronSetting/getOriginConfig")
-                .then(response => {
-                    this.originSettingObj = response;
-                    if (response.p2pConfig.seed_node_ip_list != null) {
-                        let newIpList = [];
-                        response.p2pConfig.seed_node_ip_list.forEach(item => {
-                            newIpList.push({
-                                ip: item,
-                                port: ""
-                            });
-                        });
-                        this.seedNodeIpList = newIpList || [];
-                    } else {
-                        this.seedNodeIpList = [];
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
         getCurrentSettingFun() {
             this.$store
                 .dispatch("tronSetting/getConfigSetting")
@@ -239,6 +216,18 @@ export default {
                     this.databaseSettingForm.detail = response.dbConfig;
                     this.networkSetting.detail = response.networkConfig;
                     this.crossChainSetting.detail = response.crossChainConfig;
+                    //  if (response.p2pConfig.allNodes != null) {
+                    //     let newIpList = [];
+                    //     response.p2pConfig.allNodes.forEach(item => {
+                    //         newIpList.push({
+                    //             ip: item,
+                    //             port: ""
+                    //         });
+                    //     });
+                    //     this.seedNodeIpList = newIpList || [];
+                    // } else {
+                    //     this.seedNodeIpList = [];
+                    // }
                 })
                 .catch(error => {
                     console.log(error);
