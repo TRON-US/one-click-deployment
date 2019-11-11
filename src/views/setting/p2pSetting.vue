@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 16:01:20
+ * @Last Modified time: 2019-11-11 17:02:52
  * @setting p2p setting 
  */
 
@@ -331,41 +331,19 @@ export default {
                         connectFactor: this.p2pSettingForm.connectFactor
                     };
 
-                    let nodeList = this.p2pSettingForm.seed_node_ip_list;
+                    let nodeList = this.p2pSettingForm.seed_node_ip_list; // all node list
                     let passNodeData = [];
-                    let currentCheckAry = [];
+                    let currentNodeIpAry = [];
                     if (nodeList && nodeList != null) {
                         nodeList.forEach(item => {
-                            currentCheckAry.push(item.split(":")[0]);
+                            currentNodeIpAry.push(item.split(":")[0]);
                         });
-                        let newSetCheckedSeedNode = new Set(
-                            this.checkedSeedNodeList
-                        );
-                        let newCurrentCheckAry = new Set(currentCheckAry);
-                        this.checkedSeedNodeList = Array.from(
-                            new Set(
-                                [...newSetCheckedSeedNode].filter(x =>
-                                    newCurrentCheckAry.has(x)
-                                )
-                            )
-                        );
                     }
-                    // console.log(this.checkedSeedNodeList);
-
-                    this.seedNodeIpList.forEach(item => {
-                        this.checkedSeedNodeList.forEach(checkedItem => {
-                            if (checkedItem == item.ip) {
-                                passNodeData.push(item);
-                            }
-                        });
+                    this.p2pSettingForm.defalutSelectedIp.forEach(item => {
+                        passNodeData.push(`${item}":"${this.listenPort}`);
                     });
-
-                    let newPassNodeData = [];
-                    passNodeData.forEach(item => {
-                        newPassNodeData.push(`${item.ip}":"${item.port}`);
-                    });
-                    // console.log(passNodeData, "passNodeData");
-                    p2pSettingApi(newp2pForm, newPassNodeData)
+                    console.log(passNodeData, "passNodeData");
+                    p2pSettingApi(newp2pForm, passNodeData)
                         .then(response => {
                             this.$emit("addSettingSuccess", true);
                             this.$message.success(
