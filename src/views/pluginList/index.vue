@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 20:31:31
+ * @Last Modified time: 2019-11-11 12:05:13
  * @tron plugin list  
  */
 <template>
@@ -48,20 +48,20 @@
                                     <el-radio-group v-model="pluginOnsensusForm.consensus">
                                         <el-radio :label="'dpos'">DPOS</el-radio>
                                         <el-radio :label="'pbft'">PBFT</el-radio>
-                                        <br />
-                                        <el-radio
+                                        <!-- <br /> -->
+                                        <!-- <el-radio
                                             style="margin:15px 0"
                                             :label="3"
-                                        >{{$t('tronPluginCustomConsensusModule')}}：</el-radio>
+                                        >{{$t('tronPluginCustomConsensusModule')}}：</el-radio>-->
                                     </el-radio-group>
-                                    <br />
-                                    <el-input
+                                    <!-- <br /> -->
+                                    <!-- <el-input
                                         size="small"
                                         class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="pluginOnsensusForm.consensusContent"
                                         :placeholder="$t('tronPluginCustomConsensusModulePlaceholder')"
-                                    ></el-input>
+                                    ></el-input>-->
                                 </el-form-item>
                             </div>
                         </el-card>
@@ -105,19 +105,25 @@
                                             v-for="(item,ind) in transactionCheckNodeAry"
                                         >{{item.label}}</el-checkbox>
 
-                                        <br />
-                                        <el-checkbox
-                                            style="margin:0"
-                                            :label="9"
-                                        >{{$t('tronPluginCustomTradingModule')}}</el-checkbox>
-                                        <br />
-                                        <el-input
-                                            class="pluginSettingFormInput"
+                                        <el-button
+                                            type="text"
                                             size="small"
-                                            :maxlength="50"
-                                            v-model="pluginTransactionForm.transactionContent"
-                                            :placeholder="$t('tronPluginCustomTradingModulePlaceholder')"
-                                        ></el-input>
+                                            @click="moreSetting = !moreSetting"
+                                        >{{$t("tronMoreSetting")}}</el-button>
+                                        <div v-if="moreSetting">
+                                            <el-checkbox
+                                                style="margin:0"
+                                                :label="9"
+                                            >{{$t('tronPluginCustomTradingModule')}}</el-checkbox>
+                                            <br />
+                                            <el-input
+                                                class="singlePluginSettingFormInput"
+                                                size="small"
+                                                :maxlength="100"
+                                                v-model="pluginTransactionForm.transactionContent"
+                                                :placeholder="$t('tronPluginCustomTradingModulePlaceholder')"
+                                            ></el-input>
+                                        </div>
                                     </el-checkbox-group>
                                 </el-form-item>
                             </div>
@@ -159,20 +165,20 @@
                                     <el-radio-group v-model="plugindbForm.dbsetting">
                                         <el-radio :label="'leveldb'">leveldb</el-radio>
                                         <el-radio :label="'rockdb'">rockdb</el-radio>
-                                        <br />
+                                        <!-- <br />
                                         <el-radio
                                             style="margin:15px 0"
                                             :label="3"
-                                        >{{$t('tronPluginCustomDatabaseModule')}}</el-radio>
+                                        >{{$t('tronPluginCustomDatabaseModule')}}</el-radio>-->
                                     </el-radio-group>
-                                    <br />
+                                    <!-- <br />
                                     <el-input
                                         size="small"
                                         class="pluginSettingFormInput"
                                         :maxlength="50"
                                         v-model="plugindbForm.dbsettingContent"
                                         :placeholder="$t('tronPluginCustomDatabaseModulePlaceholder')"
-                                    ></el-input>
+                                    ></el-input>-->
                                 </el-form-item>
                             </div>
                         </el-card>
@@ -207,6 +213,7 @@ export default {
         return {
             currentStep: 1,
             baseContentShow: true,
+            moreSetting: false,
             transcationContentShow: true,
             dbsettingContentShow: true,
             pluginOnsensusForm: {
@@ -569,5 +576,8 @@ export default {
 }
 .pluginSettingFormInput {
     width: 400px;
+}
+.singlePluginSettingFormInput {
+    width: 550px;
 }
 </style>
