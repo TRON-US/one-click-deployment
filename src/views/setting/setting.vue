@@ -49,6 +49,7 @@
                 <p2p-setting
                     v-if="currentStep == 5"
                     :seedNodeIpList="seedNodeIpListData"
+                    :listenPort="currentListenPort"
                     :detailInfoData="p2pSetting.detail"
                     @previousSettingStep="previousSettingStepFun"
                     @addSettingSuccess="addSettingSuccessFun"
@@ -107,7 +108,8 @@ export default {
                 detail: {}
             },
             originSettingObj: {},
-            seedNodeIpListData: []
+            seedNodeIpListData: [],
+            currentListenPort: ""
         };
     },
     created() {
@@ -181,6 +183,8 @@ export default {
                     this.databaseSettingForm.detail = response.dbConfig;
                     this.networkSetting.detail = response.networkConfig;
                     this.crossChainSetting.detail = response.crossChainConfig;
+                    this.currentListenPort =
+                        response.networkConfig.node_listen_port;
                 })
                 .catch(error => {
                     console.log(error);

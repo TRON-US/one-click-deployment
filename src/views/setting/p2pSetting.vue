@@ -157,7 +157,7 @@ import { p2pSettingApi } from "@/api/settingApi";
 import { isvalidateNum } from "@/utils/validate.js";
 export default {
     name: "p2pSettingDialog",
-    props: ["detailInfoData"],
+    props: ["detailInfoData", "listenPort"],
     computed: {
         ...mapGetters(["tronSetting"])
     },
@@ -300,13 +300,12 @@ export default {
             this.$store
                 .dispatch("tronSetting/getOriginConfig")
                 .then(response => {
-                    let listenPort = response.networkConfig.node_listen_port;
                     if (response.p2pConfig.seed_node_ip_list != null) {
                         let newIpList = [];
                         response.p2pConfig.seed_node_ip_list.forEach(item => {
                             newIpList.push({
                                 ip: item,
-                                port: listenPort
+                                port: this.listenPort
                             });
                         });
                         this.seedNodeIpList = newIpList || [];
