@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 15:58:29
+ * @Last Modified time: 2019-11-11 19:36:45
  * @operation node 
  */
 
@@ -83,7 +83,7 @@
                     <el-input
                         size="small"
                         :maxlength="50"
-                        v-model="nodeForm.ip"
+                        v-model.trim="nodeForm.ip"
                         :placeholder="$t('tronNodeIpPlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -102,7 +102,7 @@
                     <el-input
                         size="small"
                         :maxlength="50"
-                        v-model="nodeForm.port"
+                        v-model.trim="nodeForm.port"
                         :placeholder="$t('tronNodePortPlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -372,6 +372,7 @@ export default {
                     ) {
                         delete newForm.privateKey;
                     }
+
                     console.log(newForm);
 
                     if (this.editStatus == 1) {
