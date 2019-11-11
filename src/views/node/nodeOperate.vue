@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 14:36:24
+ * @Last Modified time: 2019-11-11 15:58:29
  * @operation node 
  */
 
@@ -171,7 +171,7 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item v-if="editStatus ==1" class="publickey">
-                    <span slot="label" style="padding-left:10px">
+                    <span slot="label" style="padding-left:12px">
                         publicKey
                         <el-tooltip
                             class="item"
@@ -372,7 +372,7 @@ export default {
                     ) {
                         delete newForm.privateKey;
                     }
-                    // console.log(newForm);
+                    console.log(newForm);
 
                     if (this.editStatus == 1) {
                         // delete newForm.publicKey;

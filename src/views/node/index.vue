@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 14:27:33
+ * @Last Modified time: 2019-11-11 15:56:37
  * @tron node list 
  */
 <template>
@@ -218,7 +218,9 @@ export default {
                 });
                 return;
             }
-            this.nodeObj.detail = {};
+            this.nodeObj.detail = {
+                url: "http://"
+            };
             this.nodeObj.status = 0;
             this.nodeObj.visible = true;
         },
