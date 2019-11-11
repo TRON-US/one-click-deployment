@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 12:08:34
+ * @Last Modified time: 2019-11-11 12:23:25
  * @tron plugin list  
  */
 <template>
@@ -117,9 +117,11 @@
                                             >{{$t('tronPluginCustomTradingModule')}}</el-checkbox>
                                             <br />
                                             <el-input
+                                                :autosize="{ minRows: 2, maxRows: 4}"
+                                                type="textarea"
                                                 class="singlePluginSettingFormInput"
                                                 size="small"
-                                                :maxlength="100"
+                                                :maxlength="300"
                                                 v-model="pluginTransactionForm.transactionContent"
                                                 :placeholder="$t('tronPluginCustomTradingModulePlaceholder')"
                                             ></el-input>
@@ -578,6 +580,6 @@ export default {
     width: 400px;
 }
 .singlePluginSettingFormInput {
-    width: 550px;
+    width: 715px;
 }
 </style>

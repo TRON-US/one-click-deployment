@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 20:29:12
+ * @Last Modified time: 2019-11-11 12:18:21
  * @operation node 
  */
 
@@ -234,6 +234,9 @@ export default {
         };
         const validPrivateKey = (rule, value, callback) => {
             console.log(value, "value");
+            if (value == "") {
+                callback(new Error(this.$t("tronSettingAddressPlaceholder")));
+            }
             const address = TronWeb.address.fromPrivateKey(value);
             console.log(address);
             if (!TronWeb.isAddress(address)) {
@@ -338,12 +341,10 @@ export default {
     methods: {
         openDialogFun() {},
         closeFun() {
-            // this.$refs.nodeDialogForm.resetFields();
             this.dialogVisible = false;
             this.$emit("addNodeSuccess", true);
         },
         cancelFun() {
-            // this.$refs.nodeDialogForm.resetFields();
             this.dialogVisible = false;
             this.$emit("addNodeSuccess", true);
         },
@@ -367,7 +368,6 @@ export default {
                     console.log(newForm);
 
                     if (this.editStatus == 1) {
-                        // delete newForm.privateKey;
                         // delete newForm.publicKey;
                         editNote(newForm)
                             .then(response => {
