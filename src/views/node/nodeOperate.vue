@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 12:18:21
+ * @Last Modified time: 2019-11-11 12:34:05
  * @operation node 
  */
 
@@ -233,12 +233,11 @@ export default {
             }
         };
         const validPrivateKey = (rule, value, callback) => {
-            console.log(value, "value");
-            if (value == "") {
+            // console.log(value, "value");
+            if (value.length != 64) {
                 callback(new Error(this.$t("tronSettingAddressPlaceholder")));
             }
             const address = TronWeb.address.fromPrivateKey(value);
-            console.log(address);
             if (!TronWeb.isAddress(address)) {
                 callback(new Error(this.$t("tronSettingAddressPlaceholder")));
             } else {
