@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-10 11:51:38
+ * @Last Modified time: 2019-11-11 17:23:02
  * @setting cross setting
  */
 
@@ -109,6 +109,26 @@ export default {
                 callback();
             }
         };
+        const validMaxNum = (rule, value, callback) => {
+            if (
+                this.baseSettingForm.minValidatorNumber &&
+                value < this.baseSettingForm.minValidatorNumber
+            ) {
+                callback(new Error(this.$t("tronSettingMaxNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
+        const validMinNum = (rule, value, callback) => {
+            if (
+                this.baseSettingForm.maxValidatorNumber &&
+                value > this.baseSettingForm.maxValidatorNumber
+            ) {
+                callback(new Error(this.$t("tronSettingMinNumberPlaceholder")));
+            } else {
+                callback();
+            }
+        };
         const validTwoDecimalFun = (rule, value, callback) => {
             if (!twoDecimal(value)) {
                 callback(new Error(this.$t("validTwoDecimal")));
@@ -137,6 +157,11 @@ export default {
                         message: this.$t("tronSettingNumberPlaceholder"),
                         validator: validNum,
                         trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingMaxNumberPlaceholder"),
+                        validator: validMaxNum,
+                        trigger: "blur"
                     }
                 ],
                 minValidatorNumber: [
@@ -148,6 +173,11 @@ export default {
                     {
                         message: this.$t("tronSettingNumberPlaceholder"),
                         validator: validNum,
+                        trigger: "blur"
+                    },
+                    {
+                        message: this.$t("tronSettingMinNumberPlaceholder"),
+                        validator: validMinNum,
                         trigger: "blur"
                     }
                 ],

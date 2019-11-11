@@ -73,9 +73,10 @@ export default {
     'tronSettingNormalNode': '正常节点',
     'tronSettingUnnormalNode': '非正常节点',
     'tronSettingNumberPlaceholder': '填写必须为数字且为正整数',
+    'tronSettingMaxNumberPlaceholder': '填写数必须大于minValidatorNumber',
+    'tronSettingMinNumberPlaceholder': '填写数必须小于maxValidatorNumber',
     'tronSettingAddressNoBlankPlaceholder': '地址不能为空',
     'tronSettingAddressPlaceholder': '请填写正确地址',
-
     'tronSettingNumberTwoDecimal': '填写必须为数字且最多两位小数',
     'tronSettingBaseSaveSuccess': '保存基础配置成功',
     'tronSettingCrossChainSaveSuccess': '保存跨链配置成功',

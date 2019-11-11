@@ -70,6 +70,8 @@ export default {
     'tronSettingNormalNode': 'Normal node',
     'tronSettingUnnormalNode': 'Abnormal node',
     'tronSettingNumberPlaceholder': 'Fill in must be a number and be a positive integer',
+    'tronSettingMaxNumberPlaceholder': 'The number of fills must be greater than minValidatorNumber',
+    'tronSettingMinNumberPlaceholder': 'Fill in the number must be less than maxValidatorNumber must be greater than minValidatorNumber',
     'tronSettingAddressPlaceholder': 'Please fill in the correct address',
     'tronSettingAddressNoBlankPlaceholder': 'Address cannot be empty',
     'tronSettingNumberTwoDecimal': 'Fill in must be a number and up to two decimal places',
