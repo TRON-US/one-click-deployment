@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 12:00:42
+ * @Last Modified time: 2019-11-11 17:52:17
  * @tron setting default  
  */
 <template>
@@ -119,6 +119,14 @@ export default {
     },
     methods: {
         stepClickFun(step) {
+            if (step == 6) {
+                if (this.p2pSetting.detail.seed_node_ip_list == 0) {
+                    this.$message.warning(
+                        this.$t("tronP2pSeedNodeSelectNextTips")
+                    );
+                    return;
+                }
+            }
             this.currentStep = step;
             this.$store.dispatch("tronSetting/getCurrentStepConfig", {
                 step

@@ -39,19 +39,14 @@ export default {
     'tronp2pVersionTestnetPlaceholder': '测试网p2pversion不可使用',
     'tronp2pVersionSpecialPlaceholder': '特定网络p2pversion不可使用',
 
-
     'tronmaxHttpConnectNumberPlaceholder': '请填写最大http连接数',
     'tronhttpFullNodePortPlaceholder': '请填写httpFullNode端口',
     'tronhttpHttpSolidityPortPlaceholder': '请填写httpSolidity端口',
     'tronhttpRpcPortPlaceholder': '请填写rpc端口',
     'tronhttpRpcSolidityPortPlaceholder': '请填写RpcSolidity端口',
     'tronhttpRpcListenPortPlaceholder': '请填写listen端口',
-
     'tronMaxValidatorNumberPlaceholder': '请填写最大验证数',
     'tronMinValidatorNumberPlaceholder': '请填写最小验证数',
-
-
-
     'tronSettingPortPlaceholder': '请填写当前端口',
     'tronSettingSelectPlaceholder': '请选择',
     'tronSettingwriteSynchronously': '是否同步写入',

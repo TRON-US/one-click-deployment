@@ -32,6 +32,7 @@ export default {
     'tronMaxActionNodesPlaceholder': 'Please fill in the maximum number of active nodes',
     'tronMaxActiveNodesWithSameIpPlaceholder': 'Please fill in the same IP number of the largest active node',
     'tronP2pSeedNodeSelectPlaceholder': 'Please select SeedNode',
+    'tronP2pSeedNodeSelectNextTips': 'Please select at least one SeedNode in the p2p configuration.',
     'tronp2pVersionPlaceholder': 'P2p version',
     'tronp2pVersionMainnetPlaceholder': 'The main network p2pversion is not available',
     'tronp2pVersionTestnetPlaceholder': 'Test network p2pversion is not available',

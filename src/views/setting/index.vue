@@ -2,19 +2,13 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 11:49:39
+ * @Last Modified time: 2019-11-11 17:44:47
  * @tron setting list  
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
-            <div class="tron-filter-section">
-                <!-- <el-button
-                    size="mini"
-                    @click="addNodeFun()"
-                    type="primary"
-                >{{$t('tronSettingApplication')}}</el-button>-->
-            </div>
+            <div class="tron-filter-section"></div>
             <div class="filter-container tron-table tabSection">
                 <!--tron table-->
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -250,7 +244,6 @@ export default {
                     console.log(error);
                 });
         },
-        addNodeFun() {},
         async modifySettingFun(type) {
             await this.getCurrentSettingFun();
             switch (type) {
