@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 18:51:43
+ * @Last Modified time: 2019-11-12 19:01:59
  * @setting genesis setting
  */
 
@@ -57,15 +57,15 @@
             </el-card>
             <!-- </el-col>
             </el-row>-->
+            <div label-width="0" class="textRight">
+                <el-button
+                    size="small"
+                    type="primary"
+                    @click="saveAllData()"
+                >{{$t('tronSettingNextStep')}}</el-button>
+            </div>
         </div>
 
-        <div label-width="0" class="textRight">
-            <el-button
-                size="small"
-                type="primary"
-                @click="saveAllData()"
-            >{{$t('tronSettingNextStep')}}</el-button>
-        </div>
         <el-dialog
             center
             width="700px"
