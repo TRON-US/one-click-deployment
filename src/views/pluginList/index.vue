@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 17:30:16
+ * @Last Modified time: 2019-11-12 11:34:47
  * @tron plugin list  
  */
 <template>
@@ -553,13 +553,18 @@ export default {
                         this.plugindbForm.dbsetting = this.plugindbForm.dbsettingContent;
                     }
                     dbEngineApi({ dbEngine: this.plugindbForm.dbsetting })
-                        .then(response => {
+                        .then(async response => {
                             this.$message.success(
                                 this.$t("tronPluginInputSaveSuccess")
                             );
+                            await this.$store
+                                .dispatch("user/changeRoles", "deploy")
+                                .then(res => {
+                                    console.log(res);
+                                });
                             this.$router.push({
-                                path: "/node/list",
-                                query: { deploy: 1 }
+                                path: "/deploy/list"
+                                // query: { deploy: 1 }
                             });
                         })
                         .catch(error => {

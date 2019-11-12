@@ -65,6 +65,7 @@ export default {
     'tronSettingMenuNodeList': 'Node List',
     'tronSettingMenuSetting': 'Deploy management',
     'tronSettingMenuPlugin': 'Import plugin',
+    'tronSettingMenuDeployment': 'Node deployment',
     'tronscanMenu': 'Tronscan application',
     'tronSettingMenuDashboard': 'deployment system',
     'tronSettingChooseLanguage': 'Languages',
