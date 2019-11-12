@@ -18,6 +18,7 @@ import { mapGetters } from "vuex";
 
 import { setToken } from "@/utils/auth"; // get token from cookie
 import PanelGroup from "./components/PanelGroup";
+import { oneClickApi } from "@/api/dashboard";
 export default {
     name: "Dashboard",
     created() {},
@@ -25,16 +26,28 @@ export default {
         PanelGroup
     },
     methods: {
-        async startOneClickFun() {
-            if (this.token == "plugin") {
-                setToken("plugin");
-            } else {
-                setToken("node");
-            }
-            await this.$store.dispatch("user/changeRoles", "node").then(res => {
-                console.log(res);
-            });
-            this.$router.push("/node/list");
+        startOneClickFun() {
+            // if (this.token == "plugin") {
+            //     setToken("plugin");
+            // } else {
+            //     setToken("node");
+            // }
+            this.newp2pTimestampFun();
+        },
+        newp2pTimestampFun() {
+            oneClickApi()
+                .then(async response => {
+                    console.log(response);
+                    await this.$store
+                        .dispatch("user/changeRoles", "node")
+                        .then(res => {
+                            console.log(res);
+                        });
+                    this.$router.push("/node/list");
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     computed: {
