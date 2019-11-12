@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-08 20:30:36
+ * @Last Modified time: 2019-11-12 14:31:34
  * @setting genesis setting
  */
 
@@ -81,7 +81,7 @@
                     <el-input
                         size="small"
                         :maxlength="50"
-                        v-model="assetForm.accountName"
+                        v-model.trim="assetForm.accountName"
                         :placeholder="$t('tronAccountNamePlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -103,7 +103,7 @@
                     <el-input
                         size="small"
                         :maxlength="50"
-                        v-model="assetForm.address"
+                        v-model.trim="assetForm.address"
                         :placeholder="$t('tronAddressPlaceholder')"
                     ></el-input>
                 </el-form-item>
@@ -111,7 +111,7 @@
                     <el-input
                         size="small"
                         :maxlength="50"
-                        v-model="assetForm.balance"
+                        v-model.trim="assetForm.balance"
                         :placeholder="$t('tronBalancePlaceholder')"
                     ></el-input>
                 </el-form-item>

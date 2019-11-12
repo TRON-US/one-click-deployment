@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-11 19:20:08
+ * @Last Modified time: 2019-11-12 14:36:57
  * @setting p2p setting 
  */
 
@@ -39,7 +39,7 @@
                                 <el-input
                                     size="small"
                                     :maxlength="50"
-                                    v-model="p2pSettingForm.node_p2p_version"
+                                    v-model.trim="p2pSettingForm.node_p2p_version"
                                     :placeholder="$t('tronP2pVersionPlaceholder')"
                                 ></el-input>
                             </el-form-item>
@@ -85,7 +85,7 @@
                                     <el-input
                                         size="small"
                                         :maxlength="50"
-                                        v-model="p2pSettingForm.node_maxActiveNodes"
+                                        v-model.trim="p2pSettingForm.node_maxActiveNodes"
                                         :placeholder="$t('tronMaxActionNodesPlaceholder')"
                                     ></el-input>
                                 </el-form-item>
@@ -97,7 +97,7 @@
                                     <el-input
                                         size="small"
                                         :maxlength="50"
-                                        v-model="p2pSettingForm.node_maxActiveNodesWithSameIp"
+                                        v-model.trim="p2pSettingForm.node_maxActiveNodesWithSameIp"
                                         :placeholder="$t('tronMaxActiveNodesWithSameIpPlaceholder')"
                                     ></el-input>
                                 </el-form-item>
@@ -112,7 +112,7 @@
                                         :min="0"
                                         :step="0.1"
                                         :maxlength="50"
-                                        v-model="p2pSettingForm.node_activeConnectFactor"
+                                        v-model.trim="p2pSettingForm.node_activeConnectFactor"
                                         :placeholder="$t('tronSettingPlaceholder')"
                                     ></el-input-number>
                                 </el-form-item>
@@ -127,7 +127,7 @@
                                         :min="0"
                                         :step="0.1"
                                         :maxlength="50"
-                                        v-model="p2pSettingForm.connectFactor"
+                                        v-model.trim="p2pSettingForm.connectFactor"
                                         :placeholder="$t('tronSettingPlaceholder')"
                                     ></el-input-number>
                                 </el-form-item>

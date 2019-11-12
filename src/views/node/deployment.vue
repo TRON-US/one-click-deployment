@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 11:33:19
+ * @Last Modified time: 2019-11-12 14:41:15
  * @tron node list 
  */
 <template>
@@ -91,7 +91,11 @@
             width="600px"
             center
         >
-            <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="currentPath"></el-input>
+            <el-input
+                type="textarea"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                v-model.trim="currentPath"
+            ></el-input>
             <div class="el-upload__tip">{{$t('deploymentUpload')}}</div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="deploymentDialogVisible = false">{{$t('tronNodeCancel')}}</el-button>
