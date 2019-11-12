@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 17:22:33
+ * @Last Modified time: 2019-11-12 18:41:07
  * @tron setting default  
  */
 <template>
@@ -39,7 +39,6 @@
                     :detailInfoData="networkSetting.detail"
                     @addSettingSuccess="addSettingSuccessFun"
                 ></network-setting>
-
                 <databaseSetting
                     v-if="currentStep == 4"
                     @previousSettingStep="previousSettingStepFun"

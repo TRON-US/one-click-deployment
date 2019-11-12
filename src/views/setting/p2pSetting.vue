@@ -2,12 +2,12 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 14:36:57
+ * @Last Modified time: 2019-11-12 18:48:33
  * @setting p2p setting 
  */
 
 <template>
-    <div class="tronp2pSettingForm">
+    <div class="viewBranchDialog">
         <el-form
             ref="p2pSettingDialogForm"
             :rules="p2pSettingRules"
@@ -353,8 +353,8 @@ export default {
     margin-top: 40px;
     text-align: right;
 }
-.tronp2pSettingForm {
-    padding: 0 70px 0 0;
+.tronbaseSettingForm {
+    padding: 0 80px 0 0;
 }
 .checkBox {
     min-width: 180px;

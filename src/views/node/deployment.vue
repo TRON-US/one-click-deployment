@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 14:41:15
+ * @Last Modified time: 2019-11-12 18:05:01
  * @tron node list 
  */
 <template>
@@ -242,7 +242,6 @@ export default {
             this.nodeObj.visible = true;
         },
         viewCurrentLogFun(_id) {
-            console.log(this.timer);
             clearInterval(this.timer);
             this.logInfoData = [];
             this.currentLogDialog = true;
@@ -252,10 +251,10 @@ export default {
             }, 1000 * 5);
         },
         currentNodeLogEnd() {
-            console.log("this.timer", this.timer);
+            // console.log("this.timer", this.timer);
             clearInterval(this.timer);
             this.timer = null;
-            console.log(this.timer);
+            // console.log(this.timer);
         },
         viewLogFun(_id, _type) {
             this.deploymentLoadingText = this.$t("deploymentSearchLoading");
@@ -274,12 +273,14 @@ export default {
                             this.deploymentLoadingText = this.$t(
                                 "deploymentDone"
                             );
+                            clearInterval(this.timer);
                         } else if (item == "ssh connect failed") {
                             this.deplogUploadLoading = false;
                             this.deploymentDialogVisible = false;
                             this.deploymentLoadingText = this.$t(
                                 "deploymentFail"
                             );
+                            clearInterval(this.timer);
                         }
                     });
                 })

@@ -2,60 +2,63 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 14:31:34
+ * @Last Modified time: 2019-11-12 18:51:43
  * @setting genesis setting
  */
 
 <template>
     <div class="viewBranchDialog">
-        <el-row :gutter="12">
-            <el-col :span="24">
-                <el-card shadow="hover">
-                    <div @click="genesisContentShow = !genesisContentShow">
-                        <i :class="genesisContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"></i>
-                        {{$t('tronSettingGenesis')}}
-                    </div>
-                    <el-form
-                        v-if="genesisContentShow"
-                        ref="genesisSettingDialogForm"
-                        label-width="200px"
-                        class="tronbaseSettingForm"
-                        label-position="left"
-                    >
-                        <el-row>
-                            <el-col :span="12">
-                                <div class="asset">
-                                    <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
-                                    <el-row
-                                        v-for="(item,index) in detailInfoData.genesis_block_assets"
-                                        :key="index"
-                                    >
-                                        <el-button
-                                            @click="currentAssetFun(item,index)"
-                                            style="width:100%"
-                                        >{{item.accountName}}</el-button>
-                                    </el-row>
-                                </div>
-                            </el-col>
-                            <el-col :span="12">
-                                <div class="witeness">
-                                    <el-button class="newWiteness">witeness</el-button>
-                                    <el-row
-                                        v-for="(item,index) in detailInfoData.genesis_block_witnesses"
-                                        :key="index"
-                                    >
-                                        <el-button
-                                            @click="currenWitenessFun(item,index)"
-                                            style="width:100%"
-                                        >{{item.address}}</el-button>
-                                    </el-row>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </el-form>
-                </el-card>
-            </el-col>
-        </el-row>
+        <div class="tronbaseSettingForm">
+            <!-- <el-row :gutter="12">
+            <el-col :span="24">-->
+            <el-card shadow="hover">
+                <div @click="genesisContentShow = !genesisContentShow">
+                    <i :class="genesisContentShow?'el-icon-arrow-down': 'el-icon-arrow-right'"></i>
+                    {{$t('tronSettingGenesis')}}
+                </div>
+                <el-form
+                    v-if="genesisContentShow"
+                    ref="genesisSettingDialogForm"
+                    label-width="200px"
+                    class="tronbaseSettingForm"
+                    label-position="left"
+                >
+                    <el-row :gutter="30">
+                        <el-col :span="12">
+                            <div class="asset">
+                                <el-button class="newAsset" @click="newAssetFun()">new asset</el-button>
+                                <el-row
+                                    v-for="(item,index) in detailInfoData.genesis_block_assets"
+                                    :key="index"
+                                >
+                                    <el-button
+                                        @click="currentAssetFun(item,index)"
+                                        style="width:100%"
+                                    >{{item.accountName}}</el-button>
+                                </el-row>
+                            </div>
+                        </el-col>
+                        <el-col :span="12">
+                            <div class="witeness">
+                                <el-button class="newWiteness">witeness</el-button>
+                                <el-row
+                                    v-for="(item,index) in detailInfoData.genesis_block_witnesses"
+                                    :key="index"
+                                >
+                                    <el-button
+                                        @click="currenWitenessFun(item,index)"
+                                        style="width:100%"
+                                    >{{item.address}}</el-button>
+                                </el-row>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </el-card>
+            <!-- </el-col>
+            </el-row>-->
+        </div>
+
         <div label-width="0" class="textRight">
             <el-button
                 size="small"
@@ -498,7 +501,7 @@ export default {
 }
 .tronbaseSettingForm {
     margin-top: 40px;
-    padding: 0;
+    padding: 0 80px 0 0;
 }
 
 .asset,
