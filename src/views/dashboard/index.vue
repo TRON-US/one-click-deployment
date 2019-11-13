@@ -1,15 +1,30 @@
 <template>
     <div class="dashboard-container">
         <el-row>
-            <!-- <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">使用引导</el-button> -->
-            <!-- <router-link :to="{path:'/node/list'}"> -->
-            <el-button type="warning" @click="startOneClickFun">{{$t('startTronOneClickDeploy')}}</el-button>
-            <!-- </router-link> -->
+            <div class="tronContent">
+                <h1 class="tronTitle">one-click-deployment</h1>
+                <p class="action">
+                    <el-button
+                        type="warning"
+                        @click="startOneClickFun"
+                    >{{$t('startTronOneClickDeploy')}}</el-button>
+                </p>
+            </div>
         </el-row>
-
-        <div id="first-element-introduction">
-            <panel-group />
-        </div>
+        <el-row>
+            <div class="help-body-title">一键发链</div>
+            <p
+                class="desc"
+            >一键发链服务（One Click Deployment，简称OCD）是一种基于主流区块链技术的企业级PaaS（Platform as a Service）平台服务，帮助您快速构建更稳定、安全的生产级区块链环境，减少在区块链部署、运维、管理、应用开发等方面的挑战，使您更专注于核心业务创新，并实现业务快速上链</p>
+            <div class="help-body-title">新手必看</div>
+            <div id="first-element-introduction">
+                <panel-group />
+            </div>
+            <div class="help-body-title">帮助文档</div>
+            <div class="help">
+                <el-button type="text" size="small">点击查看帮助文档</el-button>
+            </div>
+        </el-row>
     </div>
 </template>
 
@@ -65,5 +80,29 @@ export default {
         font-size: 30px;
         line-height: 46px;
     }
+}
+.desc {
+    width: 820px;
+    color: #373d41;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.help-body-title {
+    margin: 28px 0 14px;
+    padding-bottom: 5px;
+    line-height: 33px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.tronContent {
+    text-align: center;
+    max-height: 280px;
+    display: block;
+    margin: 0.5rem auto 1.5rem;
+}
+.help {
+    margin-left: 20px;
 }
 </style>

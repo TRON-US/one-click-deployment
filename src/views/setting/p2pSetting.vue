@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-13 11:59:16
+ * @Last Modified time: 2019-11-13 14:16:55
  * @setting p2p setting 
  */
 
@@ -311,11 +311,10 @@ export default {
                     });
                     // current checked Node ip
 
-                    let currentCheckedNodeIpAry = this.p2pSettingForm
-                        .defalutSelectedIp;
-
-                    let allNodesSet = new Set(allNodesAry);
-                    let currentCheckedSet = new Set(currentCheckedNodeIpAry);
+                    const allNodesSet = new Set(allNodesAry);
+                    const currentCheckedSet = new Set(
+                        this.p2pSettingForm.defalutSelectedIp
+                    );
 
                     // intersect
                     let intersect = new Set(

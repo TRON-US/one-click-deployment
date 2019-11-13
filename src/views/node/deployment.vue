@@ -2,20 +2,13 @@
  * @Author: lxm 
  * @Date: 2019-08-28 15:27:13 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 18:05:01
+ * @Last Modified time: 2019-11-13 16:39:43
  * @tron node list 
  */
 <template>
     <div class="app-container">
         <div class="tron-content">
             <div class="tron-filter-section">
-                <!-- <el-button
-                    icon="el-icon-plus"
-                    size="small"
-                    @click="addNodeFun()"
-                    type="primary"
-                >{{$t('tronNodeAdd')}}</el-button>-->
-                <div></div>
                 <el-button
                     size="small"
                     :loading="allNodeDeployLoading"
@@ -57,32 +50,8 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <!-- <el-table-column :label="$t('tronNodeOperate')" align="center" width="200">
-                        <template slot-scope="scope">
-                            <el-button
-                                size="small"
-                                type="text"
-                                @click="operateNodeFun(scope.row)"
-                            >{{$t('tronNodeModify')}}</el-button>
-                            <el-divider direction="vertical"></el-divider>
-                            <el-button
-                                size="small"
-                                type="text"
-                                @click="deleteNodeListFun(scope.row.id)"
-                            >{{$t('tronNodeDelete')}}</el-button>
-                        </template>
-                    </el-table-column>-->
                 </el-table>
             </div>
-            <!-- <div class="mgt20" v-if="isDeploy != 1">
-                <el-button
-                    size="small"
-                    style="float:right"
-                    :type="allStepsBtnType"
-                    :disabled="allStepsBtnDisable"
-                    @click="nextStepFun"
-                >{{$t('tronNodeNextStep')}}</el-button>
-            </div>-->
         </div>
         <!--tron Node Bulk Deployment  -->
         <el-dialog
@@ -291,6 +260,15 @@ export default {
             this.deplogUploadLoading = true;
             this.allNodeDeployLoading = true;
             if (this.currentPath != "") {
+                if (this.currentPath.indexOf("java-tron-1.0.0.zip") == -1) {
+                    this.$message({
+                        type: "warning",
+                        message: this.$t("deploymentCorrectPath")
+                    });
+                    this.deplogUploadLoading = false;
+                    this.allNodeDeployLoading = false;
+                    return;
+                }
                 this.multipleSelectionIds.forEach(async item => {
                     await this.deployNodeApiFun(item);
                 });
