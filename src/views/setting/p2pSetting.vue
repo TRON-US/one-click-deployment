@@ -2,7 +2,7 @@
  * @Author: lxm 
  * @Date: 2019-10-15 11:03:42 
  * @Last Modified by: lxm
- * @Last Modified time: 2019-11-12 18:48:33
+ * @Last Modified time: 2019-11-13 11:59:16
  * @setting p2p setting 
  */
 
@@ -304,19 +304,28 @@ export default {
                             .node_maxActiveNodesWithSameIp,
                         connectFactor: this.p2pSettingForm.connectFactor
                     };
+                    // all node ary
+                    let allNodesAry = [];
+                    this.seedNodeIpList.forEach(item => {
+                        allNodesAry.push(item.ip);
+                    });
+                    // current checked Node ip
 
-                    let nodeList = this.p2pSettingForm.seed_node_ip_list; // all node list
+                    let currentCheckedNodeIpAry = this.p2pSettingForm
+                        .defalutSelectedIp;
+
+                    let allNodesSet = new Set(allNodesAry);
+                    let currentCheckedSet = new Set(currentCheckedNodeIpAry);
+
+                    // intersect
+                    let intersect = new Set(
+                        [...allNodesSet].filter(x => currentCheckedSet.has(x))
+                    );
+
                     let passNodeData = [];
-                    let currentNodeIpAry = [];
-                    if (nodeList && nodeList != null) {
-                        nodeList.forEach(item => {
-                            currentNodeIpAry.push(item.split(":")[0]);
-                        });
-                    }
-                    this.p2pSettingForm.defalutSelectedIp.forEach(item => {
+                    Array.from(intersect).forEach(item => {
                         passNodeData.push(`${item}":"${this.listenPort}`);
                     });
-                    console.log(passNodeData, "passNodeData");
                     p2pSettingApi(newp2pForm, passNodeData)
                         .then(response => {
                             this.$emit("addSettingSuccess", true);
